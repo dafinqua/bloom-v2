@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
 const C = {
   t:"#C4785A",tl:"#E8A98A",cr:"#FAF6F0",cd:"#F0E8DC",
   sg:"#8A9E8C",sgl:"#C2D0C4",br:"#5C3D2E",tx:"#3A2E28",txl:"#6B5C54"

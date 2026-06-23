@@ -865,7 +865,7 @@ function Contractions() {
       </div>
       {showAlert&&<div style={{background:'linear-gradient(135deg,#FFF3E0,#FCE4EC)',border:`1px solid ${C.tl}`,borderRadius:12,padding:14,marginBottom:16,fontSize:13,lineHeight:1.6}}><strong style={{color:C.t,display:'block',marginBottom:4}}>🚨 דפוס סדיר!</strong>ציר כל {Math.round(avgGap/60)} דקות, משך {Math.round(avgDur)} שניות. הגיע הזמן! 📞</div>}
       {list.length>0&&<div style={card}><div style={ttl}>📊 צירים אחרונים</div>{list.map((c,i)=><div key={c.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:i<list.length-1?`1px solid ${C.cd}`:'none',fontSize:13}}><span style={{color:C.t,fontWeight:500}}>#{list.length-i}</span><span>⏱ {fmt(c.dur)}</span><span>{c.gap!==null?`↔ ${fmt(c.gap)}`:'—'}</span><span style={{color:C.txl,fontSize:12}}>{c.time}</span></div>)}</div>}
-      <div style={card}><div style={ttl}>📖 כלל 4-1-2</div><div style={bdy}>צירים כל <strong>4 דקות</strong>, משך <strong>דקה</strong>, למשך <strong>שעתיים )בלידה ראשונה, בלידה חורת אחרי שעה(</strong> – זמן לבית חולים!<br/><br/>סימנים נוספים: ירידת מים, דימום, ירידה בתנועות תינוק, תחושת לחץ חזק בצוואר רחם.</div></div>
+      <div style={card}><div style={ttl}>📖 כלל 4-1-2</div><div style={bdy}>צירים כל <strong>4 דקות</strong>, משך <strong>דקה</strong>, למשך <strong>שעתיים )בלידה ראשונה, בלידה חוזרת אחרי שעה(</strong> – זמן לבית חולים!<br/><br/>סימנים נוספים: ירידת מים, דימום, ירידה בתנועות תינוק, תחושת לחץ חזק בצוואר רחם.</div></div>
       {list.length>=3&&(
         <div style={card}>
           <div style={ttl}>📈 גרף התקדמות צירים</div>

@@ -1,5 +1,4 @@
-// v2.1
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const C = {
   t:"#C4785A",tl:"#E8A98A",cr:"#FAF6F0",cd:"#F0E8DC",
@@ -959,7 +958,7 @@ const DAFNA_MSGS = [
 // ===== SUPPORT CARDS =====
 function MomentCard({type}) {
   const msgs = type==='dafna' ? DAFNA_MSGS : MOMENT_MSGS;
-  const [msg] = React.useState(()=>msgs[Math.floor(Math.random()*msgs.length)]);
+  const [msg] = useState(()=>msgs[Math.floor(Math.random()*msgs.length)]);
   const isDafna = type==='dafna';
   const cardLabel = isDafna ? '\u{1F49B} רגע עם דפנה' : '\u{1F33F} רגע בשבילך';
   return (
@@ -1011,7 +1010,7 @@ function FooterModal({id, onClose}) {
 
 function Home({go}) {
   const tip=TIPS[new Date().getDay()];
-  const [modal,setModal]=React.useState(null);
+  const [modal,setModal]=useState(null);
   return (
     <div>
       <div style={{background:`linear-gradient(135deg,${C.br},${C.t})`,borderRadius:16,padding:24,color:'white',marginBottom:16,textAlign:'center'}}>
@@ -3407,8 +3406,8 @@ function BabyWorld() {
   const [sleepStart,setSleepStart]=useState(null);
   const [sleepType,setSleepType]=useState('לילה');
   const [sleepElapsed,setSleepElapsed]=useState(0);
-  const sleepRef=React.useRef(null);
-  React.useEffect(()=>{
+  const sleepRef=useRef(null);
+  useEffect(()=>{
     if(sleepActive){sleepRef.current=setInterval(()=>setSleepElapsed(e=>e+1),1000);}
     else{clearInterval(sleepRef.current);}
     return()=>clearInterval(sleepRef.current);
@@ -4294,8 +4293,8 @@ function CategoryScreen({cat, setTab}) {
 }
 
 function HamburgerNav({tab, setTab}) {
-  const [open, setOpen] = React.useState(false);
-  const [activeCat, setActiveCat] = React.useState('pregnancy');
+  const [open, setOpen] = useState(false);
+  const [activeCat, setActiveCat] = useState('pregnancy');
 
   function handleTab(id) {
     setTab(id);
@@ -4359,7 +4358,7 @@ function HamburgerNav({tab, setTab}) {
 }
 
 
-export default function App() {
+export default export default function App() {
   const [tab,setTab]=useState('home');
   function screen(){
     if(tab==='home')return <Home go={setTab}/>;

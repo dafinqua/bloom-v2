@@ -4358,7 +4358,7 @@ function HamburgerNav({tab, setTab}) {
 }
 
 
-export default export default function App() {
+export default function App() {
   const [tab,setTab]=useState('home');
   function screen(){
     if(tab==='home')return <Home go={setTab}/>;

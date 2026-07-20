@@ -187,86 +187,221 @@ const HOSPITALS = [
   {
     name:"איכילוב – תל אביב", region:"center", emoji:"🏙️",
     waterBirth:true, naturalBirth:true,
-    nicu:"פגייה רמה 3 – הגדולה בישראל",
-    rooms:"חדרי לידה מאובזרים + כדור פיזיו + בריכת לידה",
-    accommodation:"יש מלונית. אשפוז לאחר לידה: חדרים זוגיים וגם חדרים ליחיד (לפי זמינות)"
+    url:"https://www.tasmc.org.il/sites/he/maternity/Pages/default.aspx",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"חדר לידה טבעית קיים.",
+    water:"לידה במים אפשרית. ניתן ללדת בתוך בריכת לידה.",
+    accommodation:"מלונית קיימת (Baby Lis).",
+    hospitalization:"חדרים זוגיים ופרטיים.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
     name:"שיבא – תל השומר", region:"center", emoji:"🏥",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3 – מרכז רפואי גדול",
-    rooms:"חדרי לידה מודרניים + כדור פיזיו",
-    accommodation:"יש מלונית. אשפוז לאחר לידה: בעיקר חדרים זוגיים"
-  },
-  {
-    name:"וולפסון – חולון", region:"center", emoji:"🏥",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"יש מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.sheba.co.il/departments/maternity",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"שני חדרי לידה טבעית.",
+    water:"לידה במים אפשרית בג׳קוזי.",
+    accommodation:"מלונית קיימת.",
+    hospitalization:"חדרים זוגיים.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
     name:"מאיר – כפר סבא", region:"center", emoji:"🌿",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 2",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"אין מלונית. אשפוז לאחר לידה: חדרים זוגיים ולעיתים יחידים"
-  },
-  {
-    name:"הדסה עין כרם – ירושלים", region:"north", emoji:"🕍",
     waterBirth:true, naturalBirth:true,
-    nicu:"פגייה רמה 3 – מרכז רפואי אקדמי",
-    rooms:"חדרי לידה גדולים + בריכת לידה + כדור פיזיו + מוזיקה",
-    accommodation:"יש מלונית לבני זוג. אשפוז לאחר לידה: זוגיים ויחידים"
+    url:"https://www.clalit.co.il/he/hospitals/meir/departments/Pages/maternity.aspx",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"חדר לידה טבעית אחד.",
+    water:"לידה במים אפשרית בתוך בריכת הלידה.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרים זוגיים ופרטיים.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"שערי צדק – ירושלים", region:"north", emoji:"🕍",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"יש מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    name:"וולפסון – חולון", region:"center", emoji:"🏙️",
+    waterBirth:false, naturalBirth:false,
+    url:"https://www.wolfson.org.il/departments/maternity",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"אין חדר לידה טבעית ייעודי.",
+    water:"אין לידה במים.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרים פרטיים. בחלק מהחדרים השירותים והמקלחת משותפים לשני חדרים.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"רמבם – חיפה", region:"north", emoji:"⚓",
+    name:"לניאדו – נתניה", region:"center", emoji:"🌸",
     waterBirth:true, naturalBirth:true,
-    nicu:"פגייה רמה 3",
-    rooms:"חדרי לידה מודרניים + בריכת לידה + כדור פיזיו",
-    accommodation:"יש מלונית עם נוף לים. אשפוז לאחר לידה: זוגיים ויחידים"
+    url:"https://www.laniado.org.il/maternity",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"מרכז לידה טבעית.",
+    water:"לידה במים אפשרית.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרים זוגיים בלבד.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"כרמל – חיפה", region:"north", emoji:"⚓",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 2",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"אין מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    name:"בילינסון – פתח תקווה", region:"center", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.clalit.co.il/he/hospitals/beilinson/departments/Pages/maternity.aspx",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"חדר לידה טבעית אחד.",
+    water:"לידה במים אפשרית בתוך בריכה קבועה.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרים זוגיים ופרטיים.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"לניאדו – נתניה", region:"center", emoji:"🌿",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"אין מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    name:"שמיר (אסף הרופא) – צריפין", region:"center", emoji:"🌳",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.shamir.org.il/departments/maternity",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"שני חדרי לידה טבעית.",
+    water:"לידה במים אפשרית בתוך בריכות קבועות.",
+    accommodation:"מלונית קיימת.",
+    hospitalization:"חדרים זוגיים בלבד.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"סורוקה – באר שבע", region:"south", emoji:"🌵",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3 – מרכז הנגב",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"יש מלונית. אשפוז לאחר לידה: חדרים זוגיים ולעיתים יחידים"
+    name:"מעייני הישועה – בני ברק", region:"center", emoji:"✡️",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.may.org.il/maternity",
+    rooms:"כל חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"כל חדרי הלידה מתאימים ללידה טבעית.",
+    water:"לידה במים אפשרית.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרים ל-2–3 יולדות.",
+    companions:"עד שני מלווים.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"אסותא אשדוד", region:"south", emoji:"🌊",
-    waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 2",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"אין מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    name:"הדסה עין כרם – ירושלים", region:"center", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.hadassah.org.il/medical-care/departments/obstetrics-and-gynecology/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"קיים מרכז לידה טבעית.",
+    water:"אפשרית. הלידה מתבצעת בתוך אמבטיית לידה.",
+    accommodation:"קיימת מלונית Hadassah Baby.",
+    hospitalization:"קיימות מחלקות המאפשרות ביות מלא וביות גמיש.",
+    companions:"מספר המלווים נקבע בהתאם למדיניות בית היולדות.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   },
   {
-    name:"קפלן – רחובות", region:"south", emoji:"🌿",
+    name:"הדסה הר הצופים – ירושלים", region:"center", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.hadassah.org.il/medical-care/departments/obstetrics-and-gynecology/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"לידה טבעית מתאפשרת בחדרי הלידה.",
+    water:"אפשרית. קיימות שתי בריכות לידה.",
+    accommodation:"אין מלונית.",
+    hospitalization:"קיימות מחלקות המאפשרות ביות מלא, ביות גמיש וביות חלקי.",
+    companions:"מספר המלווים נקבע בהתאם למדיניות בית היולדות.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"שערי צדק – ירושלים", region:"center", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.szmc.org.il/departments/maternity/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"לידה טבעית מתאפשרת בחדרי הלידה.",
+    water:"אפשרית. ניתן ללדת בתוך בריכת לידה.",
+    accommodation:"אין מלונית.",
+    hospitalization:"לא נמצא מידע רשמי ועדכני על סוגי חדרי האשפוז.",
+    companions:"מספר המלווים נקבע בהתאם למדיניות בית היולדות.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"הלל יפה – חדרה", region:"center", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.hy.org.il/departments/maternity/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו, כדור בוטן ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"קיים חדר לידה טבעית.",
+    water:"אפשרית. ניתן ללדת בתוך בריכת הלידה.",
+    accommodation:"אין מלונית.",
+    hospitalization:"חדרי האשפוז מיועדים לשתיים עד שלוש יולדות. בכל חדר קיימים שירותים ומקלחת.",
+    companions:"מספר המלווים נקבע בהתאם למדיניות בית היולדות.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  }
+,
+  {
+    name:"רמב\"ם – חיפה", region:"north", emoji:"🏥",
     waterBirth:false, naturalBirth:true,
-    nicu:"פגייה רמה 3",
-    rooms:"חדרי לידה + כדור פיזיו",
-    accommodation:"אין מלונית. אשפוז לאחר לידה: חדרים זוגיים"
+    url:"https://www.rambam.org.il/departments/maternity/",
+    rooms:"9 חדרי לידה פרטיים ומאובזרים, הכוללים שירותים ומקלחת צמודים, כדור פיזיו, כדור בוטן ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"קיים חדר לידה טבעית ייעודי הכולל ג׳קוזי.",
+    hospitalization:"קיימות אפשרויות לביות מלא, ביות גמיש ואפס הפרדה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"כרמל – חיפה", region:"north", emoji:"🏥",
+    waterBirth:false, naturalBirth:false,
+    url:"https://www.carmel-hospital.org.il/departments/maternity/",
+    rooms:"8 חדרי לידה פרטיים ומאובזרים, הכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    hospitalization:"קיימת אפשרות לביות מלא.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"בני ציון – חיפה", region:"north", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.b-zion.org.il/departments/maternity/",
+    rooms:"8 חדרי לידה פרטיים ומאובזרים, הכוללים שירותים, מקלחת ואמבטיה בכל חדר.",
+    natural:"כל חדרי הלידה מותאמים ללידה טבעית.",
+    water:"אפשרית. ניתן ללדת בתוך המים.",
+    hospitalization:"קיימות אפשרויות לביות מלא, ביות גמיש ואפס הפרדה.",
+    companions:"ניתן לשהות עם שני מלווים במהלך הלידה, כאשר אחד מהם יכול להיות דולה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"העמק – עפולה", region:"north", emoji:"🏥",
+    waterBirth:false, naturalBirth:false,
+    url:"https://www.emek.org.il/departments/maternity/",
+    rooms:"חדרי לידה פרטיים ומאובזרים, הכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    hospitalization:"קיימות אפשרויות לביות מלא ואפס הפרדה.",
+    companions:"ניתן לשהות עם מלווה אחד במהלך הלידה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  }
+,
+  {
+    name:"סורוקה – באר שבע", region:"south", emoji:"🏥",
+    waterBirth:false, naturalBirth:false,
+    url:"https://hospitals.clalit.co.il/soroka/he/departments/Pages/maternity.aspx",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    hospitalization:"קיימות אפשרויות לביות מלא, ביות גמיש ואפס הפרדה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"אסותא – אשדוד", region:"south", emoji:"🏥",
+    waterBirth:true, naturalBirth:true,
+    url:"https://www.assuta.co.il/hospitals/ashdod/departments/maternity/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"קיים חדר לידה טבעית ייעודי.",
+    water:"אפשרית. ניתן ללדת בתוך בריכת הלידה.",
+    hospitalization:"קיימות אפשרויות לביות מלא ואפס הפרדה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"ברזילי – אשקלון", region:"south", emoji:"🏥",
+    waterBirth:false, naturalBirth:true,
+    url:"https://www.barzilai.org.il/departments/maternity/",
+    rooms:"חדרי הלידה פרטיים ומאובזרים, וכוללים שירותים ומקלחת צמודים, כדור פיזיו ומוניטור אלחוטי (במקרים המתאימים).",
+    natural:"קיים חדר לידה טבעית ייעודי.",
+    hospitalization:"קיימות אפשרויות לביות מלא.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
+  },
+  {
+    name:"יוספטל – אילת", region:"south", emoji:"🏥",
+    waterBirth:true, naturalBirth:false,
+    url:"https://www.yoseftal.org.il/departments/maternity/",
+    rooms:"חדרי הלידה מאובזרים ומותאמים ללידה, וכוללים שירותים ומקלחת צמודים.",
+    water:"אפשרית, בתיאום מראש ובהתאם לנהלי בית החולים.",
+    companions:"ניתן לשהות עם עד שני מלווים במהלך הלידה.",
+    disclaimer:"המידע באפליקציה מבוסס על המידע הרשמי של בתי היולדות. השירותים והאפשרויות עשויים להשתנות בהתאם למצב הרפואי של היולדת, לשיקול דעת הצוות ולזמינות בבית היולדות."
   }
 ];
 
@@ -310,9 +445,9 @@ const WATER_BREAK_GUIDE = {
   unsureNote:"לעיתים נדמה שמדובר בירידת מים, אך למעשה אלו הפרשות מרובות – דבר שכיח מאוד לקראת הלידה. אם אינך בטוחה, ניתן להיבדק בבית היולדות.",
   doNow:["הישארי רגועה","שימי פד (לא טמפון)","רשמי את שעת ירידת המים","הסתכלי על צבע הנוזל","התארגני בהתאם לצבע המים"],
   colors:{
-    clear:"✅ צלולים – ברוב בתי היולדות, אם אין צירים או סיבה אחרת להגיע מוקדם יותר, ניתן להתארגן ולהגיע לבית היולדות בתוך כ-3 שעות.",
-    pink:"🌸 ורדרדים – לרוב תקין ונובע מכמות קטנה של דם מצוואר הרחם. התנהלי כמו בירידת מים צלולים.",
-    green:"🟢 ירוקים / חומים (מקוניום) – התארגני וצאי לכיוון בית היולדות."
+    clear:"• צלולים – ברוב בתי היולדות, אם אין צירים או סיבה אחרת להגיע מוקדם יותר, ניתן להתארגן ולהגיע לבית היולדות בתוך כ-3 שעות.",
+    pink:"• ורדרדים – לרוב תקין ונובע מכמות קטנה של דם מצוואר הרחם. התנהלי כמו בירידת מים צלולים.",
+    green:"• ירוקים / חומים (מקוניום) – התארגני וצאי לכיוון בית היולדות."
   },
   timing:"רבות מהנשים יתחילו לפתח צירים באופן עצמאי בשעות שלאחר ירידת המים.\n\nאם הצירים אינם מתחילים, ברוב בתי היולדות יומלץ על זירוז לאחר כ-24 שעות מירידת המים, כדי להפחית את הסיכון לזיהום.\n\nברוב המקרים הזירוז יתבצע בחדר הלידה באמצעות פיטוצין, בהתאם למצבך ולשיקול דעת הצוות."
 };
@@ -358,15 +493,6 @@ const BF_CONTENT = {
     {name:"הנקה ביולוגית (Laid-back)",emoji:"🤍",desc:"האם נשענת לאחור והתינוק שוכב על גופה. תנוחה שעשויה להקל על החיבור בימים הראשונים.",icon:"laidback"}
   ],
   latch:["פה פתוח לרווחה לפני ההצמדה לשד","השפה התחתונה (ולעיתים גם העליונה) פונה החוצה","הסנטר צמוד לשד והאף חופשי או כמעט נוגע בשד","יותר מהעטרה נמצא בתוך הפה בחלק התחתון מאשר בחלק העליון","הלחיים עגולות בזמן היניקה, ללא שקיעה פנימה","ניתן לראות או לשמוע בליעות לאחר שהחלב מתחיל לזרום","משיכה או אי-נוחות קלה בשניות הראשונות אפשריות, אך כאב חד או מתמשך אינו תקין"],
-  problems:[
-    {p:"כאב בפטמות",s:"לרוב מעיד על לידה לקויה. אם נמשך מעל יומיים – פני ליועצת."},
-    {p:"פטמות סדוקות",s:"מרחי חלב אחרי הנקה, אל תשאירי פטמות רטובות, נסי משחת לנולין."},
-    {p:"שד גדוש",s:"הנקות תכופות, קירור בין הנקות, עיסוי קל לפני. יחלוף תוך 3-5 ימים."},
-    {p:"צינורית סתומה",s:"עיסוי לכיוון הפטמה, חום לפני הנקה, הנקות תכופות מאותו צד."},
-    {p:"דלקת שד (Mastitis)",s:"אל תפסיקי להניק! חום + כאב + אדמומיות – פני לרופאה לאנטיביוטיקה."},
-    {p:"מעט חלב",s:"חלב מיוצר לפי ביקוש. הנקות תכופות = יותר חלב. בדקי לידה קודם."}
-  ],
-  nutrition:"בזמן הנקה את צורכת כ-500 קלוריות נוספות ביום. חשוב: שתייה מרובה, אומגה 3, ברזל, סידן. קפה – עד 2 כוסות ביום."
 };
 
 
@@ -384,7 +510,7 @@ const POSTTERM_DATA = {
     {name:"בדיקת אולטרסאונד",desc:"בבדיקת האולטרסאונד מעריכים את כמות מי השפיר (AFI), את מיקום ותפקוד השליה, את מצג העובר ולעיתים גם מדדים נוספים, בהתאם לצורך. כמות מי שפיר נמוכה או גבוהה מהרגיל עשויה להשפיע על המשך המעקב או על ההחלטה לגבי השראת לידה.",where:"מכון אולטרסאונד / בית היולדות"},
     {name:"בדיקת מדדים",desc:"כחלק מהמעקב נהוג למדוד לחץ דם ולעיתים גם לבצע בדיקת שתן, כדי לשלול מצבים כמו רעלת הריון או ממצאים אחרים הדורשים המשך בירור.",where:"בית היולדות / קופת החולים"}
   ],
-  naturalTips: ["🚶‍♀️ הליכה ותנועה מתונה","🤲 רפלקסולוגיה","🪡 דיקור סיני","👶 גירוי פטמות – רק אם אין מניעה רפואית","❤️ קיום יחסים – אם אין מניעה רפואית","🌴 אכילת תמרים – עשויה לתרום להבשלת צוואר הרחם","🧘‍♀️ מנוחה, שינה והפחתת סטרס"],
+  naturalTips: ["🚶‍♀️ הליכה ותנועה מתונה","🦶 רפלקסולוגיה","🪡 דיקור סיני","👶 גירוי פטמות – רק אם אין מניעה רפואית","❤️ קיום יחסים – אם אין מניעה רפואית","🌴 אכילת תמרים – עשויה לתרום להבשלת צוואר הרחם","🧘‍♀️ מנוחה, שינה והפחתת סטרס"],
   emotional: "אם הגעת לשבוע 40 או מעבר לכך, טבעי להרגיש חוסר סבלנות, תסכול, אכזבה או חשש. התחושות האלה נפוצות מאוד ואינן אומרות שמשהו אינו תקין. כל הריון מתקדם בקצב שלו. נסי להמשיך בשגרה שמתאימה לך, לנוח, להיעזר בסביבה הקרובה ולהעניק לעצמך הרבה חמלה וסבלנות."
 };
 
@@ -403,7 +529,7 @@ const DECISION_TREE = {
     ]
   },
   postterm: {
-    question:"הריון עודף (41-42 שבועות)",
+    question:"40+ (41-42 שבועות)",
     info:"מעבר לשבוע 41 הסיכון לשליה מתבלה עולה בהדרגה. ברוב המקרים זירוז בשלב זה משפר את הסיכויים ללידה וגינלית מוצלחת.",
     options:[
       {label:"מה האפשרויות הרפואיות?",next:"medical_options"},
@@ -482,14 +608,14 @@ const DECISION_TREE = {
     ]
   },
   refuse_postterm: {
-    question:"מה קורה אם אסרבי לזירוז בהריון עודף?",
+    question:"מה קורה אם תסרבי לזירוז ב-40+?",
     info:"⚠️ יש לך זכות לסרב לכל הליך רפואי. עם זאת, מ-שבוע 42 הסיכון לסיבוכים (כולל לתינוק) עולה משמעותית. אם מסרבת – ימליצו על מעקב צמוד יותר (NST יומי, בדיקת מי שפיר). חשוב לקבל החלטה מודעת ולא מתוך פחד בלבד – שיחה פתוחה עם הצוות הרפואי חיונית.",
     options:[
       {label:"חזרה להתחלה",next:"start"}
     ]
   },
   refuse_size: {
-    question:"מה קורה אם אסרבי לזירוז עקב הערכת משקל?",
+    question:"מה קורה אם תסרבי לזירוז עקב הערכת משקל?",
     info:"יש לך זכות לבקש מעקב נוסף (Doppler, NST) לפני החלטה על זירוז שמבוסס רק על הערכת משקל. שיחה עם הרופאה על הביטחון בהערכה ועל הסיכונים הספציפיים יכולה לעזור להחליט בראש פתוח.",
     options:[
       {label:"חזרה להתחלה",next:"start"}
@@ -497,7 +623,7 @@ const DECISION_TREE = {
   },
   prom_wait: {
     question:"כמה זמן אפשר לחכות אחרי ירידת מים?",
-    info:"רוב הפרוטוקולים בישראל ממליצים על זירוז תוך 12-24 שעות מירידת מים אם אין צירים, בעיקר עקב סיכון לזיהום (חורון, אלח דם לתינוק). בדיקות חוזרות של חום וזיהום (CRP, ספירת דם) מסייעות במעקב. אם תרצי לחכות מעבר לזה – חשוב מעקב צמוד וחום גוף תקין.",
+    info:"רוב הפרוטוקולים בישראל ממליצים על זירוז תוך 12-24 שעות מירידת מים אם אין צירים, בעיקר עקב סיכון לזיהום (דלקת בקרומי השפיר ואלח דם לתינוק). בדיקות חוזרות של חום וזיהום (CRP, ספירת דם) מסייעות במעקב. אם תרצי לחכות מעבר לזה – חשוב מעקב צמוד וחום גוף תקין.",
     options:[
       {label:"חזרה להתחלה",next:"start"}
     ]
@@ -627,8 +753,6 @@ const COMP=[
   }
 ];
 
-const POSTPARTUM_MOM_CL=["בדיקת לחץ דם כל 4 שעות ב-24 הראשונות","בדיקת טמפרטורה","מעקב דימום (לוכיה)","בדיקת תפר (אם היה קרע/אפיזיוטומיה)","שתן ראשון תוך 6 שעות","הליכה ראשונה עם עזרה","בדיקת דם (המוגלובין)","ייעוץ הנקה בבית החולים","חיסון אדמת/חצבת אם נחוץ","השלמת תיק מסמכים לביטוח לאומי","עדכון מספר נפשות בתאגיד המים (לקבלת הנחת תעריף משפחתי)"];
-const POSTPARTUM_BABY_CL=["שקילה ראשונה (מיד אחרי לידה)","ציון אפגר (1 ו-5 דקות)","חיסון ויטמין K","בדיקת שמיעה","בדיקת עיניים","בדיקת לב (pulse oximetry)","בדיקת דם לתשב\"ץ (PKU)","זיהוי – צמיד אמא ותינוק","הרשמה לקופת חולים","שקילה ביום 3-4"];
 const EMOTIONS_QS=[
   {q:"האם הרגשתי עצובה או בכיתי הרבה?"},
   {q:"האם הרגשתי חרדה או דאגה שמלווה אותי רוב היום?"},
@@ -1406,45 +1530,58 @@ function HospitalGuide() {
                 <span style={{fontSize:15,fontWeight:600,color:C.br}}>{h.name}</span>
               </div>
               <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
-                {h.waterBirth&&<span style={{fontSize:11,background:'#E3F2FD',color:'#1565C0',borderRadius:8,padding:'2px 8px'}}>🌊 לידת מים</span>}
-                {h.naturalBirth&&<span style={{fontSize:11,background:'#E8F5E9',color:'#2E7D32',borderRadius:8,padding:'2px 8px'}}>🌸 לידה טבעית</span>}
+
               </div>
             </div>
             <span style={{color:C.txl,fontSize:18}}>{open===i?'▲':'▼'}</span>
           </div>
           {open===i&&<div style={{background:C.cr}}>
             <div style={{padding:'12px 16px',borderBottom:`1px solid ${C.cd}`}}>
-              <button onClick={()=>window.open(`https://www.google.com/search?q=${encodeURIComponent(h.name+' מחלקת יולדות אתר רשמי')}`,'_blank')} style={{width:'100%',padding:11,background:'#E3F2FD',color:'#1565C0',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+              <button onClick={()=>window.open(h.url,'_blank')} style={{width:'100%',padding:11,background:'#E3F2FD',color:'#1565C0',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
                 🌐 אתר מחלקת היולדות
               </button>
             </div>
             <div style={{padding:'12px 16px',borderBottom:`1px solid ${C.cd}`}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🛏 חדרי לידה</div>
-              <div style={{fontSize:12,color:C.txl}}>{h.rooms}</div>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🛏️ חדרי לידה</div>
+              <div style={{fontSize:12,color:C.txl,lineHeight:1.6}}>{h.rooms}</div>
             </div>
+            {h.natural&&<div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🌸 חדר לידה טבעית</div>
+              <div style={{fontSize:12,color:C.txl}}>{h.natural}</div>
+            </div>}
+            {h.water&&<div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🌊 לידה במים</div>
+              <div style={{fontSize:12,color:C.txl}}>{h.water}</div>
+            </div>}
+            {h.accommodation&&<div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🏨 מלונית</div>
+              <div style={{fontSize:12,color:C.txl}}>{h.accommodation}</div>
+            </div>}
+            {h.hospitalization&&<div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🛌 אשפוז לאחר הלידה</div>
+              <div style={{fontSize:12,color:C.txl}}>{h.hospitalization}</div>
+            </div>}
+            {h.companions&&<div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
+              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>👥 מלווים בלידה</div>
+              <div style={{fontSize:12,color:C.txl}}>{h.companions}</div>
+            </div>}
             <div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>🏨 לינה ואשפוז</div>
-              <div style={{fontSize:12,color:C.txl,lineHeight:1.6}}>{h.accommodation}</div>
+              <div style={{fontSize:11,color:C.txl,lineHeight:1.6,fontStyle:'italic'}}>{h.disclaimer}</div>
             </div>
-            <div style={{padding:'10px 16px',borderBottom:`1px solid ${C.cd}`}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.br,marginBottom:4}}>👶 פגייה</div>
-              <div style={{fontSize:12,color:C.txl}}>{h.nicu}</div>
-            </div>
-            <div style={{padding:'12px 16px',display:'flex',gap:8}}>
-              <button onClick={()=>window.open(`https://www.google.com/maps/search/${encodeURIComponent(h.name)}`,'_blank')} style={{flex:1,padding:9,background:'#4285F4',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:12,cursor:'pointer'}}>🧭 ניווט בוויז/מפות</button>
-              <button onClick={()=>window.open(`https://www.google.com/search?q=${encodeURIComponent(h.name+' מועדון יולדות סיור')}`,'_blank')} style={{flex:1,padding:9,background:C.sg,color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:12,cursor:'pointer'}}>🚶 סיור – מועדון יולדות</button>
+            <div style={{padding:'12px 16px'}}>
+              <button onClick={()=>window.open(`https://www.waze.com/ul?q=${encodeURIComponent(h.name)}`,'_blank')} style={{width:'100%',padding:9,background:'#4285F4',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:12,cursor:'pointer'}}>📍 ניווט למיון יולדות</button>
             </div>
           </div>}
         </div>
       ))}
       <div style={{...card,background:'#FFF8E1'}}>
         <div style={{fontSize:13,color:'#5D4037',lineHeight:1.8}}>
-          <strong>💡 טיפים לבחירת בית חולים:</strong><br/>
-          • בצעי סיור מחלקת לידה – מרגישה את הוויב<br/>
-          • בדקי מדיניות: האם תומכים בלידה טבעית?<br/>
-          • שאלי על אחוזי אפיזיוטומיה וקיסרי<br/>
-          • בדקי זמינות בריכת לידה ודולות<br/>
-          • קרבה לבית חשובה ללידה שנייה ומעלה!
+          <strong>💡 לפני שבוחרים בית יולדות</strong><br/>
+          • השתתפי בסיור בבית היולדות כדי להכיר את המקום והאווירה.<br/>
+          • בדקי אילו אפשרויות לידה זמינות עבורך (כמו חדר לידה טבעית או לידה במים).<br/>
+          • הכירי את אפשרויות האשפוז לאחר הלידה.<br/>
+          • ודאי שבית היולדות תומך בהעדפות ובתוכנית הלידה שלך.<br/>
+          • זכרי שאין בית יולדות אחד שמתאים לכולן – יש את זה שמתאים לך.
         </div>
       </div>
     </div>
@@ -1479,14 +1616,6 @@ function PelvisDiagram({selected}) {
             ← ראש התינוק (תחנה {labels[selected]})
           </div>
         )}
-      </div>
-      <div style={{display:'flex',justifyContent:'center',gap:12,marginTop:8,flexWrap:'wrap'}}>
-        {[["#E53935","0 – גובה הקרומין"],["#90CAF9","מינוס – מעל הקרומין"],["#66BB6A","פלוס – מתחת לקרומין"]].map(([c,l])=>(
-          <div key={l} style={{display:'flex',alignItems:'center',gap:4,fontSize:11}}>
-            <div style={{width:14,height:3,background:c,borderRadius:2}}/>
-            <span style={{color:C.txl}}>{l}</span>
-          </div>
-        ))}
       </div>
     </div>
   );
@@ -1643,6 +1772,7 @@ function BirthStages() {
   const [mainTab,setMainTab]=useState('stages');
   const [open,setOpen]=useState(null);
   const [waterOpen,setWaterOpen]=useState(false);
+  const [openWarning,setOpenWarning]=useState(null);
   const mainTabs=[
     {id:'stages',lb:'🌊 שלבים'},
     {id:'triage',lb:'🏥 מיון יולדות'},
@@ -1763,15 +1893,17 @@ function BirthStages() {
             <div style={bdy}>אם מופיע אחד מהמצבים הבאים, מומלץ להיבדק בבית היולדות – גם אם אין צירים או ירידת מים.</div>
           </div>
           {WARNING_SIGNS.map((w,i)=>(
-            <div key={i} style={{border:`1px solid ${C.cd}`,borderRadius:12,overflow:'hidden',marginBottom:10}}>
-              <div style={{padding:'14px 16px',background:'white',display:'flex',alignItems:'center',gap:10}}>
-                <span style={{fontSize:24}}>{w.emoji}</span>
-                <div style={{fontWeight:700,fontSize:14,color:C.br}}>{w.title}</div>
+            <div key={i} style={{border:`1px solid ${C.cd}`,borderRadius:12,overflow:'hidden',marginBottom:8}}>
+              <div onClick={()=>setOpenWarning(openWarning===i?null:i)} style={{padding:'13px 16px',background:'white',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
+                <div style={{fontWeight:600,fontSize:14,color:C.br}}>{w.title}</div>
+                <span style={{color:C.txl,fontSize:13}}>{openWarning===i?'▲':'▼'}</span>
               </div>
+              {openWarning===i&&(
               <div style={{padding:'12px 16px',background:C.cr}}>
                 <div style={{fontSize:13,color:C.tx,lineHeight:1.8,marginBottom:w.action?8:0,whiteSpace:'pre-line'}}>{w.desc}</div>
                 {w.action&&<div style={{fontSize:12,fontWeight:600,color:'#1565C0',background:'#E3F2FD',borderRadius:8,padding:'8px 10px'}}>👉 {w.action}</div>}
               </div>
+              )}
             </div>
           ))}
         </div>
@@ -1825,12 +1957,10 @@ const BIRTH_TOOLS_OILS = [
 ];
 
 const BIRTH_TOOLS_MASSAGE = [
-  {name:"עיסוי גב תחתון בלחץ",desc:"לחיצה עמוקה וקבועה (לא שיפשוף) בשני הצדדים של עמוד השדרה התחתון, בזמן הציר. עוזר במיוחד בתינוק אחורי (OP).",timing:"בזמן הציר עצמו"},
-  {name:"Double Hip Squeeze",desc:"המלווה לוחץ בשתי הידיים על שני צידי האגן (עצמות הכסל) בזמן הציר – פותח את האגן ומקל מאוד על כאב.",timing:"בזמן הציר עצמו"},
-  {name:"עיסוי כפות רגליים",desc:"עיסוי עגול ועדין של כפות הרגליים בין הצירים – מרגיע מאוד את מערכת העצבים.",timing:"בין צירים, להרפיה"},
-  {name:"עיסוי כתפיים וצוואר",desc:"שיפשוף עגול וקצבי של הכתפיים – משחרר מתח שמצטבר באזור הזה לאורך הלידה.",timing:"בכל שלב"},
-  {name:"לחיצה על הסקרום (Sacral Pressure)",desc:"לחיצה ישירה ומרוכזת עם כף היד או האגרוף על עצם הזנב, בזמן הציר – מקלה משמעותית על כאבי גב.",timing:"בזמן הציר, תינוק אחורי"},
-  {name:"Rebozo – נדנוד עדין",desc:"צעיף ארוך מתחת לבטן, נדנוד עדין מצד לצד – מרפה רצועות ועוזר לתינוק להתמקם.",timing:"בין צירים"}
+  {name:"לחץ נגדי בגב התחתון (Counter Pressure)",desc:"לחץ עמוק ויציב עם כף היד או האגרוף באזור הגב התחתון בזמן הציר. עשוי להקל במיוחד על כאבי גב במהלך הלידה.",timing:"בזמן הציר."},
+  {name:"Double Hip Squeeze",desc:"לחיצה בשתי הידיים על צידי האגן בזמן הציר. עשויה להפחית את תחושת הלחץ באגן ולהקל על הכאב. יעילה במיוחד כשהיולדת נשענת קדימה או נמצאת בעמידת שש.",timing:"בזמן הציר."},
+  {name:"עיסוי כתפיים וצוואר",desc:"עיסוי עדין של הכתפיים והצוואר המסייע להרפיית השרירים ולהפחתת מתח.",timing:"בכל שלב של הלידה."},
+  {name:"Rebozo – נדנוד עדין",desc:"שימוש בצעיף ריבוזו מתחת לבטן או סביב האגן ליצירת תנועה עדינה. עשוי לסייע להרפיית האגן ולעידוד התברגות טובה של התינוק.",timing:"בין הצירים."}
 ];
 
 function BirthTools() {
@@ -1955,17 +2085,20 @@ function BirthTools() {
 
       {subTab==='massage'&&(
         <div>
-          <div style={card}>
-            <div style={ttl}>💆 עיסויים לזמן צירים</div>
-            <div style={{fontSize:13,color:C.txl,marginBottom:12}}>למלווה: תרגלו את אלה מראש כדי שתהיו מוכנים!</div>
+          <div style={{...card,background:`linear-gradient(135deg,#FCE4EC,${C.cr})`}}>
+            <div style={ttl}>💆 עיסויים בזמן הלידה</div>
+            <div style={bdy}>מומלץ לתרגל את הטכניקות מראש עם המלווה, כדי שבזמן הלידה יהיה קל להשתמש בהן.</div>
           </div>
           {BIRTH_TOOLS_MASSAGE.map((m,i)=>(
             <div key={i} style={card}>
-              <div style={{fontWeight:700,color:C.br,fontSize:13,marginBottom:4}}>💆 {m.name}</div>
-              <div style={{fontSize:12,color:C.txl,lineHeight:1.6,marginBottom:4}}>{m.desc}</div>
-              <div style={{fontSize:11,background:'#E8F4E8',color:'#2E7D32',borderRadius:6,padding:'3px 8px',display:'inline-block'}}>⏱ {m.timing}</div>
+              <div style={{fontWeight:600,color:C.br,fontSize:14,marginBottom:6}}>{m.name}</div>
+              <div style={{fontSize:13,color:C.tx,lineHeight:1.7,marginBottom:8}}>{m.desc}</div>
+              <div style={{fontSize:12,color:C.txl}}>מתי? {m.timing}</div>
             </div>
           ))}
+          <div style={{...card,background:'#FFF8E1'}}>
+            <div style={{fontSize:12,color:'#5D4037',lineHeight:1.7}}>💡 לכל יולדת מתאימות טכניקות שונות. מומלץ לנסות מספר אפשרויות ולבחור במה שמרגיש נעים ומקל במהלך הלידה.</div>
+          </div>
         </div>
       )}
     </div>
@@ -2373,7 +2506,7 @@ function Breastfeeding() {
                 {item.todo.map((t,j)=><div key={j} style={{display:'flex',gap:8,padding:'5px 0',borderBottom:j<item.todo.length-1?`1px solid ${C.cd}`:'none',fontSize:13,lineHeight:1.6}}><span style={{color:C.sg,flexShrink:0}}>•</span><span>{t}</span></div>)}
               </div>
               {item.when&&<div style={{marginBottom:10,padding:'10px 12px',background:'#FFF3E0',borderRadius:8}}>
-                <div style={{fontSize:12,fontWeight:700,color:'#E65100',marginBottom:4}}>🚨 מתי כדאי להיבדק?</div>
+                <div style={{fontSize:12,fontWeight:700,color:'#E65100',marginBottom:4}}>מתי כדאי להיבדק?</div>
                 <div style={{fontSize:13,color:'#5D4037',lineHeight:1.7}}>{item.when}</div>
               </div>}
               {item.tip&&<div style={{padding:'10px 12px',background:'#FFF8E1',borderRadius:8}}>
@@ -2495,7 +2628,7 @@ function InductionList({items, open, setOpen}) {
       {items.map((item,i)=>(
         <div key={i} style={{border:`1px solid ${C.cd}`,borderRadius:12,overflow:'hidden',marginBottom:10}}>
           <div onClick={()=>setOpen(open===i?null:i)} style={{padding:'14px 16px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer',background:open===i?C.cr:'white'}}>
-            <div><div style={{fontSize:15,fontWeight:500,color:C.br}}>{item.emoji} {item.method}</div><div style={{fontSize:12,color:C.txl,marginTop:2}}>{item.type}</div></div>
+            <div><div style={{fontSize:15,fontWeight:500,color:C.br}}>{item.emoji} {item.method}</div>{item.type!=='טבעי'&&<div style={{fontSize:12,color:C.txl,marginTop:2}}>{item.type}</div>}</div>
             <span style={{color:C.txl}}>{open===i?'▲':'▼'}</span>
           </div>
           {open===i&&<div style={{padding:'14px 16px',background:C.cr,fontSize:13,lineHeight:1.7}}>
@@ -2591,7 +2724,7 @@ function PostTermGuide() {
   return (
     <div>
       <div style={{...card,background:`linear-gradient(135deg,#FFF3E0,${C.cr})`}}>
-        <div style={ttl}>📅 הריון עודף – מה עכשיו?</div>
+        <div style={ttl}>📅 40+ – מה עכשיו?</div>
         <div style={bdy}>{d.intro}</div>
       </div>
       <div style={card}>
@@ -2816,7 +2949,7 @@ function Tools() {
     function stopBreath(){clearTimeout(breathRef.current);setBreathPhase(null);setBreathCount(0);}
   useEffect(()=>()=>clearTimeout(breathRef.current),[]);
 
-  const subTabs=[{id:'general',lb:'🌿 כללי'},{id:'meditation',lb:'🧘 5 דקות'},{id:'rx_map',lb:'👣 רפלקסולוגיה'},{id:'books',lb:'📚 ספרים'},{id:'podcasts',lb:'🎙️ פודקאסטים'}];
+  const subTabs=[{id:'general',lb:'🌿 כללי'},{id:'meditation',lb:'🧘 5 דקות'},{id:'rx_map',lb:'👣 רפלקסולוגיה'},{id:'books',lb:'📚 ספרים'},{id:'podcasts',lb:'🎙️ פודקאסטים'},{id:'oils',lb:'🫙 שמנים'}];
   return (
     <div>
       <div style={{display:'flex',gap:6,marginBottom:16,flexWrap:'wrap'}}>
@@ -2941,6 +3074,51 @@ function Tools() {
 
       {subTab==='books'&&<div>{RESOURCES.books.map((b,i)=><BookCard key={i} b={b}/>)}</div>}
       {subTab==='podcasts'&&<div>{RESOURCES.podcasts.map((p,i)=><div key={i} style={{...card,padding:0,overflow:'hidden'}}><div style={{width:'100%',height:130,background:`linear-gradient(135deg,${p.color},${p.color}99)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:6}}><div style={{width:64,height:64,borderRadius:14,background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,color:'white',fontWeight:700}}>{p.initials}</div><div style={{fontSize:11,color:'rgba(255,255,255,0.8)',letterSpacing:1}}>🎙️ PODCAST</div></div><div style={{padding:14}}><div style={{fontFamily:'Georgia,serif',fontSize:16,color:C.br,marginBottom:6}}>{p.title}</div><div style={bdy}>{p.desc}</div><button onClick={()=>window.open(p.spotify,'_blank')} style={{marginTop:10,width:'100%',padding:'10px 0',background:'#1DB954',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',fontWeight:600}}>🎧 להאזנה ב-Spotify</button></div></div>)}</div>}
+      {subTab==='oils'&&(
+        <div>
+          <div style={{...card,background:`linear-gradient(135deg,#F3E5F5,${C.cr})`}}>
+            <div style={ttl}>🫙 שמנים אתריים ללידה</div>
+            <div style={bdy}>סקירה של שמנים אתריים שניתן לשלב בלידה להרגעה, הפחתת חרדה וחיזוק התהליך הטבעי.</div>
+          </div>
+          {[
+            {cat:"רוגע והפחתת חרדה",emoji:"🌸",oils:[
+              {name:"לבנדר",desc:"מסייע להרגעה, להפחתת מתח וחרדה.",use:"דיפיוזר, שאיפה, מריחה על נקודות הדופק או עיסוי. ניתן להשתמש בכמות קטנה גם ללא שמן בסיס."},
+              {name:"לבונה",desc:"מסייע לקרקוע, נשימה עמוקה, רוגע והפחתת חרדה.",use:"דיפיוזר, שאיפה או עיסוי."},
+              {name:"יסמין",desc:"מסייע להפחתת פחד, מתח וחרדה, ומשרה תחושת ביטחון ורוגע.",use:"שאיפה, דיפיוזר או מריחה על פרקי כף היד, עצמות הבריח או הגב התחתון."}
+            ]},
+            {cat:"קידום וחיזוק צירים",emoji:"💪",oils:[
+              {name:"מרווה מרושתת (Clary Sage)",desc:"מסייעת לעידוד פעילות רחמית, חיזוק צירים והרפיה.",use:"עיסוי הגב התחתון, כפות הרגליים או הכתפיים, שאיפה או דיפיוזר. ניתן לשלב עם לבנדר ביחס של 2 טיפות מרווה מרושתת לטיפה אחת של לבנדר."}
+            ]},
+            {cat:"בחילות",emoji:"🌿",oils:[
+              {name:"מנטה",desc:"מסייעת להפחתת בחילות ומעניקה תחושת רעננות.",use:"שאיפה, דיפיוזר או קומפרס."}
+            ]},
+            {cat:"אנרגיה ושיפור מצב הרוח",emoji:"✨",oils:[
+              {name:"תפוז",desc:"מסייע לשיפור מצב הרוח, העלאת אנרגיה ועשוי לעודד התקדמות לידה.",use:"שאיפה, דיפיוזר או קומפרס."},
+              {name:"לימון",desc:"מסייע לערנות, רעננות והפחתת מתח.",use:"שאיפה או דיפיוזר."},
+              {name:"ברגמוט",desc:"מסייע להפחתת מתח, הרפיה ושיפור מצב הרוח.",use:"שאיפה או דיפיוזר."},
+              {name:"אשכולית",desc:"מסייעת לרעננות, העלאת אנרגיה והפחתת מתח.",use:"שאיפה או דיפיוזר."},
+              {name:"מנדרינה",desc:"מסייעת להרגעה עדינה ולהפחתת מתח.",use:"שאיפה או דיפיוזר."}
+            ]}
+          ].map((section,si)=>(
+            <div key={si} style={{marginBottom:8}}>
+              <div style={{...card,background:C.cr}}>
+                <div style={{fontWeight:600,color:C.br,fontSize:14,marginBottom:10}}>{section.emoji} {section.cat}</div>
+                {section.oils.map((oil,oi)=>(
+                  <div key={oi} style={{paddingBottom:oi<section.oils.length-1?10:0,marginBottom:oi<section.oils.length-1?10:0,borderBottom:oi<section.oils.length-1?`1px solid ${C.cd}`:'none'}}>
+                    <div style={{fontWeight:600,fontSize:13,color:C.br,marginBottom:3}}>{oil.name}</div>
+                    <div style={{fontSize:13,color:C.tx,lineHeight:1.6,marginBottom:4}}>{oil.desc}</div>
+                    <div style={{fontSize:12,color:C.txl,lineHeight:1.6}}>שימוש: {oil.use}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <div style={{...card,background:'#FFF8E1'}}>
+            <div style={{fontSize:12,color:'#5D4037',lineHeight:1.7,marginBottom:6}}>💡 אלא אם צוין אחרת, יש לדלל שמנים אתריים בשמן בסיס לפני מריחה על העור.</div>
+            <div style={{fontSize:12,color:'#5D4037',lineHeight:1.7}}>⚠️ המידע באפליקציה נועד למטרות מידע בלבד ואינו מהווה ייעוץ רפואי. מומלץ להתייעץ עם איש מקצוע מוסמך לפני השימוש בשמנים אתריים, במיוחד במהלך ההריון והלידה.</div>
+          </div>
+        </div>
+      )}
       </div>
   );
 }
@@ -2988,27 +3166,27 @@ function PostpartumRecovery() {
             <div style={bdy}>במהלך האשפוז הצוות יגיע אלייך מספר פעמים ביום לבדיקות, למעקב ולסיוע. אל תהססי לבקש עזרה – בהנקה, בכאב, בקימה מהמיטה או בכל שאלה אחרת.</div>
           </div>
           <div style={card}>
-            <div style={{fontWeight:600,color:C.br,marginBottom:10,fontSize:14}}>🤱 מעקב לאמא</div>
-            {["💓 מעקב אחר לחץ דם, דופק וטמפרטורה","🩸 מעקב אחר הדימום (לוכיה)","🚽 וידוא מתן שתן ראשון לאחר הלידה","🚶 עידוד לקימה והליכה מוקדמת (בהתאם למצבך)","🩸 בדיקות דם לפי הצורך (לרוב המוגלובין)","🤱 סיוע ראשוני בהנקה","🩹 בדיקת תפרים (לאחר לידה קיסרית)"].map((item,i,arr)=>(
-              <div key={i} style={{display:'flex',gap:10,padding:'8px 0',borderBottom:i<arr.length-1?`1px solid ${C.cd}`:'none',fontSize:13,lineHeight:1.6}}>
-                <span style={{flex:1}}>{item}</span>
+            <div style={{fontWeight:600,color:C.br,marginBottom:10,fontSize:14}}>מעקב לאמא</div>
+            {["מעקב אחר לחץ דם, דופק וטמפרטורה","מעקב אחר הדימום (לוכיה)","וידוא מתן שתן ראשון לאחר הלידה","עידוד לקימה והליכה מוקדמת (בהתאם למצבך)","בדיקות דם לפי הצורך (לרוב המוגלובין)","סיוע ראשוני בהנקה","בדיקת תפרים (לאחר לידה קיסרית)"].map((item,i,arr)=>(
+              <div key={i} style={{display:'flex',gap:8,padding:'8px 0',borderBottom:i<arr.length-1?`1px solid ${C.cd}`:'none',fontSize:13,lineHeight:1.6}}>
+                <span style={{color:C.sg,flexShrink:0}}>✓</span><span>{item}</span>
               </div>
             ))}
           </div>
           <div style={card}>
-            <div style={{fontWeight:600,color:C.br,marginBottom:10,fontSize:14}}>👶 בדיקות וטיפולים לתינוק</div>
-            {["👶 בדיקה ראשונית מיד לאחר הלידה (כולל ציון אפגר)","💉 מתן ויטמין K","💉 חיסון נגד צהבת B","🦠 חיסון RSV (בהתאם לעונת החיסון ולהנחיות משרד הבריאות)","👂 בדיקת שמיעה","🩸 בדיקת סקר יילודים (בדיקת העקב)","🩺 בדיקת רופא ילדים לפני השחרור"].map((item,i,arr)=>(
-              <div key={i} style={{display:'flex',gap:10,padding:'8px 0',borderBottom:i<arr.length-1?`1px solid ${C.cd}`:'none',fontSize:13,lineHeight:1.6}}>
-                <span style={{flex:1}}>{item}</span>
+            <div style={{fontWeight:600,color:C.br,marginBottom:10,fontSize:14}}>בדיקות וטיפולים לתינוק</div>
+            {["בדיקה ראשונית מיד לאחר הלידה (כולל ציון אפגר)","מתן ויטמין K","חיסון נגד צהבת B","חיסון RSV (בהתאם לעונת החיסון ולהנחיות משרד הבריאות)","בדיקת שמיעה","בדיקת סקר יילודים (בדיקת העקב)","בדיקת רופא ילדים לפני השחרור"].map((item,i,arr)=>(
+              <div key={i} style={{display:'flex',gap:8,padding:'8px 0',borderBottom:i<arr.length-1?`1px solid ${C.cd}`:'none',fontSize:13,lineHeight:1.6}}>
+                <span style={{color:C.sg,flexShrink:0}}>✓</span><span>{item}</span>
               </div>
             ))}
           </div>
           <div style={{...card,background:'#E3F2FD'}}>
             <div style={{fontSize:14,color:'#1565C0',lineHeight:1.9}}>
-              <strong>⏰ משך האשפוז:</strong><br/>
-              🤱 לידה רגילה: 48-72 שעות<br/>
-              🏥 לידה קיסרית: 72-96 שעות<br/>
-              🏠 שחרור מוקדם: החל מ-25 שעות לאחר לידה רגילה, בהתאם למצב האם והתינוק.
+              <strong>משך האשפוז:</strong><br/>
+              לידה רגילה: 48-72 שעות<br/>
+              לידה קיסרית: 72-96 שעות<br/>
+              שחרור מוקדם: החל מ-25 שעות לאחר לידה רגילה, בהתאם למצב האם והתינוק.
             </div>
           </div>
           <div style={{...card,background:'#FFF8E1',borderRight:`3px solid #F9A825`}}>
@@ -3068,7 +3246,7 @@ function PostpartumRecovery() {
           </div>
 
           <div style={card}>
-            <div style={{...ttl,fontSize:15}}>🩸 דימום (לוכיה)</div>
+            <div style={{...ttl,fontSize:15}}>דימום (לוכיה)</div>
             <div style={{display:'flex',gap:6,marginBottom:10,flexWrap:'wrap'}}>
               {[['light','קל – כתמים'],['medium','בינוני – כמו וסת'],['heavy','כבד'],['clots','קרישים']].map(([k,l])=>(
                 <button key={k} onClick={()=>setBleedingLevel(k)} style={{padding:'6px 12px',borderRadius:20,border:`1px solid ${bleedingLevel===k?C.t:C.cd}`,background:bleedingLevel===k?'#FFF0EB':'white',cursor:'pointer',fontSize:12,fontFamily:'inherit',color:bleedingLevel===k?C.t:C.tx}}>{l}</button>
@@ -3089,12 +3267,12 @@ function PostpartumRecovery() {
               💡 דימום לאחר הלידה (לוכיה) משתנה בהדרגה בצבע, בכמות ובמרקם. אצל רוב הנשים הוא נמשך עד כ-4-6 שבועות.
             </div>
             <div style={{marginTop:10,background:'#F3E5F5',borderRadius:10,padding:12}}>
-              <div style={{fontSize:12,fontWeight:600,color:'#6A1B9A',marginBottom:8}}>📋 מה תקין – לפי הזמן מהלידה</div>
+              <div style={{fontSize:12,fontWeight:600,color:'#6A1B9A',marginBottom:8}}>מה תקין – לפי הזמן מהלידה</div>
               {[
-                {week:"🩸 ימים 1-3",color:"#C62828",expect:"אדום בהיר או כהה, בכמות הדומה לווסת חזקה. ייתכנו גם קרישי דם קטנים."},
-                {week:"🌸 ימים 4-10",color:"#E65100",expect:"הדימום הופך בהדרגה לורוד או חום ופוחת בכמות. לעיתים עשוי להתגבר מעט לאחר מאמץ או הנקה – וזה תקין."},
-                {week:"🤎 שבועות 2-4",color:"#F9A825",expect:"הדימום בדרך כלל הופך לחום בהיר, ורוד או צהבהב וממשיך לפחות בהדרגה."},
-                {week:"🤍 שבועות 4-6",color:"#827717",expect:"הפרשה צהבהבה או לבנבנה, בכמות קטנה מאוד או הפסקת הדימום."}
+                {week:"ימים 1-3",color:"#C62828",expect:"אדום בהיר או כהה, בכמות הדומה לווסת חזקה. ייתכנו גם קרישי דם קטנים."},
+                {week:"ימים 4-10",color:"#E65100",expect:"הדימום הופך בהדרגה לורוד או חום ופוחת בכמות. לעיתים עשוי להתגבר מעט לאחר מאמץ או הנקה – וזה תקין."},
+                {week:"שבועות 2-4",color:"#F9A825",expect:"הדימום בדרך כלל הופך לחום בהיר, ורוד או צהבהב וממשיך לפחות בהדרגה."},
+                {week:"שבועות 4-6",color:"#827717",expect:"הפרשה צהבהבה או לבנבנה, בכמות קטנה מאוד או הפסקת הדימום."}
               ].map((row,i)=>(
                 <div key={i} style={{display:'flex',gap:10,alignItems:'flex-start',padding:'8px 0',borderBottom:i<3?`1px solid #E1BEE7`:'none'}}>
                   <div style={{width:8,height:8,borderRadius:'50%',background:row.color,marginTop:5,flexShrink:0}}/>
@@ -3107,7 +3285,7 @@ function PostpartumRecovery() {
             </div>
             <div style={{marginTop:10,background:'#FFEBEE',borderRadius:10,padding:12}}>
               <div style={{fontSize:12,fontWeight:600,color:'#C62828',marginBottom:8}}>🚨 מתי כדאי להיבדק?</div>
-              {["🩸 הדימום מתחזק משמעותית לאחר שכבר נחלש.","🩸 יוצאים קרישי דם גדולים (למשל בגודל כדור פינג-פונג או יותר).","🌡️ מופיע חום מעל 38°.","🤢 להפרשות יש ריח חריג או לא נעים.","😵 את מרגישה סחרחורת משמעותית, חולשה קיצונית או עילפון."].map((w,i)=>(
+              {["• הדימום מתחזק משמעותית לאחר שכבר נחלש.","• יוצאים קרישי דם גדולים (למשל בגודל כדור פינג-פונג או יותר).","• מופיע חום מעל 38°.","• להפרשות יש ריח חריג או לא נעים.","• את מרגישה סחרחורת משמעותית, חולשה קיצונית או עילפון."].map((w,i)=>(
                 <div key={i} style={{fontSize:12,color:'#C62828',padding:'4px 0',borderBottom:i<4?`1px solid #FFCDD2`:'none',lineHeight:1.6}}>{w}</div>
               ))}
             </div>
@@ -3117,7 +3295,7 @@ function PostpartumRecovery() {
           </div>
 
           <div style={card}>
-            <div style={{...ttl,fontSize:15}}>🤕 רמת כאב</div>
+            <div style={{...ttl,fontSize:15}}>רמת כאב</div>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
               <span style={{fontSize:12,color:C.txl}}>קל</span>
               <input type="range" min={0} max={10} value={painLevel} onChange={e=>setPainLevel(+e.target.value)} style={{flex:1,accentColor:C.t}}/>
@@ -3141,7 +3319,7 @@ function PostpartumRecovery() {
           </div>
 
           <div style={card}>
-            <div style={{...ttl,fontSize:15}}>💜 מצב רוח יומי</div>
+            <div style={{...ttl,fontSize:15}}>מצב רוח יומי</div>
             <div style={{display:'flex',gap:8,marginBottom:10,flexWrap:'wrap'}}>
               {['😊','😐','😢','😰','😴','🥰'].map(m=>(
                 <button key={m} onClick={()=>setMoodLog(p=>[{id:Date.now(),mood:m,date:new Date().toLocaleDateString('he-IL')},...p].slice(0,30))} style={{padding:'8px 14px',borderRadius:12,border:`1px solid ${C.cd}`,background:'white',cursor:'pointer',fontSize:20}}>{m}</button>
@@ -3483,7 +3661,17 @@ function BabyWorld() {
 
       {subTab==='massage'&&(
         <div>
-          <div style={{...card,background:'#E8F4E8'}}><div style={{fontSize:13,color:'#2E7D32',lineHeight:1.7}}><strong>💚 למה עיסוי?</strong> עיסוי יומי 15 דקות מגביר משקל, מקל על קוליק, משפר שינה ומחזק קשר – במיוחד לאבא!</div></div>
+          <div style={{...card,background:'#E8F4E8'}}>
+            <div style={{fontSize:13,color:'#2E7D32',lineHeight:1.7}}>💡 עיסוי לתינוקות הוא זמן של מגע, תקשורת וחיבור בין ההורה לתינוק. המגע העדין עשוי לסייע בהרגעה ובהקלה על אי-נוחות, אך אינו מחליף ייעוץ או טיפול רפואי בעת הצורך.</div>
+          </div>
+          <div style={card}>
+            <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:8}}>⏰ מתי מומלץ לעשות עיסוי?</div>
+            {["כשהתינוק ער, רגוע וקשוב למגע.","מומלץ להמתין מעט לאחר האכלה.","אפשר לשלב כחלק משגרת הערב או לאחר האמבטיה."].map((t,i)=>(
+              <div key={i} style={{display:'flex',gap:8,padding:'5px 0',fontSize:13,lineHeight:1.6,borderBottom:i<2?`1px solid ${C.cd}`:'none'}}>
+                <span style={{flexShrink:0}}>⏰</span><span>{t}</span>
+              </div>
+            ))}
+          </div>
           <div style={card}>
             <div style={{display:'flex',gap:8,marginBottom:16,flexWrap:'wrap'}}>
               {BABY_MASSAGE_STEPS.map((s,i)=><button key={i} onClick={()=>setMassageStep(i)} style={{padding:'6px 12px',borderRadius:20,border:`1px solid ${massageStep===i?C.t:C.cd}`,background:massageStep===i?C.t:'white',color:massageStep===i?'white':C.tx,cursor:'pointer',fontSize:12,fontFamily:'inherit'}}>{s.emoji} {s.step}</button>)}
@@ -3506,7 +3694,15 @@ function BabyWorld() {
               <button onClick={()=>setMassageStep(p=>Math.min(BABY_MASSAGE_STEPS.length-1,p+1))} disabled={massageStep===BABY_MASSAGE_STEPS.length-1} style={{flex:1,padding:10,border:'none',borderRadius:10,background:massageStep===BABY_MASSAGE_STEPS.length-1?C.cd:C.t,color:'white',cursor:massageStep===BABY_MASSAGE_STEPS.length-1?'default':'pointer',fontFamily:'inherit',fontSize:14}}>הבא →</button>
             </div>
           </div>
-          <div style={{...card,background:'#FFF8E1'}}><div style={{fontSize:13,color:'#5D4037',lineHeight:1.8}}><strong>⏰ מתי?</strong> 45 דקות אחרי אוכל | תינוק ער ורגוע | לפני אמבטיה<br/><strong>🫙 שמן:</strong> קוקוס, שקדים, חמניות</div></div>
+          <div style={card}>
+            <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:8}}>🫙 שמן לעיסוי</div>
+            <div style={{fontSize:13,color:C.tx,lineHeight:1.7,marginBottom:6}}>מומלץ להשתמש בשמן צמחי איכותי בכבישה קרה, כגון שמן שקדים, שמן חמניות או שמן קוקוס.</div>
+            <div style={{fontSize:13,color:C.tx,lineHeight:1.7,marginBottom:6}}>אם קיימת במשפחה אלרגיה לאגוזים או לשקדים, מומלץ לבחור בשמן אחר.</div>
+            <div style={{fontSize:13,color:C.tx,lineHeight:1.7}}>לפני השימוש הראשון מומלץ לנסות את השמן על אזור קטן בעור ולוודא שאין תגובת רגישות.</div>
+          </div>
+          <div style={{...card,background:'#EDE7F6'}}>
+            <div style={{fontSize:13,color:'#4A148C',lineHeight:1.7}}>💜 בצעו את העיסוי רק כל עוד התינוק רגוע, קשוב ונהנה מהמגע. אם הוא מראה סימני אי-נוחות או בכי – הפסיקו ונסו שוב במועד אחר.</div>
+          </div>
         </div>
       )}
 
@@ -3610,10 +3806,10 @@ function BabyWorld() {
             </div>
           </div>
           {[
-            {age:"ימים 1-2 (מקוניום)",color:"#1A1A2E",textColor:'white',desc:"שחור או ירוק כהה, דביק וסמיך כמו זפת. זהו הקקי הראשון של התינוק והוא תקין לחלוטין."},
-            {age:"ימים 3-5 (מעבר)",color:"#6D4C41",textColor:'white',desc:"צבע ירוק, חום או צהבהב, ומרקם פחות דביק. זהו שלב המעבר בין המקוניום לקקי של חלב."},
-            {age:"מיום 5 (הנקה)",color:"#FBC02D",textColor:'#5D4037',desc:"צהוב-חרדלי, רך ולעיתים גרגירי או מעט נוזלי. הצבע עשוי להשתנות מעט בין צהוב לכתום – וזה תקין."},
-            {age:"תינוק הניזון מתמ׳׳ל",color:"#A1887F",textColor:'white',desc:"חום-צהבהב, סמיך יותר מקקי של תינוק יונק ובעל ריח חזק יותר. גם תדירות היציאות יכולה להיות נמוכה יותר."}
+            {age:"ימים 1-2 (מקוניום)",color:"#1C1C1C",textColor:'white',desc:"שחור או ירוק כהה, דביק וסמיך כמו זפת. זהו הקקי הראשון של התינוק והוא תקין לחלוטין."},
+            {age:"ימים 3-5 (מעבר)",color:"#4A6741",textColor:'white',desc:"צבע ירוק, חום או צהבהב, ומרקם פחות דביק. זהו שלב המעבר בין המקוניום לקקי של חלב."},
+            {age:"מיום 5 (הנקה)",color:"#D4A017",textColor:'white',desc:"צהוב-חרדלי, רך ולעיתים גרגירי או מעט נוזלי. הצבע עשוי להשתנות מעט בין צהוב לכתום – וזה תקין."},
+            {age:"תינוק הניזון מתמ׳׳ל",color:"#8B6914",textColor:'white',desc:"חום-צהבהב, סמיך יותר מקקי של תינוק יונק ובעל ריח חזק יותר. גם תדירות היציאות יכולה להיות נמוכה יותר."}
           ].map((p,i)=>(
             <div key={i} style={{display:'flex',gap:12,alignItems:'center',background:'white',borderRadius:12,padding:12,marginBottom:8,border:`1px solid ${C.cd}`}}>
               <div style={{width:44,height:44,borderRadius:12,background:p.color,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',color:p.textColor,fontSize:18}}>💩</div>
@@ -4005,34 +4201,106 @@ function AIChat() {
     const txt=input.trim();setInput('');setMsgs(p=>[...p,{r:'user',t:txt}]);setLoading(true);
     try{
       const history=msgs.map(m=>({role:m.r==='user'?'user':'assistant',content:m.t}));
-      const SYSTEM=`את עוזרת ה-AI של Bloom – אפליקציית ליווי הריון, לידה והנקה שנבנתה על ידי דפנה דולה.
+      const SYSTEM=`את Bloom AI – העוזרת הדיגיטלית של דפנה דולה, שנבנתה במיוחד עבור אפליקציית Bloom לליווי הריון, לידה והנקה.
 
-המשימה שלך: לענות בעברית, בצורה רגועה, ברורה וקצרה, כחלק מ-Bloom.
+━━━━━━━━━━━━━━━━━━━━━━━━
+📌 כללי תגובה
+━━━━━━━━━━━━━━━━━━━━━━━━
+• ענה בעברית, קצר וברור – פסקאות קצרות, ללא מינוח רפואי מסובך.
+• בסיס תשובותייך אך ורק על המידע שב-Bloom. אל תמציאי.
+• סיימי תמיד עם כיוון לעמוד הרלוונטי ב-Bloom.
 
-עקרון ראשון – השתמשי תחילה במידע שב-Bloom:
-• לידה פעילה, אפידורל, קיסרי, לידה במים → השתמשי במידע שב-Bloom על סוגי לידות
-• Spinning Babies → 3 שלבים בלבד: Bum Jiggle/Rebozo ← FLI ← SLR. פרוטוקול עכוז: 3 ימים אינטנסיביים ואז מינון שבועי
-• רפלקסולוגיה → אזורים ספציפיים לפי Bloom (כאבי גב=קשת פנימית, כאב ראש=קצות בהונות, צירים=SP6 מעל קרסול פנימי)
-• זכויות → חופשת לידה 26 שבועות, הגנה מפיטורין, שעת הנקה בעבודה
-• הנקה → חיבור נכון, תנוחות, גודש, פטמות כואבות
-• בדיקות בהריון → לפי לוח הזמנים: NT שב׳ 11-13, NIPT לבחירה, GBS שב׳ 35-37 וכו׳
-• בתי יולדות → זמן אשפוז: 48 שעות ללידה רגילה, 72 שעות לקיסרי
-• כלל הלידה: 4-1-2 ללידה ראשונה (4 דקות בין צירים, דקה משך, שעתיים). בלידה חוזרת: 4-1-1
-• ספינינג ובעמידה: FLI פעם ביום 30 שניות; SLR פעם-פעמיים בשבוע; Bum Jiggle פעם-פעמיים בשבוע
+━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 מצבי חירום
+━━━━━━━━━━━━━━━━━━━━━━━━
+אם השאלה כוללת: דימום, ירידת מים ירוקים, ירידה בתנועות עובר, כאב ראש + טשטוש ראייה, חום מעל 38°, כאב חזה, קוצר נשימה, נפיחות פנים/ידיים – ענה ואז הוסף:
+"⚠️ אם את חווה את זה כרגע – פני לבית היולדות לבדיקה."
 
-עקרון שני – סגנון תשובה:
-• תשובות קצרות, ברורות, בפסקאות קצרות
-• אל תשתמשי בשפה רפואית מסובכת אם אין צורך
-• אם יש כמה אפשרויות, הצגי אותן בקצרה
-• אם אינך בטוחה – אמרי זאת ישירות והמליצי לפנות לאיש מקצוע
-• אל תמציאי מידע
+━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ מפת הניווט של Bloom
+━━━━━━━━━━━━━━━━━━━━━━━━
+• שלב ההריון לפי שבוע → "הריון" ← "שבועות הריון"
+• 40+ → "הריון" ← "40+"
+• שלבי הלידה → "לידה" ← "שלבים"
+• סוגי לידות → "לידה" ← "סוגי לידה"
+• השראת לידה / זירוז → "לידה" ← "התערבויות" ← "שיטות"
+• טיפולים טבעיים → "לידה" ← "התערבויות" ← "טבעי"
+• טייצר צירים (4-1-2 / 4-1-1) → "לידה" ← "עזרים"
+• נשימה 4-2-6 → "לידה" ← "עזרים"
+• נקודות לחיצה (LI4, SP6, PC6, GB21) → "לידה" ← "נקודות לחיצה"
+• תחנות עובר → "לידה" ← "תחנות עובר"
+• ירידת מים → "לידה" ← "ירידת מים"
+• סימני אזהרה → "לידה" ← "סימני אזהרה"
+• Spinning Babies → "לידה" ← "ספינינג"
+• חיבור נכון להנקה → "הנקה" ← "חיבור"
+• תנוחות הנקה → "הנקה" ← "תנוחות"
+• אתגרי הנקה (גודש, דלקת, מיעוט חלב...) → "הנקה" ← "אתגרים"
+• שאיבה → "הנקה" ← "שאיבה"
+• תרופות ומזון בהנקה → "הנקה" ← "מזון/תרופות"
+• מעקב לאחר לידה / לוכיה → "התאוששות" ← "מעקב"
+• בריאות הנפש לאחר לידה → "התאוששות" ← "בריאות הנפש"
+• עיסוי לתינוק → "הכל לתינוק" ← "עיסוי"
+• רפלקסולוגיה לתינוק → "הכל לתינוק" ← "רפלקסולוגיה"
+• שינה, קקי, חיסונים → "הכל לתינוק" ← הלשונית המתאימה
 
-עקרון שלישי – מצבי חירום:
-אם השאלה כוללת: דימום, ירידת מים, ירידה בתנועות עובר, כאב ראש חזק עם טשטוש ראייה, חום מעל 38, כאבים בחזה, קוצר נשימה, כאב חריג –
-ענה על השאלה ואז הוסף בסיום: "⚠️ אם את חווה מצב כזה כרגע, מומלץ לפנות בהקדם לצוות המטפל."
+━━━━━━━━━━━━━━━━━━━━━━━━
+📋 מידע מדויק מ-Bloom
+━━━━━━━━━━━━━━━━━━━━━━━━
 
-עקרון רביעי – לינק ל-Bloom:
-כאשר התשובה קיימת ומורחבת ב-Bloom, הוסף בסיום: "💛 תוכלי למצוא מידע מורחב גם בתוך Bloom."`;
+שלבי הלידה:
+• לטנטי (0-6 ס"מ): צירים לא סדירים, זמן לנוח ולהמשיך בשגרה
+• פעיל (6-8 ס"מ): צירים כל 3-5 דק', 45-60 שניות, התרכזות ומגע
+• מעבר (8-10 ס"מ): הכי אינטנסיבי, קצר, ציר אחד בכל פעם
+• לחיצות: לחץ חזק בפי הטבעת, לפי הנחיות המיילדת
+• שליה: תוך כ-30 דק', מגע עור-עור מיידי עוזר
+
+כלל הלידה:
+• ראשונה: 4-1-2 (כל 4 דק', דקה, שעתיים)
+• חוזרת: 4-1-1 (כל 4 דק', דקה, שעה)
+
+השראת לידה:
+• בלון (קטטר פולי): מכאני, ללא הורמונים, 12-24 שעות
+• פיטוצין: IV, מחזק צירים, מצריך מוניטור
+• פרוסטגלנדין/פרופס: מבשיל צוואר הרחם
+• מיזופרוסטול (ציטוטק): יעיל, מצריך ניטור קפדני
+• AROM (פקיעת מי שפיר): מאיץ לידה קיימת
+• סטריפינג: ע"י רופא/ה, מ-37 שבועות, עשוי לעודד צירים טבעיים
+
+נקודות לחיצה (מ-37 שבועות בלבד, חוץ מ-PC6):
+• LI4 (הגו) – בין אגודל לאצבע מורה → הקלת כאב והתקדמות
+• SP6 – 3 אצבעות מעל קרסול פנימי → עידוד צירים
+• PC6 – 2-3 אצבעות מעל שורש כף יד → בחילות + חרדה (בטוח כל ההריון)
+• GB21 – אמצע הכתף/טרפז → שחרור מתח וירידת ראש
+
+40+:
+• מעקב מוגבר מ-41: מוניטור + אולטרסאונד
+• שיחה על השראת לידה בין 41+3 ל-42
+• ברוב המקרים תומלץ השראת לידה לאחר שבוע 42
+• טיפולים טבעיים: הליכה, גירוי פטמות (ללא מניעה רפואית), יחסים, תמרים, רפלקסולוגיה, דיקור, מנוחה
+
+הנקה:
+• חיבור: פה פתוח, שפה תחתונה החוצה, סנטר בשד, יותר עטרה בחלק תחתון
+• גודש: להניק לפי דרישה, קירור בין הנקות, ללא עיסוי אגרסיבי
+• צינורית סתומה: להמשיך להניק, קירור, ללא עיסוי עמוק
+• דלקת שד (מסטיטיס): להמשיך להניק, לעיתים אנטיביוטיקה
+• מיעוט חלב: לבדוק חיתולים רטובים ועלייה במשקל – לא לפי תחושת השד
+• Cluster Feeding: תקין, מגביר ייצור, חולף תוך יומיים-שלושה
+• קונוס לשאיבה: בגודל מתאים, 10-15 דק' לצד, לא כואב
+
+לוכיה (דימום אחרי לידה):
+• 1-3 ימים: אדום כהה | 4-10 ימים: ורוד/חום | 2-4 שבועות: חום בהיר | 4-6 שבועות: נפסק
+• לפנות: אם מתחזק אחרי שנחלש, קרישים גדולים, חום, ריח חריג, סחרחורת
+
+חיסונים לתינוק (ישראל):
+• לידה: ויטמין K + הפטיטיס B | שבועיים: טיפת חלב
+• 2 חודשים: מחומש + פנאומוקוקי + רוטה | 4 חודשים: מנה 2 | 6 חודשים: מנה 3 + שפעת
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+💛 תבנית תגובה
+━━━━━━━━━━━━━━━━━━━━━━━━
+1. תשובה ישירה (2-4 שורות)
+2. נקודות קצרות אם יש פרטים
+3. סיום: "💛 ב-Bloom תמצאי פרטים נוספים תחת: [לשונית ← מסך]"`;
 
       const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,system:SYSTEM,messages:[...history,{role:'user',content:txt}]})});
       const data=await res.json();
@@ -4062,6 +4330,23 @@ function AIChat() {
     </div>
   );
 }
+
+const BABY_NAMES = {
+  girls: {
+    classic: ["שרה","רחל","לאה","מרים","דבורה","חנה","תמר","רות","נעמי","אסתר","יעל","אביגיל","בת שבע","רבקה","דינה","מיכל","עדה","ענת","אלה","אסנת","גלית","דפנה","הדס","ורד","זהר","חגית","טל","יפה","כרמית","לילך","מורן","נועה","סיגל","עינת","פנינה","ציפי","קרן","רינת","שרית","תהל"],
+    modern: ["ליה","מיה","עדן","נוה","שקד","ארי","אלמה","אמה","אביה","אורי","גפן","דרור","הילה","ויקי","זיו","חן","טיה","ילי","כלנית","לי","מלאכי","ניצן","סלה","עמיה","פלג","צוף","קמה","רועי","שגיא","תאיר","אגם","ברקת","גלעד","דגן","הראל","ורד","זמר","חיל","טליה","יערה"],
+    nature: ["ורד","שקד","ארז","גפן","דגן","הדס","ורדית","זית","חצב","טל","יסמין","כלנית","לוטם","מור","נורית","סיגלית","עדי","פרח","צור","קמה","רותם","שיר","תמר","אביב","בשן","גבעול","דפנה","הדרה","ולינה","זהרה","חמציץ","טבע","ירדן","כוכב","לבנה","מרגנית","נופר","ספיר","עלמא"],
+    international: ["סופיה","אוליביה","אמה","אבה","מיה","לוסי","ניקול","ג׳וליה","לאה","ויקטוריה","אנה","אלכסנדרה","אריאל","ברנדה","גבריאלה","דניאלה","הנה","ולנטינה","זואי","חלי","טיילור","יסמין","כלה","לונה","מלודי","נדיה","סרנה","עבי","פיה","צ׳לסי","קייטלין","רוז","שרלוט","תאודורה","אולגה","ביאה","גלוריה","דבורה","הגר","ויויאן"]
+  },
+  boys: {
+    classic: ["אברהם","יצחק","יעקב","משה","דוד","שלמה","יוסף","אהרון","יהושע","שמואל","אליהו","ישעיה","ירמיה","יחזקאל","דניאל","עזרא","נחמיה","מרדכי","בנימין","ראובן","שמעון","לוי","יהודה","זבולון","יששכר","גד","אשר","נפתלי","מנשה","אפרים","פינחס","גדעון","שאול","עמנואל","אמנון","אבנר","אביגיל","איתמר","אלישע","אלדד"],
+    modern: ["עידן","עומר","ליאור","איתי","אבי","גיא","דן","הראל","ויקטור","זיו","חן","טל","יואב","כפיר","לי","מתן","ניר","סער","עמית","פלג","צור","קרן","רן","שגיא","תום","אדיר","בן","גפן","דרור","האנג","ורד","זמר","חיל","טוב","ים","כרמל","לאון","מאור","נוי","סיון"],
+    nature: ["ארז","גפן","דגן","הר","ים","ירדן","כרמל","לוטם","מור","נהר","סלע","עוז","פלג","צור","קמה","רותם","שחף","תל","אביב","בשן","גל","דבש","הדר","ורד","זית","חצב","טל","יובל","כוכב","לבנה","מורן","נוף","סתיו","עמק","פסגה","צוף","קדם","רון","שמיר"],
+    international: ["נואה","לוקאס","ליאם","אטיאן","סבסטיאן","מקסימיליאן","אלכסנדר","גבריאל","ולנטינו","ניקולס","ג׳ייסון","לוי","מאתאוס","נתנאל","אורי","פיליפ","קנת","ריצ׳רד","שנה","תאודור","אוסקר","בנג׳מין","גונזלו","דומיניק","היגו","ויקטור","זאב","חיים","טוביה","יאן","כריסטיאן","לורנסו","מרקוס","נסטור","סרחיו","עזאר","פליכס","קספר","ראול","שלום"]
+  }
+};
+const BIBLICAL_NAMES = ["שרה","רחל","לאה","מרים","דבורה","חנה","תמר","רות","נעמי","אסתר","יעל","אביגיל","בת שבע","רבקה","דינה","מיכל","אברהם","יצחק","יעקב","משה","דוד","שלמה","יוסף","אהרון","יהושע","שמואל","אליהו","דניאל","עזרא","בנימין","ראובן","שמעון","לוי","יהודה","גד","אשר","נפתלי","מנשה","אפרים","פינחס","גדעון","שאול"];
+const POPULAR_NAMES_2025 = ["ליה","מיה","עדן","נוה","שקד","עידן","עומר","ליאור","איתי","אבי","גיא","הראל","מתן","ניר","סער","עמית","תום","אורי","אביה","אלמה","אמה","ארי","גפן","הילה","טיה","ילי","לי","נוה","צוף","רועי","שגיא","תאיר","אגם","ברקת","גלעד","יערה","מאור","נוי","סיון","ים"];
 
 function BabyNames() {
   const [gender, setGender] = useState('girls');
@@ -4279,7 +4564,7 @@ const NAV_CATS = [
       {id:'tools',lb:'🛠️ עזרים'},
       {id:'names',lb:'✨ שמות'},
       {id:'wallet',lb:'📋 תיק רפואי'},
-      {id:'postterm',lb:'🍂 הריון עודף'},
+      {id:'postterm',lb:'🍂 40+'},
       {id:'j',lb:'📝 יומן'},
       {id:'ai',lb:'🌸 Bloom AI'},
     ]

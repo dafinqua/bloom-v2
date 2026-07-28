@@ -1,11 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
 
+// ── Profile Storage ──
+const PROFILE_KEY = 'bloom_profile_v1';
+function loadProfile() {
+  try { var s = localStorage.getItem(PROFILE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+function saveProfile(data) {
+  try { localStorage.setItem(PROFILE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+function calcWeek(profile) {
+  if (!profile) return null;
+  var today = new Date();
+  var lmp;
+  if (profile.type === 'lmp') {
+    lmp = new Date(profile.date);
+  } else {
+    // due date → lmp = due - 280 days
+    lmp = new Date(new Date(profile.date) - 280*24*60*60*1000);
+  }
+  var diff = Math.floor((today - lmp) / (24*60*60*1000));
+  var week = Math.floor(diff / 7) + 1;
+  var day = diff % 7;
+  var daysLeft = 280 - diff;
+  return { week: week, day: day, daysLeft: daysLeft, lmp: lmp };
+}
+
 const C = {
   t:"#C4785A",tl:"#E8A98A",cr:"#FAF6F0",cd:"#F0E8DC",
   sg:"#8A9E8C",sgl:"#C2D0C4",br:"#5C3D2E",tx:"#3A2E28",txl:"#6B5C54"
 };
 const card = {background:"white",borderRadius:16,padding:20,marginBottom:16,boxShadow:"0 2px 12px rgba(92,61,46,0.08)"};
-const ttl = {fontFamily:"Georgia,serif",fontSize:20,color:C.br,marginBottom:12};
+const ttl = {fontFamily:'"DM Sans","Assistant",sans-serif',fontSize:18,fontWeight:600,color:C.br,marginBottom:12,letterSpacing:'-0.3px'};
 const bdy = {fontSize:14,lineHeight:1.7,color:C.txl};
 
 const WD = {
@@ -947,36 +972,67 @@ function FooterModal({id,onClose}) {
   );
 }
 
-function Home({go}) {
+function Home({go, profile, onEditProfile}) {
   const tip=TIPS[new Date().getDay()%TIPS.length];
   const [modal,setModal]=useState(null);
+  const cats=[
+    {id:'pregnancy',ti:'ti-baby-bottle',label:'הריון',color:'#8B5E3C',count:null},
+    {id:'birth',ti:'ti-wave-sine',label:'לידה',color:'#8B5E3C',count:null},
+    {id:'postbirth',ti:'ti-heart',label:'אחרי לידה',color:'#8B5E3C',count:null},
+  ];
   return (
     <div>
-      <div style={{background:`linear-gradient(135deg,${C.br},${C.t})`,borderRadius:16,padding:24,color:'white',marginBottom:16,textAlign:'center'}}>
-        <div style={{fontSize:40,marginBottom:8}}>🌸</div>
-        <div style={{fontFamily:'Georgia,serif',fontSize:28,fontWeight:'normal',marginBottom:6}}>ברוכה הבאה</div>
-        <div style={{fontSize:14,opacity:0.85}}>המלווה הדיגיטלית שלך לכל המסע</div>
-      </div>
+      {(function(){
+        var info = profile ? calcWeek(profile) : null;
+        if (info && info.week >= 1 && info.week <= 42) {
+          return (
+            <div onClick={function(){go('w');}} style={{background:'#3D2B1F',borderRadius:16,padding:'20px',marginBottom:16,cursor:'pointer'}}>
+              <div style={{fontSize:10,color:'#9B7860',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:6}}>שבוע ההריון שלך</div>
+              <div style={{fontSize:28,color:'#F5E6D3',fontWeight:600,marginBottom:4}}>שבוע {info.week} {info.day > 0 && '+ '+info.day+' ימים'}</div>
+              {info.daysLeft > 0 && <div style={{fontSize:12,color:'#C4A882',marginTop:4}}>נותרו כ-{info.daysLeft} ימים עד התל"מ</div>}
+              <div style={{fontSize:10,color:'#7A5C40',marginTop:8,textDecoration:'underline'}}>לחצי לפרטי השבוע ←</div>
+            </div>
+          );
+        }
+        return (
+          <div style={{background:'#3D2B1F',borderRadius:16,padding:'22px 20px',marginBottom:16,textAlign:'center'}}>
+            <div style={{fontSize:24,fontWeight:300,color:'#F5E6D3',letterSpacing:'3px',marginBottom:6,direction:'ltr'}}>Bloom</div>
+            <div style={{fontSize:14,color:'#E8D5C0',fontWeight:400,marginBottom:4}}>ברוכה הבאה</div>
+            <div style={{fontSize:12,color:'#9B7860'}}>המלווה הדיגיטלית שלך לכל המסע</div>
+            <div onClick={onEditProfile} style={{marginTop:10,fontSize:11,color:'#C4785A',cursor:'pointer',textDecoration:'underline'}}>הוסיפי תאריך הריון ←</div>
+          </div>
+        );
+      })()}
 
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10,marginBottom:16}}>
-        {NAV_CATS.map(cat=>(
-          <div key={cat.id} onClick={()=>go('cat_'+cat.id)} style={{background:'white',borderRadius:14,padding:'16px 8px',textAlign:'center',cursor:'pointer',boxShadow:'0 2px 8px rgba(92,61,46,0.08)',border:`2px solid ${cat.color}22`}}>
-            <div style={{fontSize:28,marginBottom:4}}>{cat.label.split(' ')[0]}</div>
-            <div style={{fontSize:11,fontWeight:600,color:cat.color,lineHeight:1.3}}>{cat.label.slice(cat.label.indexOf(' ')+1)}</div>
-            <div style={{fontSize:10,color:C.txl,marginTop:3}}>{cat.tabs.length} נושאים</div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:16}}>
+        {[
+          {id:'pregnancy',svg:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="3"/><path d="M12 10c-3.5 0-6 2-6 5.5"/><path d="M12 10c3.5 0 6 2 6 5.5"/><ellipse cx="12" cy="18" rx="3" ry="2.5"/></svg>,label:'הריון'},
+          {id:'birth',svg:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12c1.5-3 3-4.5 4.5-4.5S9 9 10.5 9 13.5 6 15 6s3 3 4.5 3S22 7.5 22 7.5"/><path d="M2 17c1.5-3 3-4.5 4.5-4.5S9 14 10.5 14 13.5 11 15 11s3 3 4.5 3S22 12.5 22 12.5"/></svg>,label:'לידה'},
+          {id:'postbirth',svg:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>,label:'אחרי לידה'},
+        ].map(cat=>(
+          <div key={cat.id} onClick={()=>go('cat_'+cat.id)} style={{background:'#3D2B1F',borderRadius:12,padding:'12px 6px',textAlign:'center',cursor:'pointer'}}>
+            <div style={{width:34,height:34,borderRadius:'50%',background:'rgba(255,255,255,0.12)',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto'}}>
+              {cat.svg}
+            </div>
+            <div style={{fontSize:10,fontWeight:600,color:'#F0D9C0',marginTop:5,lineHeight:1.3}}>{cat.label}</div>
           </div>
         ))}
       </div>
 
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:16}}>
         {[
-          {ic:'📅',lb:'תוכן שבועי',tb:'w'},{ic:'⏱️',lb:'טיימר צירים',tb:'c'},
-          {ic:'🤱',lb:'הנקה',tb:'bf'},{ic:'📋',lb:'תוכנית לידה',tb:'bp'},
-          {ic:'✅',lb:"צ'קליסטים",tb:'cl'},{ic:'🍼',lb:'הכל לתינוק',tb:'baby'}
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,lb:'תוכן שבועי',tb:'w'},
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>,lb:'טיימר צירים',tb:'c'},
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>,lb:'הנקה',tb:'bf'},
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>,lb:'תוכנית לידה',tb:'bp'},
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,lb:"צ'קליסטים",tb:'cl'},
+          {svg:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="6" r="3"/><path d="M8 14a4 4 0 0 1 8 0"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/></svg>,lb:'הכל לתינוק',tb:'baby'},
         ].map(l=>(
-          <div key={l.tb} onClick={()=>go(l.tb)} style={{background:'white',borderRadius:14,padding:'12px 10px',display:'flex',alignItems:'center',gap:10,cursor:'pointer',boxShadow:'0 2px 8px rgba(92,61,46,0.06)'}}>
-            <span style={{fontSize:22}}>{l.ic}</span>
-            <span style={{fontSize:13,fontWeight:500,color:C.br}}>{l.lb}</span>
+          <div key={l.tb} onClick={()=>go(l.tb)} style={{background:'white',borderRadius:12,padding:'10px 6px',textAlign:'center',cursor:'pointer',border:'0.5px solid #EDE4D8'}}>
+            <div style={{width:34,height:34,borderRadius:'50%',background:'#F5EDE4',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto'}}>
+              {l.svg}
+            </div>
+            <div style={{fontSize:9,fontWeight:500,color:'#6B5744',marginTop:5,lineHeight:1.3}}>{l.lb}</div>
           </div>
         ))}
       </div>
@@ -1771,24 +1827,39 @@ function BirthStages({initTab='stages'}={}) {
   const [waterOpen,setWaterOpen]=useState(false);
   const [openWarning,setOpenWarning]=useState(null);
   const mainTabs=[
-    {id:'stages',lb:'🌊 שלבים'},
-    {id:'stations',lb:'📍 תחנות עובר'},
+    {id:'stages',lb:'שלבים'},
+    {id:'stations',lb:'תחנות עובר'},
   ];
   return (
     <div>
-      <div style={{display:'flex',gap:6,marginBottom:16,flexWrap:'wrap'}}>
-        {mainTabs.map(t=>(
-          <button key={t.id} onClick={()=>setMainTab(t.id)} style={{flex:1,padding:'9px 6px',border:`1px solid ${mainTab===t.id?C.t:C.cd}`,borderRadius:10,background:mainTab===t.id?C.t:'white',color:mainTab===t.id?'white':C.tx,cursor:'pointer',fontFamily:'inherit',fontSize:12,fontWeight:mainTab===t.id?500:400}}>
-            {t.lb}
-          </button>
-        ))}
+      <div style={{background:'#3D2B1F',margin:'-20px -20px 16px',padding:'0 20px'}}>
+        <div style={{display:'flex'}}>
+          {mainTabs.map(t=>(
+            <button key={t.id} onClick={()=>setMainTab(t.id)} style={{flex:1,padding:'9px 4px',border:'none',background:'none',color:mainTab===t.id?'#F5E6D3':'#BFA080',cursor:'pointer',fontFamily:'inherit',fontSize:11,fontWeight:mainTab===t.id?500:400,position:'relative'}}>
+              {t.lb}
+              {mainTab===t.id&&<span style={{position:'absolute',bottom:0,left:'20%',right:'20%',height:2,background:'#C4785A',borderRadius:'2px 2px 0 0',display:'block'}}/>}
+            </button>
+          ))}
+        </div>
       </div>
       {mainTab==='stages'&&<div>
       <div style={{...card,marginBottom:12}}><div style={ttl}>🌊 הלידה</div><div style={bdy}>כל לידה שונה, אך בדרך כלל עוברת דרך השלבים האלה. ידע = כוח.</div></div>
       {BIRTH_STAGES.map(stage=>(
-        <div key={stage.id} style={{border:`1px solid ${C.cd}`,borderRadius:12,overflow:'hidden',marginBottom:10}}>
-          <div onClick={()=>setOpen(open===stage.id?null:stage.id)} style={{padding:'14px 16px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer',background:open===stage.id?C.cr:'white'}}>
-            <div><div style={{fontSize:15,fontWeight:500,color:C.br}}>{stage.emoji} {stage.title}</div><div style={{fontSize:12,color:C.txl,marginTop:2}}>{stage.duration} | {stage.cervix}</div></div>
+        <div key={stage.id} style={{border:`1px solid ${open===stage.id?'#C4785A':C.cd}`,borderRadius:12,overflow:'hidden',marginBottom:8,boxShadow:open===stage.id?'0 2px 8px rgba(196,120,90,0.15)':'none'}}>
+          <div onClick={()=>setOpen(open===stage.id?null:stage.id)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer',background:'white'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10}}>
+              <div style={{width:32,height:32,borderRadius:'50%',background:open===stage.id?'#FBE8DC':'#F5EDE4',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,color:open===stage.id?'#C4785A':'#8B5E3C'}}>
+                {stage.id==='latent'&&<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+                {stage.id==='active'&&<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>}
+                {stage.id==='transition'&&<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12c1.5-3 3-4.5 4.5-4.5S9 9 10.5 9 13.5 6 15 6s3 3 4.5 3S22 7.5 22 7.5"/></svg>}
+                {stage.id==='pushing'&&<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="6" r="3"/><path d="M8 14a4 4 0 0 1 8 0"/><line x1="12" y1="17" x2="12" y2="21"/></svg>}
+                {stage.id==='placenta'&&<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>}
+              </div>
+              <div>
+                <div style={{fontSize:13,fontWeight:500,color:C.br}}>{stage.title}</div>
+                <div style={{fontSize:11,color:C.txl,marginTop:1}}>{stage.duration} | {stage.cervix}</div>
+              </div>
+            </div>
             <span style={{color:C.txl,fontSize:18}}>{open===stage.id?'▲':'▼'}</span>
           </div>
           {open===stage.id&&<div style={{padding:'14px 16px',background:C.cr,fontSize:13,lineHeight:1.7}}>
@@ -4553,20 +4624,34 @@ const TABS = NAV_CATS.flatMap(c => c.tabs);
 function CategoryScreen({cat, setTab}) {
   const catData = NAV_CATS.find(c=>c.id===cat);
   if(!catData) return null;
+  const catIcon={
+    pregnancy:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16s-4-2.5-4-5.5a2.5 2.5 0 0 1 4-2 2.5 2.5 0 0 1 4 2c0 3-4 5.5-4 5.5z"/></svg>,
+    birth:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12c1.5-3 3-4.5 4.5-4.5S9 9 10.5 9 13.5 6 15 6s3 3 4.5 3S22 7.5 22 7.5"/><path d="M2 17c1.5-3 3-4.5 4.5-4.5S9 14 10.5 14 13.5 11 15 11s3 3 4.5 3S22 12.5 22 12.5"/></svg>,
+    postbirth:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0D9C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>,
+  };
+  const catLabel={pregnancy:'הריון',birth:'לידה',postbirth:'אחרי לידה'};
   return (
     <div>
-      <div style={{background:`linear-gradient(135deg,${catData.color},${catData.color}99)`,borderRadius:16,padding:20,marginBottom:16,textAlign:'center',color:'white'}}>
-        <div style={{fontSize:40,marginBottom:6}}>{catData.label.split(' ')[0]}</div>
-        <div style={{fontFamily:'Georgia,serif',fontSize:22,fontWeight:700,marginBottom:4}}>{catData.label.slice(catData.label.indexOf(' ')+1)}</div>
-        <div style={{fontSize:12,opacity:0.85}}>בחרי נושא להמשך</div>
+      <div style={{background:'#3D2B1F',margin:'-20px -20px 16px',padding:'16px 20px 0'}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
+          <div style={{width:40,height:40,borderRadius:'50%',background:'rgba(255,255,255,0.1)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+            {catIcon[cat]}
+          </div>
+          <div>
+            <div style={{fontSize:16,color:'#F5E6D3',fontWeight:500}}>{catLabel[cat]||catData.label}</div>
+            <div style={{fontSize:9,color:'#9B7860',marginTop:2}}>בחרי נושא להמשך</div>
+          </div>
+        </div>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
         {catData.tabs.map(t=>(
-          <div key={t.id} onClick={t.comingSoon?undefined:()=>setTab(t.id)} style={{background:t.comingSoon?'linear-gradient(135deg,#FDF6F0,#F5EDE4)':'white',borderRadius:14,padding:'16px 12px',textAlign:'center',cursor:t.comingSoon?'default':'pointer',boxShadow:'0 2px 10px rgba(92,61,46,0.08)',border:t.comingSoon?'1px dashed #D4B8A8':'1px solid #F0E8DC',transition:'all 0.15s',position:'relative',overflow:'hidden',opacity:t.comingSoon?0.6:1,filter:t.comingSoon?'blur(0px)':'none'}}>
-            {t.isBloomPlus&&<div style={{position:'absolute',top:7,right:-12,background:'linear-gradient(135deg,#C4785A,#A0522D)',color:'white',fontSize:9,fontWeight:700,padding:'3px 16px',transform:'rotate(35deg)',letterSpacing:'0.3px',boxShadow:'0 1px 3px rgba(0,0,0,0.2)'}}>👑</div>}
-            {t.comingSoon&&<div style={{position:'absolute',top:6,left:6,background:'rgba(196,120,90,0.12)',borderRadius:20,padding:'2px 8px',fontSize:9,color:'#8B5E3C',fontWeight:600,letterSpacing:'0.3px',border:'1px solid rgba(196,120,90,0.2)'}}>✨ בקרוב</div>}
-            <div style={{fontSize:26,marginBottom:6}}>{t.lb.split(' ')[0]}</div>
-            <div style={{fontSize:13,color:t.comingSoon?'#B08070':'#3A2E28',fontWeight:500,lineHeight:1.3}}>{t.lb.slice(t.lb.indexOf(' ')+1).replace(' 👑','')}</div>
+          <div key={t.id} onClick={t.comingSoon?undefined:()=>setTab(t.id)} style={{background:t.comingSoon?'#FBF7F2':'white',borderRadius:12,padding:'12px 8px',textAlign:'center',cursor:t.comingSoon?'default':'pointer',border:t.comingSoon?'1px dashed #D4B8A8':'0.5px solid #EDE4D8',position:'relative',overflow:'hidden',opacity:t.comingSoon?0.55:1}}>
+            {t.isBloomPlus&&<div style={{position:'absolute',top:6,right:-10,background:'linear-gradient(135deg,#C4785A,#A0522D)',color:'white',fontSize:8,fontWeight:700,padding:'2px 14px',transform:'rotate(35deg)',letterSpacing:'0.3px'}}>👑</div>}
+            {t.comingSoon&&<div style={{position:'absolute',top:5,left:5,background:'rgba(196,120,90,0.1)',borderRadius:20,padding:'2px 7px',fontSize:8,color:'#8B5E3C',fontWeight:600,border:'1px solid rgba(196,120,90,0.2)'}}>✨ בקרוב</div>}
+            <div style={{width:32,height:32,borderRadius:'50%',background:'#F5EDE4',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 6px'}}>
+              <span style={{fontSize:16,lineHeight:1}}>{t.lb.split(' ')[0]}</span>
+            </div>
+            <div style={{fontSize:10,color:t.comingSoon?'#B08070':'#3A2E28',fontWeight:500,lineHeight:1.3}}>{t.lb.slice(t.lb.indexOf(' ')+1).replace(' 👑','')}</div>
           </div>
         ))}
       </div>
@@ -4580,71 +4665,6 @@ function CategoryScreen({cat, setTab}) {
             </div>
           </div>
           <div style={{color:'rgba(255,255,255,0.75)',fontSize:22,fontWeight:300}}>←</div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function HamburgerNav({tab, setTab}) {
-  const [open, setOpen] = React.useState(false);
-  const [activeCat, setActiveCat] = React.useState('pregnancy');
-
-  function handleTab(id) {
-    setTab(id);
-    setOpen(false);
-  }
-
-  const currentCat = NAV_CATS.find(c => c.tabs.some(t => t.id === tab));
-  const currentTab = TABS.find(t => t.id === tab);
-
-  return (
-    <div style={{position:'sticky',top:64,zIndex:90,background:'white',borderBottom:`1px solid #F0E8DC`}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px'}}>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <button onClick={()=>setOpen(!open)} style={{background:'none',border:'none',cursor:'pointer',padding:4,display:'flex',flexDirection:'column',gap:4}}>
-            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(45deg) translate(4px,4px)':'none'}}/>
-            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,opacity:open?0:1,transition:'all 0.2s'}}/>
-            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(-45deg) translate(4px,-4px)':'none'}}/>
-          </button>
-          <button onClick={()=>{setTab('home');setOpen(false);}} style={{display:'flex',alignItems:'center',gap:4,background:tab==='home'?'#FFF0EB':'none',border:'none',cursor:'pointer',borderRadius:8,padding:'4px 8px',fontFamily:'inherit'}}>
-            <span style={{fontSize:16}}>🏠</span>
-            <span style={{fontSize:13,color:tab==='home'?'#C4785A':'#6B5C54',fontWeight:tab==='home'?600:400}}>בית</span>
-          </button>
-          {tab!=='home'&&<div style={{fontSize:13,color:'#6B5C54'}}>
-            {tab.startsWith('cat_')
-              ? <span style={{color:NAV_CATS.find(c=>c.id===tab.slice(4))?.color,fontWeight:600}}>{NAV_CATS.find(c=>c.id===tab.slice(4))?.label}</span>
-              : <>
-                  {currentCat&&<span style={{color:currentCat.color,fontWeight:500,cursor:'pointer'}} onClick={()=>setTab('cat_'+currentCat.id)}>{currentCat.label}</span>}
-                  {currentTab&&<span style={{color:'#3A2E28'}}> › {currentTab.lb}</span>}
-                </>
-            }
-          </div>}
-        </div>
-        <div style={{display:'flex',gap:6}}>
-          {NAV_CATS.map(cat=>(
-            <button key={cat.id} onClick={()=>{setTab('cat_'+cat.id);setOpen(false);}} style={{padding:'5px 10px',borderRadius:15,border:`1px solid ${tab==='cat_'+cat.id?cat.color:'#F0E8DC'}`,background:tab==='cat_'+cat.id?cat.color+'22':'white',cursor:'pointer',fontFamily:'inherit',fontSize:11,color:tab==='cat_'+cat.id?cat.color:'#6B5C54',fontWeight:tab==='cat_'+cat.id?500:400}}>
-              {cat.label.split(' ')[0]}
-            </button>
-          ))}
-        </div>
-      </div>
-      {open&&(
-        <div style={{background:'white',borderTop:`1px solid #F0E8DC`,boxShadow:'0 4px 20px rgba(92,61,46,0.12)'}}>
-          <div style={{display:'flex',borderBottom:`1px solid #F0E8DC`}}>
-            {NAV_CATS.map(cat=>(
-              <button key={cat.id} onClick={()=>setActiveCat(cat.id)} style={{flex:1,padding:'10px 4px',border:'none',borderBottom:`3px solid ${activeCat===cat.id?cat.color:'transparent'}`,background:'none',cursor:'pointer',fontFamily:'inherit',fontSize:12,color:activeCat===cat.id?cat.color:'#6B5C54',fontWeight:activeCat===cat.id?600:400}}>
-                {cat.label}
-              </button>
-            ))}
-          </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:0}}>
-            {NAV_CATS.find(c=>c.id===activeCat)?.tabs.map(t=>(
-              <button key={t.id} onClick={()=>handleTab(t.id)} style={{padding:'12px 14px',border:'none',borderBottom:`1px solid #F0E8DC`,borderLeft:`1px solid #F0E8DC`,background:tab===t.id?'#FFF0EB':'white',cursor:'pointer',fontFamily:'inherit',fontSize:13,color:tab===t.id?'#C4785A':'#3A2E28',fontWeight:tab===t.id?600:400,textAlign:'right'}}>
-                {t.lb}
-              </button>
-            ))}
-          </div>
         </div>
       )}
     </div>
@@ -4716,7 +4736,148 @@ const SEARCH_INDEX=[
 ];
 
 
-// ===== BIRTH PREP COMPONENT =====
+// ── Setup Screen ──
+function SetupScreen({onSave, isEdit}) {
+  var type_state = React.useState('lmp');
+  var type = type_state[0]; var setType = type_state[1];
+  var date_state = React.useState('');
+  var date = date_state[0]; var setDate = date_state[1];
+  var err_state = React.useState('');
+  var err = err_state[0]; var setErr = err_state[1];
+
+  var today = new Date().toISOString().slice(0,10);
+  var minDate = new Date(Date.now() - 300*24*60*60*1000).toISOString().slice(0,10);
+
+  function handleSave() {
+    if (!date) { setErr('נא לבחור תאריך'); return; }
+    var d = new Date(date);
+    if (isNaN(d)) { setErr('תאריך לא תקין'); return; }
+    onSave({type: type, date: date, savedAt: Date.now()});
+  }
+
+  return (
+    <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',background:'#FBF7F2',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'32px 24px',direction:'rtl',fontFamily:'"Assistant","Heebo",sans-serif'}}>
+      <div style={{width:'100%',maxWidth:400}}>
+        <div style={{textAlign:'center',marginBottom:32}}>
+          <div style={{fontFamily:'"Cormorant Garamond",Georgia,serif',fontSize:36,fontWeight:300,color:'#3D2B1F',letterSpacing:'2px',fontStyle:'italic',marginBottom:8}}>Bloom</div>
+          <div style={{fontSize:16,color:'#3A2E28',fontWeight:500,marginBottom:8}}>{isEdit ? 'עריכת פרטי ההריון' : 'ברוכה הבאה 🌸'}</div>
+          {!isEdit && <div style={{fontSize:13,color:'#9B7860',lineHeight:1.6}}>כדי להתאים את האפליקציה אלייך,<br/>נשמח לכמה פרטים.</div>}
+        </div>
+
+        <div style={{background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)',marginBottom:20}}>
+          <div style={{fontSize:13,color:'#6B5744',fontWeight:500,marginBottom:14}}>בחרי את סוג התאריך</div>
+          <div onClick={function(){setType('lmp');}} style={{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',borderRadius:10,border:'1px solid '+(type==='lmp'?'#C4785A':'#EDE4D8'),background:type==='lmp'?'#FFF0EB':'white',cursor:'pointer',marginBottom:8}}>
+            <div style={{width:18,height:18,borderRadius:'50%',border:'2px solid '+(type==='lmp'?'#C4785A':'#C8BFB5'),display:'flex',alignItems:'center',justifyContent:'center'}}>
+              {type==='lmp' && <div style={{width:8,height:8,borderRadius:'50%',background:'#C4785A'}}/>}
+            </div>
+            <div>
+              <div style={{fontSize:13,color:'#3A2E28',fontWeight:type==='lmp'?500:400}}>אני יודעת את תאריך הווסת האחרונה שלי</div>
+              <div style={{fontSize:11,color:'#9B7860',marginTop:2}}>התל"מ יחושב אוטומטית (280 ימים)</div>
+            </div>
+          </div>
+          <div onClick={function(){setType('due');}} style={{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',borderRadius:10,border:'1px solid '+(type==='due'?'#C4785A':'#EDE4D8'),background:type==='due'?'#FFF0EB':'white',cursor:'pointer'}}>
+            <div style={{width:18,height:18,borderRadius:'50%',border:'2px solid '+(type==='due'?'#C4785A':'#C8BFB5'),display:'flex',alignItems:'center',justifyContent:'center'}}>
+              {type==='due' && <div style={{width:8,height:8,borderRadius:'50%',background:'#C4785A'}}/>}
+            </div>
+            <div style={{fontSize:13,color:'#3A2E28',fontWeight:type==='due'?500:400}}>אני יודעת את תאריך הלידה המשוער שלי</div>
+          </div>
+        </div>
+
+        <div style={{background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)',marginBottom:20}}>
+          <div style={{fontSize:13,color:'#6B5744',fontWeight:500,marginBottom:12}}>{type==='lmp'?'תאריך הווסת האחרונה':'תאריך לידה משוער'}</div>
+          <input
+            type="date"
+            value={date}
+            onChange={function(e){setDate(e.target.value);setErr('');}}
+            min={type==='lmp'?minDate:today}
+            max={type==='lmp'?today:new Date(Date.now()+300*24*60*60*1000).toISOString().slice(0,10)}
+            style={{width:'100%',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontSize:14,fontFamily:'inherit',color:'#3A2E28',background:'#FBF7F2',outline:'none',boxSizing:'border-box',direction:'ltr'}}
+          />
+          {err && <div style={{color:'#C4785A',fontSize:12,marginTop:6}}>{err}</div>}
+        </div>
+
+        <button onClick={handleSave} style={{width:'100%',background:'linear-gradient(135deg,#C4785A,#8B4A2E)',border:'none',borderRadius:12,padding:'14px',fontSize:15,color:'white',fontWeight:600,cursor:'pointer',fontFamily:'inherit',marginBottom:isEdit?12:0}}>
+          שמירה
+        </button>
+        {isEdit && <button onClick={function(){onSave(null);}} style={{width:'100%',background:'none',border:'none',padding:'10px',fontSize:13,color:'#9B7860',cursor:'pointer',fontFamily:'inherit'}}>
+          ביטול
+        </button>}
+      </div>
+    </div>
+  );
+}
+
+function stripEmoji(s){if(!s)return s;var sp=s.indexOf(' ');return sp>=0?s.slice(sp+1):s;}
+
+function HamburgerNav({tab, setTab}) {
+  var open_state = React.useState(false);
+  var open = open_state[0]; var setOpen = open_state[1];
+  var cat_state = React.useState('pregnancy');
+  var activeCat = cat_state[0]; var setActiveCat = cat_state[1];
+
+  function handleTab(id) { setTab(id); setOpen(false); }
+
+  var currentCat = NAV_CATS.find(function(c){return c.tabs.some(function(t){return t.id===tab;});});
+  var currentTab = TABS ? TABS.find(function(t){return t.id===tab;}) : null;
+  var catLabel = tab.startsWith('cat_') ? stripEmoji(NAV_CATS.find(function(c){return c.id===tab.slice(4);})?.label||'') : (currentTab ? currentTab.lb : '');
+
+  return (
+    <div style={{position:'sticky',top:64,zIndex:90,background:'white',borderBottom:'1px solid #EDE4D8'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px'}}>
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <button onClick={function(){setOpen(!open);}} style={{background:'none',border:'none',cursor:'pointer',padding:4,display:'flex',flexDirection:'column',gap:4}}>
+            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(45deg) translate(4px,4px)':'none'}}/>
+            <div style={{width:22,height:2,background:'#5C3D2E',opacity:open?0:1,transition:'all 0.2s'}}/>
+            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(-45deg) translate(4px,-4px)':'none'}}/>
+          </button>
+          <button onClick={function(){setTab('home');setOpen(false);}} style={{display:'flex',alignItems:'center',gap:4,background:tab==='home'?'#FFF0EB':'none',border:'none',cursor:'pointer',borderRadius:8,padding:'4px 8px',fontFamily:'inherit'}}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={tab==='home'?'#C4785A':'#6B5C54'} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span style={{fontSize:13,color:tab==='home'?'#C4785A':'#6B5C54',fontWeight:tab==='home'?600:400}}>בית</span>
+          </button>
+          {tab!=='home' && <div style={{fontSize:13,color:'#6B5C54'}}>
+            <span style={{color:'#C4785A',fontWeight:600}}>{catLabel}</span>
+          </div>}
+        </div>
+      </div>
+      {open&&(
+        <div style={{background:'white',borderTop:'1px solid #EDE4D8',boxShadow:'0 4px 20px rgba(92,61,46,0.12)'}}>
+          <div style={{display:'flex',borderBottom:'1px solid #EDE4D8'}}>
+            {[
+              {id:'pregnancy',label:'הריון'},
+              {id:'birth',label:'לידה'},
+              {id:'postbirth',label:'אחרי לידה'},
+            ].map(function(cat){return (
+              <button key={cat.id} onClick={function(){setActiveCat(cat.id);}} style={{flex:1,padding:'10px 4px',border:'none',borderBottom:'2px solid '+(activeCat===cat.id?'#C4785A':'transparent'),background:'none',cursor:'pointer',fontFamily:'inherit',fontSize:11,color:activeCat===cat.id?'#C4785A':'#6B5C54',fontWeight:activeCat===cat.id?600:400}}>
+                {cat.label}
+              </button>
+            );})}
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:0}}>
+            {(NAV_CATS.find(function(c){return c.id===activeCat;})||{tabs:[]}).tabs.map(function(t){return (
+              <button key={t.id} onClick={function(){handleTab(t.id);}} style={{padding:'12px 14px',border:'none',borderBottom:'1px solid #EDE4D8',borderLeft:'1px solid #EDE4D8',background:tab===t.id?'#FFF0EB':'white',cursor:'pointer',fontFamily:'inherit',fontSize:13,color:tab===t.id?'#C4785A':'#3A2E28',fontWeight:tab===t.id?600:400,textAlign:'right'}}>
+                {stripEmoji(t.lb)}
+              </button>
+            );})}
+          </div>
+          <div style={{borderTop:'1px solid #EDE4D8',padding:'12px 16px'}}>
+            <button onClick={function(){setTab('booking');setOpen(false);}} style={{width:'100%',background:'linear-gradient(135deg,#C4785A,#8B4A2E)',border:'none',borderRadius:12,padding:'12px 16px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'inherit'}}>
+              <div style={{display:'flex',alignItems:'center',gap:10}}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <div style={{textAlign:'right'}}>
+                  <div style={{fontSize:13,color:'white',fontWeight:600}}>קביעת טיפול</div>
+                  <div style={{fontSize:10,color:'rgba(255,255,255,0.75)',marginTop:1}}>טיפולים אישיים עם דפנה</div>
+                </div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 function BirthPrep() {
   const [open,setOpen]=useState(null);
   const items=[
@@ -4863,6 +5024,8 @@ export default function App() {
   const [showSearch,setShowSearch]=useState(false);
   const [searchQ,setSearchQ]=useState('');
   const [showPlus,setShowPlus]=useState(false);
+  const [profile,setProfile]=useState(()=>loadProfile());
+  const [showSetup,setShowSetup]=useState(()=>!loadProfile());
   const [tabStack,setTabStack]=useState(['home']);
   const currentTab=tabStack[tabStack.length-1];
   // Keep tab in sync for legacy code
@@ -4912,7 +5075,7 @@ export default function App() {
     };
   },[]);
   function screen(){
-    if(tab==='home')return <Home go={goTo}/>;
+    if(tab==='home')return <Home go={goTo} profile={profile} onEditProfile={()=>setShowSetup(true)}/>;
     if(tab==='cat_pregnancy')return <CategoryScreen cat="pregnancy" setTab={goTo}/>;
     if(tab==='cat_birth')return <CategoryScreen cat="birth" setTab={goTo}/>;
     if(tab==='cat_postbirth')return <CategoryScreen cat="postbirth" setTab={goTo}/>;
@@ -4957,27 +5120,45 @@ export default function App() {
     if(tab==='ai')return null;
     return null;
   }
+  function handleSaveProfile(p) {
+    if (p === null) { setShowSetup(false); return; }
+    saveProfile(p);
+    setProfile(p);
+    setShowSetup(false);
+  }
+
+  if (showSetup) return <SetupScreen onSave={handleSaveProfile} isEdit={!!profile}/>;
+
   return (
     <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',display:'flex',flexDirection:'column',fontFamily:'"Assistant","Heebo",sans-serif',background:C.cr,direction:'rtl'}}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap');`}</style>
-      <div style={{background:C.br,color:C.cr,padding:'14px 20px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:100}}>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          {currentTab!=='home'?(
-            <button onClick={goBack} style={{background:'rgba(255,255,255,0.15)',border:'none',borderRadius:'50%',width:36,height:36,cursor:'pointer',color:'white',fontSize:20,display:'flex',alignItems:'center',justifyContent:'center'}}>‹</button>
-          ):(
-            <div style={{width:36,height:36,borderRadius:'50%',background:C.t,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>🌸</div>
-          )}
-          <div>
-            <div style={{fontFamily:'"Assistant",sans-serif',fontSize:20,fontWeight:700,letterSpacing:'-0.5px'}}>Bloom</div>
-            <div style={{fontSize:10,color:C.tl,letterSpacing:'0.5px'}}>מלווה הריון ולידה</div>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap'); @import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css');`}</style>
+      <div style={{background:'#3D2B1F',color:C.cr,position:'sticky',top:0,zIndex:100}}>
+        <div style={{padding:'16px 18px 0',display:'flex',alignItems:'flex-start',justifyContent:'space-between'}}>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            {currentTab!=='home'&&<button onClick={goBack} style={{background:'rgba(255,255,255,0.12)',border:'none',borderRadius:'50%',width:30,height:30,cursor:'pointer',color:'white',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center',marginLeft:6}}>‹</button>}
+            <div onClick={()=>goTo('home')} style={{cursor:'pointer'}}>
+              <div style={{fontFamily:'"Cormorant Garamond","Georgia",serif',fontSize:26,fontWeight:300,color:'#F5E6D3',letterSpacing:'2px',fontStyle:'italic',lineHeight:1}}>Bloom</div>
+              <div style={{fontSize:8,color:'#7A5C40',letterSpacing:'2px',textTransform:'uppercase',marginTop:3}}>מלווה הריון ולידה</div>
+            </div>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:8,marginTop:4}}>
+            <button onClick={()=>setShowPlus(true)} style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.15)',borderRadius:20,padding:'3px 9px',cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>
+              <span style={{fontSize:11}}>👑</span>
+              <span style={{fontSize:10,color:'rgba(255,255,255,0.8)',fontWeight:500}}>Bloom+</span>
+            </button>
+            <button onClick={()=>setShowSearch(s=>!s)} style={{background:'none',border:'none',cursor:'pointer',color:'#7A5C40',padding:2,display:'flex',alignItems:'center'}}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A5C40" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
           </div>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <button onClick={()=>setShowPlus(true)} style={{background:'rgba(255,255,255,0.12)',border:'1px solid rgba(255,255,255,0.2)',borderRadius:20,padding:'4px 10px',cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>
-            <span style={{fontSize:13}}>👑</span>
-            <span style={{fontSize:12,color:'rgba(255,255,255,0.9)',fontWeight:600,letterSpacing:'0.3px'}}>Bloom+</span>
-          </button>
-          <button onClick={()=>setShowSearch(s=>!s)} style={{background:'none',border:'none',cursor:'pointer',color:C.tl,fontSize:22,padding:4,display:'flex',alignItems:'center'}}>🔍</button>
+        <div style={{display:'flex',marginTop:12}}>
+          {[['cat_pregnancy','הריון'],['cat_birth','לידה'],['cat_postbirth','אחרי לידה']].map(([id,label])=>{
+            const active=['cat_pregnancy','cat_birth','cat_postbirth'].includes(tab)?tab==='home'?false:tab===id:tab==='cat_pregnancy'||['w','spinning','birthprep','cl','cx','rights','tools','wallet','postterm','names','j','ai','booking'].includes(tab)?id==='cat_pregnancy':['stages','triage','c','birthtypes','hospitals','bp','induction','birthtools','water','warning','spinning'].includes(tab)?id==='cat_birth':id==='cat_postbirth';
+            return <div key={id} onClick={()=>goTo(id)} style={{flex:1,textAlign:'center',padding:'9px 4px',fontSize:11,color:active?'#F5E6D3':'#BFA080',fontWeight:active?500:400,cursor:'pointer',position:'relative'}}>
+              {label}
+              {active&&<span style={{position:'absolute',bottom:0,left:'25%',right:'25%',height:2,background:'#C4785A',borderRadius:'2px 2px 0 0',display:'block'}}/>}
+            </div>;
+          })}
         </div>
       </div>
       {showSearch&&(

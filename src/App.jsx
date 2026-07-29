@@ -986,11 +986,13 @@ function Home({go, profile, onEditProfile}) {
         var info = profile ? calcWeek(profile) : null;
         if (info && info.week >= 1 && info.week <= 42) {
           return (
-            <div onClick={function(){go('w');}} style={{background:'#3D2B1F',borderRadius:16,padding:'20px',marginBottom:16,cursor:'pointer'}}>
-              <div style={{fontSize:10,color:'#9B7860',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:6}}>שבוע ההריון שלך</div>
-              <div style={{fontSize:28,color:'#F5E6D3',fontWeight:600,marginBottom:4}}>שבוע {info.week} {info.day > 0 && '+ '+info.day+' ימים'}</div>
-              {info.daysLeft > 0 && <div style={{fontSize:12,color:'#C4A882',marginTop:4}}>נותרו כ-{info.daysLeft} ימים עד התל"מ</div>}
-              <div style={{fontSize:10,color:'#7A5C40',marginTop:8,textDecoration:'underline'}}>לחצי לפרטי השבוע ←</div>
+            <div onClick={function(){go('w');}} style={{background:'white',borderRadius:12,padding:'12px 14px',marginBottom:14,cursor:'pointer',border:'0.5px solid #EDE4D8',borderRight:'4px solid #C4785A',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+              <div>
+                <div style={{fontSize:8,color:'#9B7B5E',letterSpacing:'1.2px',textTransform:'uppercase',marginBottom:3}}>שבוע ההריון שלך</div>
+                <div style={{fontSize:20,color:'#3A2E28',fontWeight:600,marginBottom:2}}>שבוע {info.week}{info.day > 0 ? ' + '+info.day+' ימים' : ''}</div>
+                {info.daysLeft > 0 && <div style={{fontSize:9,color:'#C4785A',marginTop:2}}>נותרו כ-{info.daysLeft} ימים עד התל"מ</div>}
+              </div>
+              <div style={{fontSize:11,color:'#C4A882',flexShrink:0,marginRight:4}}>←</div>
             </div>
           );
         }
@@ -1319,6 +1321,18 @@ function Contractions() {
         <div style={{marginTop:10,fontSize:12,color:C.txl,lineHeight:1.8,background:'#FFF8E1',borderRadius:8,padding:'10px 12px'}}>
           💛 זכרי שהטיימר הוא כלי עזר בלבד. גם התחושה שלך חשובה. אם יש ירידת מים, דימום, ירידה בתנועות העובר, או כל דבר שמדאיג אותך – פני לצוות המטפל או לבית היולדות.
         </div>
+      </div>
+      <div style={{background:'#FAF6F0',borderTop:'1px solid #EDE4D8',padding:'14px 20px',textAlign:'center'}}>
+        <div style={{display:'flex',justifyContent:'center',gap:16,flexWrap:'wrap',marginBottom:8}}>
+          <span onClick={function(){goTo('more_about');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer',textDecoration:'underline'}}>אודות Bloom</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>|</span>
+          <span onClick={function(){goTo('more_contact');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer',textDecoration:'underline'}}>יצירת קשר</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>|</span>
+          <span onClick={function(){goTo('more_privacy');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer',textDecoration:'underline'}}>מדיניות פרטיות</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>|</span>
+          <span onClick={function(){goTo('more_terms');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer',textDecoration:'underline'}}>תנאי שימוש</span>
+        </div>
+        <div style={{fontSize:10,color:'#C4B0A4',fontFamily:'"Cormorant Garamond",serif',fontStyle:'italic'}}>Bloom · גרסה 1.0</div>
       </div>
     </div>
   );
@@ -4807,214 +4821,90 @@ function SetupScreen({onSave, isEdit}) {
   );
 }
 
-function stripEmoji(s){if(!s)return s;var sp=s.indexOf(' ');return sp>=0?s.slice(sp+1):s;}
 
-function HamburgerNav({tab, setTab}) {
-  var open_state = React.useState(false);
-  var open = open_state[0]; var setOpen = open_state[1];
-  var cat_state = React.useState('pregnancy');
-  var activeCat = cat_state[0]; var setActiveCat = cat_state[1];
+// ===== MORE SCREEN =====
+const MORE_ITEMS = [
+  {id:'about', label:'אודות Bloom', icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>},
+  {id:'contact', label:'יצירת קשר', icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>},
+  {id:'privacy', label:'מדיניות פרטיות', icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>},
+  {id:'terms', label:'תנאי שימוש', icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5E3C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>},
+];
 
-  function handleTab(id) { setTab(id); setOpen(false); }
+const MORE_CONTENT = {
+  about: (
+    <div style={{fontSize:14,lineHeight:1.9,color:'#4A3728'}}>
+      <p style={{marginBottom:14}}>Bloom היא אפליקציה שנועדה ללוות נשים בתקופת ההריון, הלידה ואחרי הלידה, ולרכז במקום אחד מידע מקצועי, ברור ונגיש.</p>
+      <p>האפליקציה פותחה על ידי <strong>דפנה לוי</strong> – דולה, מדריכת הכנה ללידה, יועצת הנקה, מטפלת ברפלקסולוגיה וברפואה סינית.</p>
+      <p style={{marginTop:14}}>המידע באפליקציה נועד להעניק ידע, הכוונה ותמיכה לאורך הדרך.</p>
+    </div>
+  ),
+  privacy: (
+    <div style={{fontSize:14,lineHeight:1.9,color:'#4A3728'}}>
+      <p style={{marginBottom:14}}>האפליקציה עשויה לשמור מידע הנדרש לצורך התאמת התוכן ולשיפור חוויית השימוש.</p>
+      <p style={{marginBottom:14}}>מידע הנשמר באופן מקומי במכשירך אינו נשלח לשרת אלא אם צוין אחרת בעתיד.</p>
+      <p>האפליקציה עשויה לכלול קישורים לאתרים חיצוניים. השימוש בהם כפוף למדיניות הפרטיות ולתנאי השימוש של אותם אתרים.</p>
+    </div>
+  ),
+  terms: (
+    <div style={{fontSize:14,lineHeight:1.9,color:'#4A3728'}}>
+      <p style={{marginBottom:14}}>המידע המופיע ב-Bloom נועד למידע, העשרה ותמיכה בלבד ואינו מהווה ייעוץ רפואי, אבחון או תחליף לבדיקה ולטיפול של איש או אשת מקצוע.</p>
+      <p style={{marginBottom:14}}>בכל מצב רפואי, שינוי במצבך או מקרה חירום יש לפנות לצוות הרפואי.</p>
+      <p style={{marginBottom:14}}>השימוש באפליקציה ובמידע שבה הוא באחריות המשתמשת.</p>
+      <p style={{marginBottom:14}}>ייתכנו שינויים בין בתי יולדות, נהלים רפואיים והמלצות מקצועיות, ולכן מומלץ להסתמך גם על ההנחיות העדכניות של הגורמים המטפלים.</p>
+      <p>כל זכויות היוצרים בתוכן ובעיצוב האפליקציה שמורות ל-Bloom ול-Dafna Doula.</p>
+    </div>
+  ),
+  contact: null,
+};
 
-  var currentCat = NAV_CATS.find(function(c){return c.tabs.some(function(t){return t.id===tab;});});
-  var currentTab = TABS ? TABS.find(function(t){return t.id===tab;}) : null;
-  var catLabel = tab.startsWith('cat_') ? stripEmoji(NAV_CATS.find(function(c){return c.id===tab.slice(4);})?.label||'') : (currentTab ? currentTab.lb : '');
-
+function MoreScreen({goTo}) {
   return (
-    <div style={{position:'sticky',top:64,zIndex:90,background:'white',borderBottom:'1px solid #EDE4D8'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px'}}>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <button onClick={function(){setOpen(!open);}} style={{background:'none',border:'none',cursor:'pointer',padding:4,display:'flex',flexDirection:'column',gap:4}}>
-            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(45deg) translate(4px,4px)':'none'}}/>
-            <div style={{width:22,height:2,background:'#5C3D2E',opacity:open?0:1,transition:'all 0.2s'}}/>
-            <div style={{width:22,height:2,background:'#5C3D2E',borderRadius:2,transition:'all 0.2s',transform:open?'rotate(-45deg) translate(4px,-4px)':'none'}}/>
-          </button>
-          <button onClick={function(){setTab('home');setOpen(false);}} style={{display:'flex',alignItems:'center',gap:4,background:tab==='home'?'#FFF0EB':'none',border:'none',cursor:'pointer',borderRadius:8,padding:'4px 8px',fontFamily:'inherit'}}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={tab==='home'?'#C4785A':'#6B5C54'} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span style={{fontSize:13,color:tab==='home'?'#C4785A':'#6B5C54',fontWeight:tab==='home'?600:400}}>בית</span>
-          </button>
-          {tab!=='home' && <div style={{fontSize:13,color:'#6B5C54'}}>
-            <span style={{color:'#C4785A',fontWeight:600}}>{catLabel}</span>
-          </div>}
-        </div>
+    <div style={{padding:20}}>
+      <div style={{background:'#3D2B1F',borderRadius:16,padding:'20px',marginBottom:20,textAlign:'center'}}>
+        <div style={{fontFamily:'"Cormorant Garamond","Georgia",serif',fontSize:28,fontWeight:300,color:'#F5E6D3',letterSpacing:'2px',fontStyle:'italic'}}>Bloom</div>
+        <div style={{fontSize:10,color:'#9B7860',letterSpacing:'2px',textTransform:'uppercase',marginTop:4}}>מלווה הריון ולידה</div>
       </div>
-      {open&&(
-        <div style={{background:'white',borderTop:'1px solid #EDE4D8',boxShadow:'0 4px 20px rgba(92,61,46,0.12)'}}>
-          <div style={{display:'flex',borderBottom:'1px solid #EDE4D8'}}>
-            {[
-              {id:'pregnancy',label:'הריון'},
-              {id:'birth',label:'לידה'},
-              {id:'postbirth',label:'אחרי לידה'},
-            ].map(function(cat){return (
-              <button key={cat.id} onClick={function(){setActiveCat(cat.id);}} style={{flex:1,padding:'10px 4px',border:'none',borderBottom:'2px solid '+(activeCat===cat.id?'#C4785A':'transparent'),background:'none',cursor:'pointer',fontFamily:'inherit',fontSize:11,color:activeCat===cat.id?'#C4785A':'#6B5C54',fontWeight:activeCat===cat.id?600:400}}>
-                {cat.label}
-              </button>
-            );})}
-          </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:0}}>
-            {(NAV_CATS.find(function(c){return c.id===activeCat;})||{tabs:[]}).tabs.map(function(t){return (
-              <button key={t.id} onClick={function(){handleTab(t.id);}} style={{padding:'12px 14px',border:'none',borderBottom:'1px solid #EDE4D8',borderLeft:'1px solid #EDE4D8',background:tab===t.id?'#FFF0EB':'white',cursor:'pointer',fontFamily:'inherit',fontSize:13,color:tab===t.id?'#C4785A':'#3A2E28',fontWeight:tab===t.id?600:400,textAlign:'right'}}>
-                {stripEmoji(t.lb)}
-              </button>
-            );})}
-          </div>
-          <div style={{borderTop:'1px solid #EDE4D8',padding:'12px 16px'}}>
-            <button onClick={function(){setTab('booking');setOpen(false);}} style={{width:'100%',background:'linear-gradient(135deg,#C4785A,#8B4A2E)',border:'none',borderRadius:12,padding:'12px 16px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'inherit'}}>
-              <div style={{display:'flex',alignItems:'center',gap:10}}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <div style={{textAlign:'right'}}>
-                  <div style={{fontSize:13,color:'white',fontWeight:600}}>קביעת טיפול</div>
-                  <div style={{fontSize:10,color:'rgba(255,255,255,0.75)',marginTop:1}}>טיפולים אישיים עם דפנה</div>
+      <div style={{background:'white',borderRadius:14,overflow:'hidden',boxShadow:'0 2px 10px rgba(92,61,46,0.07)',marginBottom:20}}>
+        {MORE_ITEMS.map(function(item, i) {
+          return (
+            <div key={item.id} onClick={function(){goTo('more_'+item.id);}} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 18px',cursor:'pointer',borderBottom:i<MORE_ITEMS.length-1?'1px solid #F0E8DC':'none',background:'white'}}>
+              <div style={{display:'flex',alignItems:'center',gap:12}}>
+                <div style={{width:34,height:34,borderRadius:'50%',background:'#F5EDE4',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                  {item.icon}
                 </div>
+                <span style={{fontSize:14,color:'#3A2E28',fontWeight:500}}>{item.label}</span>
               </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-          </div>
-        </div>
-      )}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4A882" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{textAlign:'center',marginTop:8}}>
+        <div style={{fontSize:12,color:'#B0988A',fontFamily:'"Cormorant Garamond",serif',fontStyle:'italic'}}>Bloom</div>
+        <div style={{fontSize:11,color:'#C4B0A4',marginTop:2}}>גרסה 1.0</div>
+      </div>
     </div>
   );
 }
 
-
-function BirthPrep() {
-  const [open,setOpen]=useState(null);
-  const items=[
-    {
-      id:'raspberry',emoji:'🌿',title:'עלי פטל',
-      what:'חליטת צמחים שנשים רבות בוחרות לשתות לקראת סוף ההריון כחלק מההכנה ללידה.',
-      when:'משבוע 35.',
-      pros:['עשוי לסייע בחיזוק שרירי הרחם','עשוי לתמוך בצירים יעילים יותר במהלך הלידה','ניתן להמשיך לשתות גם לאחר הלידה','עשוי לסייע בכיווץ הרחם ובחזרתו לגודלו שלפני ההריון'],
-      how:'כפית עלי פטל בכוס מים רותחים, להמתין כ-10 דקות ולסנן.',
-      extra:{title:'מינון',items:['שבוע 35 – כוס אחת ביום','שבוע 36 – שתי כוסות ביום','משבוע 37 – שלוש כוסות ביום']},
-    },
-    {
-      id:'nettle',emoji:'🌱',title:'סרפד',
-      what:'צמח מרפא העשיר בברזל, סידן, מגנזיום, אבץ ומינרלים נוספים.',
-      when:'בהתאם להנחיית איש מקצוע.',
-      pros:['עשיר בברזל, סידן, מגנזיום, אבץ ומינרלים נוספים','עשוי לסייע בהשלמת מינרלים בתקופת ההריון','עשוי לסייע בהפחתת בצקות אצל חלק מהנשים'],
-      how:'כפית אחת לחליטה בכוס מים, פעם ביום.',
-    },
-    {
-      id:'dates',emoji:'🌴',title:'תמרים',
-      what:'תמרים עשויים לתמוך בהבשלה הטבעית של צוואר הרחם לקראת הלידה.',
-      when:'משבוע 34.',
-      pros:['עשויים לתמוך בהבשלה של צוואר הרחם'],
-      how:'נהוג לאכול כ-6 תמרים ביום.',
-      avoid:'לא מתאים לנשים עם סוכרת, אלא אם קיבלו הנחיה אחרת מהצוות הרפואי.',
-    },
-    {
-      id:'perineum',emoji:'💆',title:'עיסוי פרינאום',
-      what:'עיסוי עדין של אזור הפרינאום שמטרתו להגביר את גמישות הרקמות לקראת הלידה.',
-      when:'משבוע 34.',
-      pros:['עשוי לשפר את גמישות הרקמות','עשוי להפחית את הסיכון לקרעים משמעותיים','עשוי להפחית את הצורך בחתך חיץ אצל חלק מהיולדות'],
-      howList:['השתמשי בשמן טבעי (כגון שמן שקדים או קלנדולה)','עסי בעדינות את האזור במשך כ-5 דקות','ניתן לבצע לבד או בעזרת המלווה'],
-      avoidList:['במקרה של זיהום פעיל בנרתיק (כגון פטרייה)','במקרה של דלקות נרתיק חוזרות','במקרה של קיצור צוואר הרחם או אם קיבלת הנחיה רפואית להימנע','במקרה של ירידת מים או דימום'],
-    },
-    {
-      id:'ball',emoji:'🤸',title:'כדור פיזיו',
-      what:'כדור פיזיו מאפשר תנועה נוחה ועשוי לסייע בהכנת הגוף ללידה.',
-      when:'ניתן להשתמש לאורך ההריון בהתאם לנוחות.',
-      pros:['עשוי להקל על כאבי גב ואגן','מעודד תנועתיות של האגן','מסייע בשמירה על יציבה ותנועה'],
-      howList:['ניעות אגן קדימה ואחורה','תנועות מעגליות','תנועות בצורת הספרה 8'],
-    },
-    {
-      id:'spinning',emoji:'🔄',title:'Spinning Babies',
-      what:'שיטה שמטרתה ליצור איזון בגוף ולסייע לתינוק למצוא תנוחה אופטימלית לקראת הלידה.',
-      when:'ניתן להתחיל מסוף הטרימסטר השני.',
-      spinningLink:true,
-    },
-    {
-      id:'acupuncture',emoji:'🪡',title:'דיקור להכנה ללידה',
-      what:'נשים רבות בוחרות לשלב דיקור לקראת סוף ההריון כחלק מההכנה ללידה.',
-      when:'לרוב משבוע 36.',
-      pros:['עשוי לתמוך בהכנת הגוף ללידה','עשוי לעודד הבשלה של צוואר הרחם','עשוי לסייע בהרגעה ובהפחתת מתח'],
-      note:'מומלץ לבצע אצל מטפל/ת מוסמך/ת בעל/ת ניסיון בטיפול בנשים בהריון.',
-    },
-    {
-      id:'reflexology',emoji:'👣',title:'רפלקסולוגיה',
-      what:'שיטת טיפול המבוססת על עיסוי ולחיצה של אזורים בכפות הרגליים.',
-      when:'ניתן לשלב לקראת סוף ההריון בהתאם למצבך ולהמלצת המטפל.',
-      pros:['עשויה לסייע בהרפיה ובהפחתת מתח','עשויה לתרום להכנת הגוף ללידה'],
-      note:'יש לפנות למטפל/ת המנוסה בטיפול בנשים בהריון.',
-    },
-  ];
+function MoreInner({title, id, goTo}) {
+  var WA = '972544521285';
   return (
-    <div>
-      <div style={{...card,background:`linear-gradient(135deg,#F3E8FF,${C.cr})`}}>
-        <div style={ttl}>🌿 מתכוננות ללידה</div>
-        <div style={bdy}>כלים ושיטות טבעיות שעשויות לסייע בהכנת הגוף ללידה. כל שינוי בתזונה, תוספים או טיפולים – מומלץ להתייעץ עם הצוות הרפואי שלך.</div>
-      </div>
-      {items.map(it=>(
-        <div key={it.id} style={card}>
-          <div onClick={()=>setOpen(open===it.id?null:it.id)} style={{display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
-            <div style={{display:'flex',alignItems:'center',gap:8}}>
-              <span style={{fontSize:20}}>{it.emoji}</span>
-              <div style={{fontFamily:'Georgia,serif',fontSize:16,fontWeight:600,color:C.br}}>{it.title}</div>
-            </div>
-            <div style={{fontSize:18,color:C.t}}>{open===it.id?'▲':'▼'}</div>
+    <div style={{padding:20}}>
+      <div style={{...card,marginBottom:0}}>
+        <div style={{...ttl,marginBottom:16}}>{title}</div>
+        {id==='contact' ? (
+          <div>
+            <div style={{fontSize:14,lineHeight:1.9,color:'#4A3728',marginBottom:20}}>מצאת טעות? יש לך רעיון לשיפור? אשמח לשמוע ממך.</div>
+            <button onClick={function(){window.open('https://wa.me/'+WA,'_blank');}} style={{width:'100%',background:'#25D366',border:'none',borderRadius:12,padding:'14px 18px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10,fontFamily:'inherit'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span style={{fontSize:14,color:'white',fontWeight:600}}>שלחי הודעה ב-WhatsApp</span>
+            </button>
           </div>
-          {open===it.id&&(
-            <div style={{marginTop:14,borderTop:`1px solid ${C.cd}`,paddingTop:14}}>
-              <div style={{fontSize:13,color:C.tx,lineHeight:1.7,marginBottom:10}}>{it.what}</div>
-              {it.when&&(
-                <div style={{marginBottom:10}}>
-                  <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:4}}>מתי מתחילים?</div>
-                  <div style={{fontSize:13,color:C.txl}}>{it.when}</div>
-                </div>
-              )}
-              {it.pros&&(
-                <div style={{marginBottom:10}}>
-                  <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:6}}>יתרונות אפשריים</div>
-                  {it.pros.map((p,i)=><div key={i} style={{fontSize:13,color:C.tx,marginBottom:4}}>✔ {p}</div>)}
-                </div>
-              )}
-              {it.how&&(
-                <div style={{marginBottom:10}}>
-                  <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:4}}>איך משתמשים?</div>
-                  <div style={{fontSize:13,color:C.txl,lineHeight:1.7}}>{it.how}</div>
-                </div>
-              )}
-              {it.howList&&(
-                <div style={{marginBottom:10}}>
-                  <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:6}}>איך משתמשים?</div>
-                  {it.howList.map((h,i)=><div key={i} style={{fontSize:13,color:C.tx,marginBottom:4}}>✔ {h}</div>)}
-                </div>
-              )}
-              {it.extra&&(
-                <div style={{marginBottom:10,background:'#F5F0FF',borderRadius:10,padding:'10px 12px'}}>
-                  <div style={{fontWeight:600,color:C.br,fontSize:13,marginBottom:6}}>{it.extra.title}</div>
-                  {it.extra.items.map((e,i)=><div key={i} style={{fontSize:13,color:C.tx,marginBottom:3}}>✔ {e}</div>)}
-                </div>
-              )}
-              {it.avoid&&(
-                <div style={{marginBottom:10,background:'#FFF3CD',borderRadius:8,padding:'8px 12px'}}>
-                  <div style={{fontWeight:600,color:'#856404',fontSize:13,marginBottom:4}}>מתי לא מומלץ?</div>
-                  <div style={{fontSize:13,color:'#856404',lineHeight:1.7}}>{it.avoid}</div>
-                </div>
-              )}
-              {it.avoidList&&(
-                <div style={{marginBottom:10,background:'#FFF3CD',borderRadius:8,padding:'8px 12px'}}>
-                  <div style={{fontWeight:600,color:'#856404',fontSize:13,marginBottom:6}}>מתי לא מומלץ?</div>
-                  {it.avoidList.map((a,i)=><div key={i} style={{fontSize:13,color:'#856404',marginBottom:4}}>• {a}</div>)}
-                </div>
-              )}
-              {it.note&&(
-                <div style={{background:'#E3F2FD',borderRadius:8,padding:'8px 12px',fontSize:13,color:'#1565C0',lineHeight:1.6}}>
-                  💡 {it.note}
-                </div>
-              )}
-              {it.spinningLink&&(
-                <div onClick={()=>window.dispatchEvent(new CustomEvent('bloom-nav',{detail:'spinning'}))} style={{background:'#E8F4E8',borderRadius:10,padding:'12px 14px',textAlign:'center',cursor:'pointer'}}>
-                  <div style={{fontSize:13,color:C.tx,marginBottom:8}}>למדריך המלא עם תרגילים והסברים מפורטים:</div>
-                  <div style={{fontSize:13,color:'#2E7D32',fontWeight:600}}>🧣 עברי למסך Spinning Babies ←</div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      ))}
+        ) : (
+          <div style={bdy}>{MORE_CONTENT[id]}</div>
+        )}
+      </div>
     </div>
   );
 }
@@ -5118,6 +5008,11 @@ export default function App() {
     if(tab==='birthprep')return <BirthPrep/>;
     if(tab==='j')return <Journal/>;
     if(tab==='ai')return null;
+    if(tab==='more')return <MoreScreen goTo={goTo}/>;
+    if(tab==='more_about')return <MoreInner title='אודות Bloom' id='about' goTo={goTo}/>;
+    if(tab==='more_privacy')return <MoreInner title='מדיניות פרטיות' id='privacy' goTo={goTo}/>;
+    if(tab==='more_terms')return <MoreInner title='תנאי שימוש' id='terms' goTo={goTo}/>;
+    if(tab==='more_contact')return <MoreInner title='יצירת קשר' id='contact' goTo={goTo}/>;
     return null;
   }
   function handleSaveProfile(p) {
@@ -5199,10 +5094,21 @@ export default function App() {
           )}
         </div>
       )}
-      <HamburgerNav tab={tab} setTab={goTo}/>
       <div style={{flex:1,padding:20,paddingBottom:40}}>{screen()}</div>
       <div style={{background:'#FFF8E1',padding:'10px 16px',textAlign:'center',borderTop:`1px solid ${C.cd}`}}>
         <div style={{fontSize:10,color:'#5D4037',lineHeight:1.7,textAlign:'center'}}>⚠️ המידע באפליקציה נועד למטרות מידע בלבד ואינו מחליף ייעוץ, אבחון או טיפול רפואי אישי.<br/>© Bloom – דפנה דולה | dafnadoula.co.il</div>
+      </div>
+      <div style={{background:'#FAF6F0',borderTop:'1px solid #EDE4D8',padding:'12px 20px',textAlign:'center'}}>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:10,flexWrap:'wrap',marginBottom:6}}>
+          <span onClick={function(){goTo('more_about');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer'}}>אודות</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>·</span>
+          <span onClick={function(){goTo('more_contact');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer'}}>יצירת קשר</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>·</span>
+          <span onClick={function(){goTo('more_privacy');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer'}}>מדיניות פרטיות</span>
+          <span style={{fontSize:11,color:'#D4C0B0'}}>·</span>
+          <span onClick={function(){goTo('more_terms');}} style={{fontSize:11,color:'#8B5E3C',cursor:'pointer'}}>תנאי שימוש</span>
+        </div>
+        <div style={{fontSize:10,color:'#C4B0A4',fontStyle:'italic',fontFamily:'"Cormorant Garamond",serif'}}>Bloom · גרסה 1.0</div>
       </div>
           {showPlus&&(
       <div style={{position:'fixed',inset:0,zIndex:999,background:'rgba(92,61,46,0.5)',backdropFilter:'blur(4px)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} onClick={()=>setShowPlus(false)}>

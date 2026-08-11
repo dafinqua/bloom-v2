@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { supabase } from "./supabaseClient";
 
 // ── Profile Storage ──
 const PROFILE_KEY = 'bloom_profile_v1';
@@ -4875,6 +4876,198 @@ const SEARCH_INDEX=[
 
 
 // ── Setup Screen ──
+// ── Auth: error message translation ──
+function translateAuthError(msg) {
+  if (!msg) return 'משהו השתבש. נסי שוב.';
+  var m = msg.toLowerCase();
+  if (m.indexOf('invalid login credentials') !== -1) return 'אימייל או סיסמה שגויים.';
+  if (m.indexOf('already registered') !== -1 || m.indexOf('already exists') !== -1) return 'כבר קיים חשבון עם האימייל הזה. נסי להתחבר במקום.';
+  if (m.indexOf('password should be at least') !== -1) return 'הסיסמה חייבת להכיל לפחות 6 תווים.';
+  if (m.indexOf('email not confirmed') !== -1) return 'יש לאמת את כתובת האימייל לפני ההתחברות. בדקי את תיבת הדואר שלך.';
+  if (m.indexOf('rate limit') !== -1) return 'יותר מדי ניסיונות. נסי שוב בעוד כמה דקות.';
+  if (m.indexOf('invalid email') !== -1) return 'כתובת האימייל אינה תקינה.';
+  return 'משהו השתבש: ' + msg;
+}
+
+function AuthScreen() {
+  const [mode,setMode]=useState('login'); // 'login' | 'signup' | 'forgot'
+  const [email,setEmail]=useState('');
+  const [password,setPassword]=useState('');
+  const [fullName,setFullName]=useState('');
+  const [loading,setLoading]=useState(false);
+  const [err,setErr]=useState('');
+  const [msg,setMsg]=useState('');
+
+  async function handleSubmit(){
+    setErr('');setMsg('');
+    if(!email||(mode!=='forgot'&&!password)){setErr('נא למלא את כל השדות.');return;}
+    setLoading(true);
+    try{
+      if(mode==='signup'){
+        const {error}=await supabase.auth.signUp({
+          email,password,
+          options:{data:{full_name:fullName}}
+        });
+        if(error) throw error;
+        setMsg('נשלח מייל אימות לכתובת שלך. יש ללחוץ על הקישור כדי להשלים את ההרשמה, ואז לחזור ולהתחבר.');
+      } else if(mode==='forgot'){
+        const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+        if(error) throw error;
+        setMsg('נשלח מייל עם קישור לאיפוס סיסמה.');
+      } else {
+        const {error}=await supabase.auth.signInWithPassword({email,password});
+        if(error) throw error;
+        // הצלחה: onAuthStateChange ב-App מטפל בהמשך אוטומטית
+      }
+    }catch(e){
+      setErr(translateAuthError(e.message));
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogle(){
+    setErr('');
+    const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
+    if(error) setErr(translateAuthError(error.message));
+  }
+
+  const inputStyle={width:'100%',boxSizing:'border-box',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontFamily:'inherit',fontSize:14,marginBottom:10,outline:'none'};
+
+  return (
+    <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',background:'#FBF7F2',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'32px 24px',direction:'rtl',fontFamily:'"Assistant","Heebo",sans-serif'}}>
+      <div style={{width:'100%',maxWidth:400}}>
+        <div style={{textAlign:'center',marginBottom:28}}>
+          <div style={{fontFamily:'"Cormorant Garamond",Georgia,serif',fontSize:36,fontWeight:300,color:'#3D2B1F',letterSpacing:'2px',fontStyle:'italic',marginBottom:8}}>Bloom</div>
+          <div style={{fontSize:13,color:'#9B7860',lineHeight:1.6}}>הליווי שלך להריון, לידה ואחרי – במקום אחד</div>
+        </div>
+
+        <div style={{background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)'}}>
+          <div style={{display:'flex',gap:6,marginBottom:18,background:'#F5EFE6',borderRadius:10,padding:3}}>
+            {[['login','התחברות'],['signup','הרשמה']].map(([id,lb])=>(
+              <button key={id} onClick={()=>{setMode(id);setErr('');setMsg('');}} style={{flex:1,padding:'8px 0',border:'none',borderRadius:8,background:mode===id?'white':'transparent',color:mode===id?'#3D2B1F':'#9B7860',fontWeight:mode===id?600:400,fontFamily:'inherit',fontSize:13,cursor:'pointer',boxShadow:mode===id?'0 1px 4px rgba(0,0,0,0.06)':'none'}}>{lb}</button>
+            ))}
+          </div>
+
+          {mode==='signup'&&<input value={fullName} onChange={e=>setFullName(e.target.value)} placeholder="שם מלא" style={inputStyle}/>}
+          <input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="אימייל" style={inputStyle}/>
+          {mode!=='forgot'&&<input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="סיסמה" style={inputStyle}/>}
+
+          {mode==='login'&&<div onClick={()=>{setMode('forgot');setErr('');setMsg('');}} style={{fontSize:12,color:'#C4785A',textAlign:'left',cursor:'pointer',marginBottom:14}}>שכחת סיסמה?</div>}
+
+          {err&&<div style={{fontSize:12,color:'#B71C1C',background:'#FFEBEE',borderRadius:8,padding:'8px 10px',marginBottom:10}}>{err}</div>}
+          {msg&&<div style={{fontSize:12,color:'#2E7D32',background:'#E8F5E9',borderRadius:8,padding:'8px 10px',marginBottom:10}}>{msg}</div>}
+
+          <button onClick={handleSubmit} disabled={loading} style={{width:'100%',padding:'13px 0',background:'#C4785A',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:15,fontWeight:600,cursor:loading?'default':'pointer',opacity:loading?0.7:1,marginBottom:12}}>
+            {loading?'רגע...':mode==='login'?'התחברות':mode==='signup'?'הרשמה':'שליחת קישור לאיפוס'}
+          </button>
+
+          {mode!=='forgot'&&(
+            <>
+              <div style={{display:'flex',alignItems:'center',gap:10,margin:'14px 0'}}>
+                <div style={{flex:1,height:1,background:'#EDE4D8'}}/>
+                <div style={{fontSize:11,color:'#9B7860'}}>או</div>
+                <div style={{flex:1,height:1,background:'#EDE4D8'}}/>
+              </div>
+              <button onClick={handleGoogle} style={{width:'100%',padding:'12px 0',background:'white',color:'#3A2E28',border:'1px solid #EDE4D8',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+                <span>המשיכי עם Google</span>
+              </button>
+            </>
+          )}
+
+          {mode==='forgot'&&<div onClick={()=>{setMode('login');setErr('');setMsg('');}} style={{fontSize:12,color:'#C4785A',textAlign:'center',cursor:'pointer',marginTop:4}}>חזרה להתחברות</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ResetPasswordScreen({onDone}) {
+  const [password,setPassword]=useState('');
+  const [loading,setLoading]=useState(false);
+  const [err,setErr]=useState('');
+  async function handleUpdate(){
+    setErr('');
+    if(password.length<6){setErr('הסיסמה חייבת להכיל לפחות 6 תווים.');return;}
+    setLoading(true);
+    try{
+      const {error}=await supabase.auth.updateUser({password});
+      if(error) throw error;
+      onDone();
+    }catch(e){
+      setErr(translateAuthError(e.message));
+    }finally{
+      setLoading(false);
+    }
+  }
+  return (
+    <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',background:'#FBF7F2',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'32px 24px',direction:'rtl',fontFamily:'"Assistant","Heebo",sans-serif'}}>
+      <div style={{width:'100%',maxWidth:400,background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)'}}>
+        <div style={{fontSize:16,color:'#3A2E28',fontWeight:600,marginBottom:14,textAlign:'center'}}>בחירת סיסמה חדשה</div>
+        <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="סיסמה חדשה" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontFamily:'inherit',fontSize:14,marginBottom:10,outline:'none'}}/>
+        {err&&<div style={{fontSize:12,color:'#B71C1C',background:'#FFEBEE',borderRadius:8,padding:'8px 10px',marginBottom:10}}>{err}</div>}
+        <button onClick={handleUpdate} disabled={loading} style={{width:'100%',padding:'13px 0',background:'#C4785A',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:15,fontWeight:600,cursor:'pointer',opacity:loading?0.7:1}}>{loading?'רגע...':'עדכני סיסמה'}</button>
+      </div>
+    </div>
+  );
+}
+
+function AccountScreen({user, onClose, onLoggedOut}) {
+  const [row,setRow]=useState(null);
+  const [fullName,setFullName]=useState('');
+  const [phone,setPhone]=useState('');
+  const [city,setCity]=useState('');
+  const [loading,setLoading]=useState(true);
+  const [saving,setSaving]=useState(false);
+  const [msg,setMsg]=useState('');
+
+  useEffect(()=>{
+    let active=true;
+    supabase.from('profiles').select('*').eq('id',user.id).single().then(({data})=>{
+      if(!active) return;
+      if(data){setRow(data);setFullName(data.full_name||'');setPhone(data.phone||'');setCity(data.city||'');}
+      setLoading(false);
+    });
+    return ()=>{active=false;};
+  },[user.id]);
+
+  async function handleSave(){
+    setSaving(true);setMsg('');
+    const {error}=await supabase.from('profiles').update({full_name:fullName,phone:phone,city:city}).eq('id',user.id);
+    setSaving(false);
+    setMsg(error?'שמירה נכשלה, נסי שוב.':'נשמר בהצלחה.');
+  }
+
+  async function handleLogout(){
+    await supabase.auth.signOut();
+    onLoggedOut();
+  }
+
+  return (
+    <div onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.45)',zIndex:999,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
+      <div onClick={e=>e.stopPropagation()} style={{background:'white',borderRadius:'20px 20px 0 0',padding:'24px 20px 32px',maxWidth:480,width:'100%',maxHeight:'85vh',overflowY:'auto'}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+          <div style={{fontFamily:'Georgia,serif',fontSize:18,color:'#5C3D2E',fontWeight:600}}>👤 החשבון שלי</div>
+          <button onClick={onClose} style={{background:'none',border:'none',fontSize:22,cursor:'pointer',color:'#9E9E9E'}}>✕</button>
+        </div>
+        {loading?(
+          <div style={{fontSize:13,color:'#9B7860',textAlign:'center',padding:20}}>טוענת...</div>
+        ):(
+          <>
+            <div style={{fontSize:12,color:'#9B7860',marginBottom:14}}>מחוברת כ־{user.email}</div>
+            <input value={fullName} onChange={e=>setFullName(e.target.value)} placeholder="שם מלא" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontFamily:'inherit',fontSize:14,marginBottom:10,outline:'none'}}/>
+            <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="טלפון" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontFamily:'inherit',fontSize:14,marginBottom:10,outline:'none'}}/>
+            <input value={city} onChange={e=>setCity(e.target.value)} placeholder="עיר" style={{width:'100%',boxSizing:'border-box',padding:'12px 14px',borderRadius:10,border:'1px solid #EDE4D8',fontFamily:'inherit',fontSize:14,marginBottom:14,outline:'none'}}/>
+            {msg&&<div style={{fontSize:12,color:'#2E7D32',marginBottom:10}}>{msg}</div>}
+            <button onClick={handleSave} disabled={saving} style={{width:'100%',padding:'12px 0',background:'#C4785A',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer',marginBottom:10}}>{saving?'שומרת...':'שמירת שינויים'}</button>
+            <button onClick={handleLogout} style={{width:'100%',padding:'12px 0',background:'white',color:'#B71C1C',border:'1px solid #EDE4D8',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer'}}>התנתקות</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function SetupScreen({onSave, isEdit}) {
   var type_state = React.useState('lmp');
   var type = type_state[0]; var setType = type_state[1];
@@ -5090,6 +5283,19 @@ function BirthPrep() {
 }
 
 export default function App() {
+  const [authSession,setAuthSession]=useState(undefined); // undefined = still checking, null = logged out, object = logged in
+  const [authView,setAuthView]=useState('normal'); // 'normal' | 'recovery'
+  const [showAccount,setShowAccount]=useState(false);
+
+  useEffect(()=>{
+    supabase.auth.getSession().then(({data})=>{setAuthSession(data.session);});
+    const {data:listener}=supabase.auth.onAuthStateChange((event,session)=>{
+      if(event==='PASSWORD_RECOVERY'){setAuthView('recovery');}
+      setAuthSession(session);
+    });
+    return ()=>{listener.subscription.unsubscribe();};
+  },[]);
+
   const [tab,setTab]=useState('home');
   const [modal,setModal]=useState(null);
   const [showSearch,setShowSearch]=useState(false);
@@ -5198,6 +5404,16 @@ export default function App() {
     setShowSetup(false);
   }
 
+  if (authSession===undefined) {
+    return <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#FBF7F2',fontFamily:'"Assistant",sans-serif',color:'#9B7860',fontSize:14}}>טוענת...</div>;
+  }
+  if (authView==='recovery') {
+    return <ResetPasswordScreen onDone={()=>setAuthView('normal')}/>;
+  }
+  if (!authSession) {
+    return <AuthScreen/>;
+  }
+
   if (showSetup) return <SetupScreen onSave={handleSaveProfile} isEdit={!!profile}/>;
 
   return (
@@ -5274,15 +5490,16 @@ export default function App() {
       <div style={{background:'#FFF8E1',padding:'8px 16px 10px',textAlign:'center',borderTop:`1px solid ${C.cd}`}}>
         <div style={{fontSize:10,color:'#5D4037',lineHeight:1.7,textAlign:'center',marginBottom:6}}>⚠️ המידע באפליקציה נועד למטרות מידע בלבד ואינו מחליף ייעוץ, אבחון או טיפול רפואי אישי.<br/>© Bloom – דפנה דולה | dafnadoula.co.il</div>
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:6}}>
-          {[['about','אודות'],['privacy','פרטיות'],['terms','כתב ויתור'],['feedback','משוב'],['contact','יצירת קשר'],['version','גרסה']].map(([id,label],i)=>(
+          {[['about','אודות'],['privacy','פרטיות'],['terms','כתב ויתור'],['feedback','משוב'],['contact','יצירת קשר'],['version','גרסה'],['account','החשבון שלי']].map(([id,label],i)=>(
             <React.Fragment key={id}>
               {i>0&&<span style={{fontSize:9,color:C.cd}}>•</span>}
-              <span onClick={()=>setModal(id)} style={{fontSize:9.5,fontWeight:300,color:C.txl,cursor:'pointer'}}>{label}</span>
+              <span onClick={()=>id==='account'?setShowAccount(true):setModal(id)} style={{fontSize:9.5,fontWeight:300,color:C.txl,cursor:'pointer'}}>{label}</span>
             </React.Fragment>
           ))}
         </div>
       </div>
       {modal&&<FooterModal id={modal} onClose={()=>setModal(null)}/>}
+      {showAccount&&<AccountScreen user={authSession.user} onClose={()=>setShowAccount(false)} onLoggedOut={()=>setShowAccount(false)}/>}
           {showPlus&&(
       <div style={{position:'fixed',inset:0,zIndex:999,background:'rgba(92,61,46,0.5)',backdropFilter:'blur(4px)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} onClick={()=>setShowPlus(false)}>
         <div onClick={e=>e.stopPropagation()} style={{background:C.cr,borderRadius:'24px 24px 0 0',padding:'28px 24px 40px',width:'100%',maxWidth:480,boxSizing:'border-box',maxHeight:'85vh',overflowY:'auto'}}>

@@ -1,5 +1,53 @@
 import React, { useState, useEffect, useRef } from "react";
-import { supabase } from "./supabaseClient";
+// ⚠️ PREVIEW-ONLY MOCK — real file uses "./supabaseClient" with an actual Supabase project.
+// This mock exists solely so the artifact viewer here in chat can render the app visually.
+// It fakes a logged-out state so you can see the AuthScreen, and simulates a fake login
+// after signing in with ANY email/password so you can also see the rest of the app.
+const supabase = {
+  auth: {
+    _listeners: [],
+    _session: null,
+    getSession: async () => ({ data: { session: supabase.auth._session } }),
+    onAuthStateChange: (cb) => {
+      supabase.auth._listeners.push(cb);
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    },
+    signUp: async ({ email }) => {
+      return { data: {}, error: null };
+    },
+    signInWithPassword: async ({ email }) => {
+      const fakeUser = { id: 'preview-user-id', email: email || 'demo@example.com' };
+      const fakeSession = { user: fakeUser };
+      supabase.auth._session = fakeSession;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
+      return { data: { session: fakeSession }, error: null };
+    },
+    signInWithOAuth: async () => {
+      const fakeUser = { id: 'preview-user-id', email: 'demo@google.com' };
+      const fakeSession = { user: fakeUser };
+      supabase.auth._session = fakeSession;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
+      return { error: null };
+    },
+    resetPasswordForEmail: async () => ({ data: {}, error: null }),
+    updateUser: async () => ({ data: {}, error: null }),
+    signOut: async () => {
+      supabase.auth._session = null;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_OUT', null));
+      return { error: null };
+    },
+  },
+  from: () => ({
+    select: () => ({
+      eq: () => ({
+        single: async () => ({ data: { full_name: 'דוגמה בלבד', phone: '', city: '' }, error: null }),
+      }),
+    }),
+    update: () => ({
+      eq: async () => ({ error: null }),
+    }),
+  }),
+};
 
 // ── Profile Storage ──
 const PROFILE_KEY = 'bloom_profile_v1';
@@ -1009,7 +1057,10 @@ function Home({go, profile, onEditProfile}) {
             <div onClick={function(){go('w');}} style={{background:'#3D2B1F',borderRadius:16,padding:'20px',marginBottom:16,cursor:'pointer'}}>
               <div style={{fontSize:10,color:'#9B7860',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:6}}>שבוע ההריון שלך</div>
               <div style={{fontSize:28,color:'#F5E6D3',fontWeight:600,marginBottom:4}}>שבוע {info.week} {info.day > 0 && '+ '+info.day+' ימים'}</div>
-              {info.daysLeft > 0 && <div style={{fontSize:12,color:'#C4A882',marginTop:4}}>נותרו כ-{info.daysLeft} ימים עד התל"מ</div>}
+              <div style={{fontSize:12,color:'#C4A882',marginTop:4,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <span>{info.daysLeft > 0 ? 'נותרו כ-'+info.daysLeft+' ימים עד התל"מ' : ''}</span>
+                <span onClick={function(e){e.stopPropagation();onEditProfile();}} style={{fontSize:10,color:'#C4785A',textDecoration:'underline',cursor:'pointer'}}>עריכת תאריך</span>
+              </div>
               <div style={{fontSize:10,color:'#7A5C40',marginTop:8,textDecoration:'underline'}}>לחצי לפרטי השבוע ←</div>
             </div>
           );
@@ -5068,10 +5119,10 @@ function AccountScreen({user, onClose, onLoggedOut}) {
   );
 }
 
-function SetupScreen({onSave, isEdit}) {
-  var type_state = React.useState('lmp');
+function SetupScreen({onSave, isEdit, profile}) {
+  var type_state = React.useState(profile ? profile.type : 'lmp');
   var type = type_state[0]; var setType = type_state[1];
-  var date_state = React.useState('');
+  var date_state = React.useState(profile ? profile.date : '');
   var date = date_state[0]; var setDate = date_state[1];
   var err_state = React.useState('');
   var err = err_state[0]; var setErr = err_state[1];
@@ -5414,7 +5465,7 @@ export default function App() {
     return <AuthScreen/>;
   }
 
-  if (showSetup) return <SetupScreen onSave={handleSaveProfile} isEdit={!!profile}/>;
+  if (showSetup) return <SetupScreen onSave={handleSaveProfile} isEdit={!!profile} profile={profile}/>;
 
   return (
     <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',display:'flex',flexDirection:'column',fontFamily:'"Assistant","Heebo",sans-serif',background:C.cr,direction:'rtl'}}>

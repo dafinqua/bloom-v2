@@ -10,7 +10,9 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "@supabase/supabase-js": "^2.112.2"
+    "@supabase/supabase-js": "^2.112.2",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/preferences": "^7.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",

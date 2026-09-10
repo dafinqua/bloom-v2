@@ -5375,6 +5375,23 @@ function AdminDashboard() {
         <h1 style={{ color: "#5C3D2E", marginBottom: 6 }}>
           Bloom — דשבורד ניהול
         </h1>
+        <button
+  onClick={async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  }}
+  style={{
+    border: "1px solid #C4785A",
+    background: "white",
+    color: "#5C3D2E",
+    borderRadius: 10,
+    padding: "8px 14px",
+    cursor: "pointer",
+    marginBottom: 12
+  }}
+>
+  התנתקות
+</button>
 
         <p style={{ color: "#9B7860", marginTop: 0 }}>
           נתוני שימוש באפליקציה

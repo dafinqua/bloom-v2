@@ -5302,24 +5302,33 @@ function BirthPrep() {
 }
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
+  const [screens, setScreens] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function loadStats() {
-      const { data, error } = await supabase.rpc("get_analytics_summary");
+    async function loadDashboard() {
+      const [statsResult, screensResult] = await Promise.all([
+        supabase.rpc("get_analytics_summary"),
+        supabase.rpc("get_top_screens"),
+      ]);
 
-      if (error) {
-        console.error("[Bloom dashboard]", error);
+      if (statsResult.error || screensResult.error) {
+        console.error(
+          "[Bloom dashboard]",
+          statsResult.error || screensResult.error
+        );
         setError(true);
         return;
       }
 
-      if (data && data.length > 0) {
-        setStats(data[0]);
+      if (statsResult.data && statsResult.data.length > 0) {
+        setStats(statsResult.data[0]);
       }
+
+      setScreens(screensResult.data || []);
     }
 
-    loadStats();
+    loadDashboard();
   }, []);
 
   if (error) {
@@ -5404,6 +5413,74 @@ function AdminDashboard() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div style={{ marginTop: 45 }}>
+          <h2 style={{ color: "#5C3D2E", marginBottom: 18 }}>
+            המסכים הכי נצפים
+          </h2>
+
+          <div
+            style={{
+              background: "white",
+              borderRadius: 16,
+              overflow: "hidden",
+              boxShadow: "0 2px 10px rgba(92,61,46,0.08)",
+            }}
+          >
+            {screens.length === 0 ? (
+              <div style={{ padding: 20, color: "#9B7860" }}>
+                עדיין אין נתוני צפייה.
+              </div>
+            ) : (
+              screens.map((screen, index) => (
+                <div
+                  key={`${screen.screen_name}-${index}`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "16px 20px",
+                    borderBottom:
+                      index < screens.length - 1
+                        ? "1px solid #F1E8E1"
+                        : "none",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        color: "#5C3D2E",
+                      }}
+                    >
+                      {screen.screen_name}
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: "#9B7860",
+                        marginTop: 3,
+                      }}
+                    >
+                      {screen.unique_users} משתמשות
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 600,
+                      color: "#5C3D2E",
+                    }}
+                  >
+                    {screen.total_views} צפיות
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>

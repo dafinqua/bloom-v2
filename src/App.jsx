@@ -5304,6 +5304,12 @@ function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [screens, setScreens] = useState([]);
   const [error, setError] = useState(false);
+  useEffect(() => {
+  supabase.auth.getSession().then(({ data }) => {
+    console.log("ADMIN SESSION:", data.session);
+    console.log("ADMIN EMAIL:", data.session?.user?.email);
+  });
+}, []);
 
   useEffect(() => {
     async function loadDashboard() {

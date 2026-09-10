@@ -1,53 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-// ⚠️ PREVIEW-ONLY MOCK — real file uses "./supabaseClient" with an actual Supabase project.
-// This mock exists solely so the artifact viewer here in chat can render the app visually.
-// It fakes a logged-out state so you can see the AuthScreen, and simulates a fake login
-// after signing in with ANY email/password so you can also see the rest of the app.
-const supabase = {
-  auth: {
-    _listeners: [],
-    _session: null,
-    getSession: async () => ({ data: { session: supabase.auth._session } }),
-    onAuthStateChange: (cb) => {
-      supabase.auth._listeners.push(cb);
-      return { data: { subscription: { unsubscribe: () => {} } } };
-    },
-    signUp: async ({ email }) => {
-      return { data: {}, error: null };
-    },
-    signInWithPassword: async ({ email }) => {
-      const fakeUser = { id: 'preview-user-id', email: email || 'demo@example.com' };
-      const fakeSession = { user: fakeUser };
-      supabase.auth._session = fakeSession;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
-      return { data: { session: fakeSession }, error: null };
-    },
-    signInWithOAuth: async () => {
-      const fakeUser = { id: 'preview-user-id', email: 'demo@google.com' };
-      const fakeSession = { user: fakeUser };
-      supabase.auth._session = fakeSession;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
-      return { error: null };
-    },
-    resetPasswordForEmail: async () => ({ data: {}, error: null }),
-    updateUser: async () => ({ data: {}, error: null }),
-    signOut: async () => {
-      supabase.auth._session = null;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_OUT', null));
-      return { error: null };
-    },
-  },
-  from: () => ({
-    select: () => ({
-      eq: () => ({
-        single: async () => ({ data: { full_name: 'דוגמה בלבד', phone: '', city: '' }, error: null }),
-      }),
-    }),
-    update: () => ({
-      eq: async () => ({ error: null }),
-    }),
-  }),
-};
+import { supabase } from "./supabaseClient";
+import { Capacitor } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
+import { getAuthRedirectUrl, initNativeAuthListener } from "./nativeAuth";
+import { logAppOpen, trackScreen } from "./analytics";
+
+const isNativeApp = Capacitor.isNativePlatform();
+// Opens http(s) links in the system browser on native Android (so they don't get
+// trapped inside the app's WebView with no way back); on web this is unchanged.
+function openExternal(url) {
+  if (isNativeApp && /^https?:\/\//.test(url)) {
+    Browser.open({ url });
+  } else {
+    openExternal(url);
+  }
+}
 
 // ── Profile Storage ──
 const PROFILE_KEY = 'bloom_profile_v1';
@@ -1033,7 +1000,7 @@ function FooterModal({id,onClose}) {
         {id==='contact'&&(
           <div style={{display:'flex',gap:8,marginTop:20}}>
             <button onClick={()=>window.open('mailto:dafinqua1@gmail.com','_blank')} style={{flex:1,padding:'13px 0',background:'#C4785A',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer'}}>📧 שלחי מייל</button>
-            <button onClick={()=>window.open('https://wa.me/972544521285','_blank')} style={{flex:1,padding:'13px 0',background:'#25D366',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer'}}>💬 וואטסאפ</button>
+            <button onClick={()=>openExternal('https://wa.me/972544521285')} style={{flex:1,padding:'13px 0',background:'#25D366',color:'white',border:'none',borderRadius:12,fontFamily:'inherit',fontSize:14,cursor:'pointer'}}>💬 וואטסאפ</button>
           </div>
         )}
       </div>
@@ -1688,7 +1655,7 @@ function HospitalGuide() {
           </div>
           {open===i&&<div style={{background:C.cr}}>
             <div style={{padding:'12px 16px',borderBottom:`1px solid ${C.cd}`}}>
-              <button onClick={()=>window.open(h.url,'_blank')} style={{width:'100%',padding:11,background:'#E3F2FD',color:'#1565C0',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+              <button onClick={()=>openExternal(h.url)} style={{width:'100%',padding:11,background:'#E3F2FD',color:'#1565C0',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
                 🌐 אתר מחלקת היולדות
               </button>
             </div>
@@ -1720,7 +1687,7 @@ function HospitalGuide() {
               <div style={{fontSize:11,color:C.txl,lineHeight:1.6,fontStyle:'italic'}}>{h.disclaimer}</div>
             </div>
             <div style={{padding:'12px 16px'}}>
-              <button onClick={()=>window.open(`https://www.waze.com/ul?q=${encodeURIComponent(h.name)}`,'_blank')} style={{width:'100%',padding:9,background:'#4285F4',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:12,cursor:'pointer'}}>📍 ניווט למיון יולדות</button>
+              <button onClick={()=>openExternal(`https://www.waze.com/ul?q=${encodeURIComponent(h.name)}`)} style={{width:'100%',padding:9,background:'#4285F4',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:12,cursor:'pointer'}}>📍 ניווט למיון יולדות</button>
             </div>
           </div>}
         </div>
@@ -2207,7 +2174,7 @@ function BirthTools({initTab='meditation'}={}) {
             {id:"4tWZ3seENMlXgGdd0YmDwc",name:"Labour Hypnobirthing & Relaxation",desc:"77 שירים – 5K שומרים",emoji:"🧘",mood:"היפנובירת'ינג ומדיטציה"},
             {id:"6DkLHjHYzhkJ9aQnmtc5xN",name:"Calming Playlist for Birthing",desc:"לידה שקטה ורגועה",emoji:"🕊️",mood:"אמביינט ושקט"}
           ].map((pl,i)=>(
-            <div key={i} onClick={()=>window.open(`https://open.spotify.com/playlist/${pl.id}`,'_blank')} style={{...card,cursor:'pointer',display:'flex',alignItems:'center',gap:14,padding:14,border:`1px solid #1DB954`,marginBottom:8}}>
+            <div key={i} onClick={()=>openExternal(`https://open.spotify.com/playlist/${pl.id}`)} style={{...card,cursor:'pointer',display:'flex',alignItems:'center',gap:14,padding:14,border:`1px solid #1DB954`,marginBottom:8}}>
               <div style={{width:48,height:48,borderRadius:10,background:'linear-gradient(135deg,#1DB954,#158a3e)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>
                 {pl.emoji}
               </div>
@@ -2310,7 +2277,7 @@ function ExCard({ex}) {
           <div style={{marginBottom:6,fontSize:13,color:C.tx}}><strong>תדירות בהריון:</strong> {ex.freq}</div>
           <div style={{marginBottom:6,fontSize:13,color:C.tx}}><strong>בזמן לידה:</strong> {ex.labor}</div>
           <div style={{marginBottom:10,padding:'8px 10px',background:'#FFF8E1',borderRadius:8,fontSize:12,color:'#5D4037'}}><strong>מתי לא לבצע:</strong> {ex.contra}</div>
-          <div onClick={()=>window.open(ex.video,'_blank')} style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',background:'#E3F2FD',borderRadius:8,cursor:'pointer'}}>
+          <div onClick={()=>openExternal(ex.video)} style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',background:'#E3F2FD',borderRadius:8,cursor:'pointer'}}>
             <span style={{fontSize:16}}>▶</span>
             <span style={{fontSize:12,color:'#1565C0',textDecoration:'underline'}}>צפייה בסרטון הדרכה</span>
           </div>
@@ -2932,7 +2899,7 @@ function Rights() {
       ))}
       <div style={card}>
         <div style={{fontSize:12,color:C.txl,lineHeight:1.7}}>המידע בפרק זה נועד לספק מידע כללי על זכויות בהריון ולאחר הלידה. למרות שנעשה מאמץ לשמור על המידע מעודכן, חוקים, תקנות ונהלים עשויים להשתנות. מומלץ לוודא את המידע מול הגורמים הרשמיים.</div>
-        <div onClick={()=>window.open('https://www.kolzchut.org.il/','_blank')} style={{marginTop:10,display:'flex',alignItems:'center',gap:6,padding:'8px 12px',background:C.cr,borderRadius:8,cursor:'pointer',width:'fit-content'}}>
+        <div onClick={()=>openExternal('https://www.kolzchut.org.il/')} style={{marginTop:10,display:'flex',alignItems:'center',gap:6,padding:'8px 12px',background:C.cr,borderRadius:8,cursor:'pointer',width:'fit-content'}}>
           <span style={{fontSize:13,color:C.t}}>🔗 כל זכות</span>
         </div>
       </div>
@@ -3176,7 +3143,7 @@ function Tools() {
       )}
 
       {subTab==='books'&&<div>{RESOURCES.books.map((b,i)=><BookCard key={i} b={b}/>)}</div>}
-      {subTab==='podcasts'&&<div>{RESOURCES.podcasts.map((p,i)=><div key={i} style={{...card,padding:0,overflow:'hidden'}}><div style={{width:'100%',height:130,background:`linear-gradient(135deg,${p.color},${p.color}99)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:6}}><div style={{width:64,height:64,borderRadius:14,background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,color:'white',fontWeight:700}}>{p.initials}</div><div style={{fontSize:11,color:'rgba(255,255,255,0.8)',letterSpacing:1}}>🎙️ PODCAST</div></div><div style={{padding:14}}><div style={{fontFamily:'Georgia,serif',fontSize:16,color:C.br,marginBottom:6}}>{p.title}</div><div style={bdy}>{p.desc}</div><button onClick={()=>window.open(p.spotify,'_blank')} style={{marginTop:10,width:'100%',padding:'10px 0',background:'#1DB954',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',fontWeight:600}}>🎧 להאזנה ב-Spotify</button></div></div>)}</div>}
+      {subTab==='podcasts'&&<div>{RESOURCES.podcasts.map((p,i)=><div key={i} style={{...card,padding:0,overflow:'hidden'}}><div style={{width:'100%',height:130,background:`linear-gradient(135deg,${p.color},${p.color}99)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:6}}><div style={{width:64,height:64,borderRadius:14,background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,color:'white',fontWeight:700}}>{p.initials}</div><div style={{fontSize:11,color:'rgba(255,255,255,0.8)',letterSpacing:1}}>🎙️ PODCAST</div></div><div style={{padding:14}}><div style={{fontFamily:'Georgia,serif',fontSize:16,color:C.br,marginBottom:6}}>{p.title}</div><div style={bdy}>{p.desc}</div><button onClick={()=>openExternal(p.spotify)} style={{marginTop:10,width:'100%',padding:'10px 0',background:'#1DB954',color:'white',border:'none',borderRadius:10,fontFamily:'inherit',fontSize:13,cursor:'pointer',fontWeight:600}}>🎧 להאזנה ב-Spotify</button></div></div>)}</div>}
       {subTab==='oils'&&(
         <div>
           <div style={{...card,background:`linear-gradient(135deg,#F3E5F5,${C.cr})`}}>
@@ -3514,7 +3481,7 @@ function DafnaBooking() {
   const waNumber = "972544521285";
   function openWhatsApp(service) {
     const msg = encodeURIComponent(`שלום דפנה! אני מעוניינת לקבוע טיפול: ${service}. אשמח לשמוע על זמינות ומחירים. תודה!`);
-    window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+    openExternal(`https://wa.me/${waNumber}?text=${msg}`);
   }
 
   return (
@@ -3523,11 +3490,11 @@ function DafnaBooking() {
         <div style={{fontSize:48,marginBottom:8}}>🌸</div>
         <div style={{fontFamily:'inherit',fontSize:24,fontWeight:700,marginBottom:4}}>דפנה – דולה ומטפלת הוליסטית</div>
         <div style={{fontSize:13,opacity:0.85,lineHeight:1.6}}>דולה מוסמכת | רפלקסולוגיה | דיקור סיני<br/>הדרכת הנקה | פמה | עיסוי</div>
-        <div onClick={()=>window.open('https://dafnadoula.co.il','_blank')} style={{marginTop:12,padding:'8px 16px',background:'rgba(255,255,255,0.15)',borderRadius:20,fontSize:13,display:'inline-block',cursor:'pointer'}}>
+        <div onClick={()=>openExternal('https://dafnadoula.co.il')} style={{marginTop:12,padding:'8px 16px',background:'rgba(255,255,255,0.15)',borderRadius:20,fontSize:13,display:'inline-block',cursor:'pointer'}}>
           📍 dafnadoula.co.il
         </div>
       </div>
-      <div onClick={()=>window.open('https://instagram.com/dafnadoula','_blank')} style={{...card,cursor:'pointer',background:`linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)`,color:'white',textAlign:'center',padding:18}}>
+      <div onClick={()=>openExternal('https://instagram.com/dafnadoula')} style={{...card,cursor:'pointer',background:`linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)`,color:'white',textAlign:'center',padding:18}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:6}}>
           <img src={PROFILE_PHOTO} alt="דפנה" style={{width:32,height:32,borderRadius:'50%',objectFit:'cover',border:'2px solid white'}}/>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838a4 4 0 100 8 4 4 0 000-8zm6.406-2.812a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
@@ -3563,7 +3530,7 @@ function DafnaBooking() {
       <div style={{...card,background:`linear-gradient(135deg,#FFF3E0,#FCE4EC)`,textAlign:'center'}}>
         <div style={{fontSize:14,color:C.br,lineHeight:1.8}}>
           <strong>📞 יצירת קשר ישיר:</strong><br/>
-          <button onClick={()=>window.open('https://wa.me/'+waNumber,'_blank')} style={{marginTop:10,padding:'12px 28px',background:'#25D366',color:'white',border:'none',borderRadius:25,fontFamily:'inherit',fontSize:15,fontWeight:500,cursor:'pointer'}}>
+          <button onClick={()=>openExternal('https://wa.me/'+waNumber)} style={{marginTop:10,padding:'12px 28px',background:'#25D366',color:'white',border:'none',borderRadius:25,fontFamily:'inherit',fontSize:15,fontWeight:500,cursor:'pointer'}}>
             💬 WhatsApp – דפנה דולה
           </button>
         </div>
@@ -4737,7 +4704,7 @@ function Coupons() {
             <button onClick={()=>copyCode(c.code,c.id)} style={{padding:'6px 14px',background:copied===c.id?C.sg:C.t,color:'white',border:'none',borderRadius:8,cursor:'pointer',fontFamily:'inherit',fontSize:13,transition:'all 0.2s',flexShrink:0,marginRight:8}}>{copied===c.id?'✓ הועתק!':'📋 העתקי'}</button>
           </div>
           <div style={{display:'flex',gap:8}}>
-            <button onClick={()=>window.open(c.url,'_blank')} style={{flex:1,padding:9,background:C.t,color:'white',border:'none',borderRadius:8,cursor:'pointer',fontFamily:'inherit',fontSize:13}}>🌐 למימוש ההטבה</button>
+            <button onClick={()=>openExternal(c.url)} style={{flex:1,padding:9,background:C.t,color:'white',border:'none',borderRadius:8,cursor:'pointer',fontFamily:'inherit',fontSize:13}}>🌐 למימוש ההטבה</button>
           </div>
         </div>
       ))}
@@ -4745,7 +4712,7 @@ function Coupons() {
         <div style={{fontSize:13,color:'#2E7D32',lineHeight:1.8}}>
           <strong>🎁 קוד חבר מביאה חבר</strong><br/>
           הפניי חברה לאפליקציה – שתיכן תקבלנה הנחה של 5% על טיפול הבא!<br/>
-          <button onClick={()=>{const msg=encodeURIComponent('שלום! ממליצה על אפליקציית דפנה דולה – מלווה הריון ולידה. מדהים! 🌸'); window.open('https://wa.me/?text='+msg,'_blank');}} style={{marginTop:8,padding:'8px 20px',background:'#2E7D32',color:'white',border:'none',borderRadius:20,fontFamily:'inherit',fontSize:13,cursor:'pointer'}}>💚 שתפי חברה</button>
+          <button onClick={()=>{const msg=encodeURIComponent('שלום! ממליצה על אפליקציית דפנה דולה – מלווה הריון ולידה. מדהים! 🌸'); openExternal('https://wa.me/?text='+msg);}} style={{marginTop:8,padding:'8px 20px',background:'#2E7D32',color:'white',border:'none',borderRadius:20,fontFamily:'inherit',fontSize:13,cursor:'pointer'}}>💚 שתפי חברה</button>
         </div>
       </div>
     </div>
@@ -4962,7 +4929,7 @@ function AuthScreen() {
         if(error) throw error;
         setMsg('נשלח מייל אימות לכתובת שלך. יש ללחוץ על הקישור כדי להשלים את ההרשמה, ואז לחזור ולהתחבר.');
       } else if(mode==='forgot'){
-        const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+        const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:getAuthRedirectUrl()});
         if(error) throw error;
         setMsg('נשלח מייל עם קישור לאיפוס סיסמה.');
       } else {
@@ -4979,7 +4946,7 @@ function AuthScreen() {
 
   async function handleGoogle(){
     setErr('');
-    const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
+    const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:getAuthRedirectUrl()}});
     if(error) setErr(translateAuthError(error.message));
   }
 
@@ -5339,6 +5306,8 @@ export default function App() {
   const [showAccount,setShowAccount]=useState(false);
 
   useEffect(()=>{
+    initNativeAuthListener(()=>setAuthView('recovery'));
+    logAppOpen();
     supabase.auth.getSession().then(({data})=>{setAuthSession(data.session);});
     const {data:listener}=supabase.auth.onAuthStateChange((event,session)=>{
       if(event==='PASSWORD_RECOVERY'){setAuthView('recovery');}
@@ -5357,7 +5326,7 @@ export default function App() {
   const [tabStack,setTabStack]=useState(['home']);
   const currentTab=tabStack[tabStack.length-1];
   // Keep tab in sync for legacy code
-  useEffect(()=>{setTab(currentTab);},[currentTab]);
+  useEffect(()=>{setTab(currentTab);if(!showSetup)trackScreen(currentTab);},[currentTab,showSetup]);
   const goTo=(t)=>{
     setTabStack(s=>[...s,t]);
     setTab(t);

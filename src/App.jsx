@@ -5300,11 +5300,25 @@ function BirthPrep() {
     </div>
   );
 }
-
+function AdminDashboard() {
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#FAF6F0",
+      padding: "30px",
+      direction: "rtl"
+    }}>
+      <h1>Bloom — דשבורד ניהול</h1>
+      <p>הדשבורד מחובר ✓</p>
+    </div>
+  );
+}
 export default function App() {
   const [authSession,setAuthSession]=useState(undefined); // undefined = still checking, null = logged out, object = logged in
   const [authView,setAuthView]=useState('normal'); // 'normal' | 'recovery'
   const [showAccount,setShowAccount]=useState(false);
+
+
 
   useEffect(()=>{
     initNativeAuthListener(()=>setAuthView('recovery'));
@@ -5424,7 +5438,12 @@ export default function App() {
     setProfile(p);
     setShowSetup(false);
   }
+const isAdminDashboard =
+  new URLSearchParams(window.location.search).get("admin") === "bloom";
 
+if (isAdminDashboard) {
+  return <AdminDashboard />;
+}
   if (authSession===undefined) {
     return <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#FBF7F2',fontFamily:'"Assistant",sans-serif',color:'#9B7860',fontSize:14}}>טוענת...</div>;
   }

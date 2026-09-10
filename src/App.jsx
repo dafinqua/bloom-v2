@@ -5301,60 +5301,152 @@ function BirthPrep() {
   );
 }
 function AdminDashboard() {
-  const [stats, setStats] = useState(null);
-  const [screens, setScreens] = useState([]);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
+  const screenLabels = {
+    home: "בית",
+    cat_pregnancy: "הריון",
+    w: "תוכן שבועי",
+    spinning: "Spinning Babies",
+    birthprep: "מתכוננות ללידה",
+    cl: "צ'קליסטים",
+    cx: "מצבים רפואיים",
+    rights: "זכויות",
+    tools: "עזרים",
+    names: "שמות",
+    wallet: "תיק רפואי",
+    postterm: "40+",
+    j: "יומן",
+    ai: "Bloom AI",
 
-  useEffect(() => {
-    async function loadDashboard() {
-      const [statsResult, screensResult] = await Promise.all([
-        supabase.rpc("get_analytics_summary"),
-        supabase.rpc("get_top_screens"),
-      ]);
+    cat_birth: "לידה",
+    stages: "שלבים ותחנות",
+    triage: "מיון יולדות",
+    c: "טיימר צירים",
+    birthtypes: "סוגי לידות",
+    hospitals: "בתי יולדות",
+    bp: "תוכנית לידה",
+    induction: "התערבויות",
+    birthtools: "כלים ללידה",
+    water: "ירידת מים",
+    warning: "סימני אזהרה",
 
-      if (statsResult.error || screensResult.error) {
-        console.error(
-          "[Bloom dashboard]",
-          statsResult.error || screensResult.error
-        );
-        setError(true);
-        return;
-      }
+    cat_postbirth: "אחרי לידה",
+    bf: "הנקה ואחרי לידה",
+    postpartum: "התאוששות",
+    baby: "הכל לתינוק",
+    nightchat: "ערות לילה",
+    coupons: "קופונים",
+  };
 
-      if (statsResult.data && statsResult.data.length > 0) {
-        setStats(statsResult.data[0]);
-      }
+  async function loadDashboard() {
+    setLoading(true);
+    setError(false);
 
-      setScreens(screensResult.data || []);
+    const { data: dashboardData, error: dashboardError } =
+      await supabase.rpc("get_analytics_dashboard");
+
+    if (dashboardError) {
+      console.error("[Bloom dashboard]", dashboardError);
+      setError(true);
+      setLoading(false);
+      return;
     }
 
+    setData(dashboardData);
+    setLastUpdated(new Date());
+    setLoading(false);
+  }
+
+  useEffect(() => {
     loadDashboard();
   }, []);
 
   if (error) {
     return (
-      <div style={{ padding: 30, direction: "rtl" }}>
-        לא ניתן לטעון את נתוני הדשבורד.
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#FAF6F0",
+          padding: 30,
+          direction: "rtl",
+          fontFamily: '"Assistant", sans-serif',
+        }}
+      >
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h1 style={{ color: "#5C3D2E" }}>
+            Bloom — דשבורד ניהול
+          </h1>
+
+          <p style={{ color: "#9B7860" }}>
+            לא ניתן לטעון את נתוני הדשבורד.
+          </p>
+
+          <button
+            onClick={async () => {
+              await supabase.auth.signOut();
+              window.location.href = "/";
+            }}
+            style={{
+              border: "1px solid #C4785A",
+              background: "white",
+              color: "#5C3D2E",
+              borderRadius: 10,
+              padding: "8px 14px",
+              cursor: "pointer",
+            }}
+          >
+            התנתקות
+          </button>
+        </div>
       </div>
     );
   }
 
-  if (!stats) {
+  if (loading || !data) {
     return (
-      <div style={{ padding: 30, direction: "rtl" }}>
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#FAF6F0",
+          color: "#9B7860",
+          direction: "rtl",
+          fontFamily: '"Assistant", sans-serif',
+        }}
+      >
         טוענת נתונים...
       </div>
     );
   }
 
+  const summary = data.summary || {};
+  const platforms = data.platforms || [];
+  const daily = data.daily || [];
+  const newUsersDaily = data.new_users_daily || [];
+  const retention = data.retention || {};
+  const top7 = data.top_screens_7_days || [];
+  const top30 = data.top_screens_30_days || [];
+
   const cards = [
-    ["היום", stats.users_today],
-    ["7 ימים", stats.users_7_days],
-    ["30 ימים", stats.users_30_days],
-    ["סה״כ משתמשות", stats.users_total],
-    ["פתיחות אפליקציה", stats.total_app_opens],
+    ["היום", summary.users_today ?? 0],
+    ["7 ימים", summary.users_7_days ?? 0],
+    ["30 ימים", summary.users_30_days ?? 0],
+    ["סה״כ משתמשות", summary.users_total ?? 0],
+    ["פתיחות אפליקציה", summary.app_opens ?? 0],
+    ["Sessions", summary.sessions ?? 0],
+    ["מסכים לביקור", summary.screens_per_session ?? 0],
   ];
+
+  const maxActiveUsers = Math.max(
+    1,
+    ...daily.map((d) => Number(d.active_users || 0))
+  );
 
   return (
     <div
@@ -5366,36 +5458,100 @@ function AdminDashboard() {
         fontFamily: '"Assistant", sans-serif',
       }}
     >
-      <div style={{ maxWidth: 900, margin: "0 auto" }}>
-        <h1 style={{ color: "#5C3D2E", marginBottom: 6 }}>
-          Bloom — דשבורד ניהול
-        </h1>
-        <button
-  onClick={async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  }}
-  style={{
-    border: "1px solid #C4785A",
-    background: "white",
-    color: "#5C3D2E",
-    borderRadius: 10,
-    padding: "8px 14px",
-    cursor: "pointer",
-    marginBottom: 12
-  }}
->
-  התנתקות
-</button>
+      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
 
-        <p style={{ color: "#9B7860", marginTop: 0 }}>
-          נתוני שימוש באפליקציה
-        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 16,
+            flexWrap: "wrap",
+          }}
+        >
+          <div>
+            <h1
+              style={{
+                color: "#5C3D2E",
+                marginBottom: 6,
+              }}
+            >
+              Bloom — דשבורד ניהול
+            </h1>
+
+            <p
+              style={{
+                color: "#9B7860",
+                marginTop: 0,
+              }}
+            >
+              נתוני שימוש באפליקציה
+            </p>
+
+            {lastUpdated && (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "#A8907F",
+                  marginTop: 4,
+                }}
+              >
+                עודכן לאחרונה:{" "}
+                {lastUpdated.toLocaleTimeString("he-IL", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={loadDashboard}
+              style={{
+                border: "none",
+                background: "#C4785A",
+                color: "white",
+                borderRadius: 10,
+                padding: "9px 14px",
+                cursor: "pointer",
+                fontFamily: '"Assistant", sans-serif',
+              }}
+            >
+              רענון נתונים
+            </button>
+
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+                window.location.href = "/";
+              }}
+              style={{
+                border: "1px solid #C4785A",
+                background: "white",
+                color: "#5C3D2E",
+                borderRadius: 10,
+                padding: "9px 14px",
+                cursor: "pointer",
+                fontFamily: '"Assistant", sans-serif',
+              }}
+            >
+              התנתקות
+            </button>
+          </div>
+        </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(145px, 1fr))",
             gap: 14,
             marginTop: 30,
           }}
@@ -5407,7 +5563,8 @@ function AdminDashboard() {
                 background: "white",
                 borderRadius: 16,
                 padding: 20,
-                boxShadow: "0 2px 10px rgba(92,61,46,0.08)",
+                boxShadow:
+                  "0 2px 10px rgba(92,61,46,0.08)",
               }}
             >
               <div
@@ -5422,7 +5579,7 @@ function AdminDashboard() {
 
               <div
                 style={{
-                  fontSize: 32,
+                  fontSize: 30,
                   fontWeight: 600,
                   color: "#5C3D2E",
                 }}
@@ -5433,73 +5590,329 @@ function AdminDashboard() {
           ))}
         </div>
 
-        <div style={{ marginTop: 45 }}>
-          <h2 style={{ color: "#5C3D2E", marginBottom: 18 }}>
-            המסכים הכי נצפים
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 16,
+            marginTop: 32,
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              borderRadius: 16,
+              padding: 20,
+              boxShadow:
+                "0 2px 10px rgba(92,61,46,0.08)",
+            }}
+          >
+            <h2
+              style={{
+                color: "#5C3D2E",
+                fontSize: 18,
+                marginTop: 0,
+              }}
+            >
+              Web מול Android
+            </h2>
+
+            {platforms.length === 0 ? (
+              <div style={{ color: "#9B7860" }}>
+                עדיין אין נתונים.
+              </div>
+            ) : (
+              platforms.map((p) => (
+                <div
+                  key={p.platform}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "10px 0",
+                    borderBottom:
+                      "1px solid #F1E8E1",
+                  }}
+                >
+                  <span>
+                    {p.platform === "android"
+                      ? "Android"
+                      : "Web"}
+                  </span>
+                  <strong>{p.users} משתמשות</strong>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div
+            style={{
+              background: "white",
+              borderRadius: 16,
+              padding: 20,
+              boxShadow:
+                "0 2px 10px rgba(92,61,46,0.08)",
+            }}
+          >
+            <h2
+              style={{
+                color: "#5C3D2E",
+                fontSize: 18,
+                marginTop: 0,
+              }}
+            >
+              חדשות מול חוזרות
+            </h2>
+
+            <div
+              style={{
+                display: "flex",
+                gap: 20,
+                marginTop: 16,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    color: "#9B7860",
+                  }}
+                >
+                  משתמשות חדשות
+                </div>
+                <div
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 600,
+                    color: "#5C3D2E",
+                  }}
+                >
+                  {retention.new_users ?? 0}
+                </div>
+              </div>
+
+              <div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    color: "#9B7860",
+                  }}
+                >
+                  משתמשות חוזרות
+                </div>
+                <div
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 600,
+                    color: "#5C3D2E",
+                  }}
+                >
+                  {retention.returning_users ?? 0}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 36 }}>
+          <h2 style={{ color: "#5C3D2E" }}>
+            פעילות ב־30 הימים האחרונים
           </h2>
 
           <div
             style={{
               background: "white",
               borderRadius: 16,
-              overflow: "hidden",
-              boxShadow: "0 2px 10px rgba(92,61,46,0.08)",
+              padding: 20,
+              boxShadow:
+                "0 2px 10px rgba(92,61,46,0.08)",
+              overflowX: "auto",
             }}
           >
-            {screens.length === 0 ? (
-              <div style={{ padding: 20, color: "#9B7860" }}>
-                עדיין אין נתוני צפייה.
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                gap: 5,
+                height: 170,
+                minWidth: 600,
+              }}
+            >
+              {daily.map((day) => {
+                const value =
+                  Number(day.active_users || 0);
+
+                return (
+                  <div
+                    key={day.date}
+                    title={`${day.date}: ${value} משתמשות`}
+                    style={{
+                      flex: 1,
+                      minWidth: 10,
+                      height: `${
+                        10 +
+                        (value / maxActiveUsers) * 140
+                      }px`,
+                      background: "#C4785A",
+                      borderRadius: "5px 5px 0 0",
+                      opacity: value === 0 ? 0.2 : 1,
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: 11,
+                color: "#9B7860",
+                marginTop: 8,
+              }}
+            >
+              <span>לפני 30 יום</span>
+              <span>היום</span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 36 }}>
+          <h2 style={{ color: "#5C3D2E" }}>
+            משתמשות חדשות לפי יום
+          </h2>
+
+          <div
+            style={{
+              background: "white",
+              borderRadius: 16,
+              padding: 20,
+              boxShadow:
+                "0 2px 10px rgba(92,61,46,0.08)",
+            }}
+          >
+            {newUsersDaily.length === 0 ? (
+              <div style={{ color: "#9B7860" }}>
+                עדיין אין נתונים.
               </div>
             ) : (
-              screens.map((screen, index) => (
-                <div
-                  key={`${screen.screen_name}-${index}`}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "16px 20px",
-                    borderBottom:
-                      index < screens.length - 1
-                        ? "1px solid #F1E8E1"
-                        : "none",
-                  }}
-                >
-                  <div>
-                    <div
-                      style={{
-                        fontWeight: 600,
-                        color: "#5C3D2E",
-                      }}
-                    >
-                      {screen.screen_name}
-                    </div>
-
-                    <div
-                      style={{
-                        fontSize: 12,
-                        color: "#9B7860",
-                        marginTop: 3,
-                      }}
-                    >
-                      {screen.unique_users} משתמשות
-                    </div>
-                  </div>
-
+              newUsersDaily
+                .slice()
+                .reverse()
+                .slice(0, 10)
+                .map((day) => (
                   <div
+                    key={day.date}
                     style={{
-                      fontSize: 20,
-                      fontWeight: 600,
-                      color: "#5C3D2E",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "10px 0",
+                      borderBottom:
+                        "1px solid #F1E8E1",
                     }}
                   >
-                    {screen.total_views} צפיות
+                    <span>{day.date}</span>
+                    <strong>
+                      {day.new_users} חדשות
+                    </strong>
                   </div>
-                </div>
-              ))
+                ))
             )}
           </div>
         </div>
+
+        <TopScreensSection
+          title="המסכים המובילים — 7 ימים"
+          screens={top7}
+          screenLabels={screenLabels}
+        />
+
+        <TopScreensSection
+          title="המסכים המובילים — 30 ימים"
+          screens={top30}
+          screenLabels={screenLabels}
+        />
+      </div>
+    </div>
+  );
+}
+
+function TopScreensSection({
+  title,
+  screens,
+  screenLabels,
+}) {
+  return (
+    <div style={{ marginTop: 36 }}>
+      <h2 style={{ color: "#5C3D2E" }}>
+        {title}
+      </h2>
+
+      <div
+        style={{
+          background: "white",
+          borderRadius: 16,
+          overflow: "hidden",
+          boxShadow:
+            "0 2px 10px rgba(92,61,46,0.08)",
+        }}
+      >
+        {!screens || screens.length === 0 ? (
+          <div
+            style={{
+              padding: 20,
+              color: "#9B7860",
+            }}
+          >
+            עדיין אין נתונים.
+          </div>
+        ) : (
+          screens.map((screen, index) => (
+            <div
+              key={`${screen.screen}-${index}`}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "15px 20px",
+                borderBottom:
+                  index < screens.length - 1
+                    ? "1px solid #F1E8E1"
+                    : "none",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    color: "#5C3D2E",
+                    fontWeight: 600,
+                  }}
+                >
+                  {screenLabels[screen.screen] ||
+                    screen.screen}
+                </div>
+
+                <div
+                  style={{
+                    color: "#9B7860",
+                    fontSize: 12,
+                    marginTop: 3,
+                  }}
+                >
+                  {screen.users} משתמשות
+                </div>
+              </div>
+
+              <strong
+                style={{
+                  color: "#5C3D2E",
+                }}
+              >
+                {screen.views} צפיות
+              </strong>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

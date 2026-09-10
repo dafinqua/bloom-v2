@@ -4,6 +4,7 @@ import { Capacitor } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 import { getAuthRedirectUrl, initNativeAuthListener } from "./nativeAuth";
 import { logAppOpen, trackScreen } from "./analytics";
+const ADMIN_DASHBOARD = "/?admin=bloom";
 
 const isNativeApp = Capacitor.isNativePlatform();
 // Opens http(s) links in the system browser on native Android (so they don't get

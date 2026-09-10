@@ -5301,15 +5301,111 @@ function BirthPrep() {
   );
 }
 function AdminDashboard() {
+  const [stats, setStats] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function loadStats() {
+      const { data, error } = await supabase.rpc("get_analytics_summary");
+
+      if (error) {
+        console.error("[Bloom dashboard]", error);
+        setError(true);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        setStats(data[0]);
+      }
+    }
+
+    loadStats();
+  }, []);
+
+  if (error) {
+    return (
+      <div style={{ padding: 30, direction: "rtl" }}>
+        לא ניתן לטעון את נתוני הדשבורד.
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return (
+      <div style={{ padding: 30, direction: "rtl" }}>
+        טוענת נתונים...
+      </div>
+    );
+  }
+
+  const cards = [
+    ["היום", stats.users_today],
+    ["7 ימים", stats.users_7_days],
+    ["30 ימים", stats.users_30_days],
+    ["סה״כ משתמשות", stats.users_total],
+    ["פתיחות אפליקציה", stats.total_app_opens],
+  ];
+
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#FAF6F0",
-      padding: "30px",
-      direction: "rtl"
-    }}>
-      <h1>Bloom — דשבורד ניהול</h1>
-      <p>הדשבורד מחובר ✓</p>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#FAF6F0",
+        padding: "30px 20px",
+        direction: "rtl",
+        fontFamily: '"Assistant", sans-serif',
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <h1 style={{ color: "#5C3D2E", marginBottom: 6 }}>
+          Bloom — דשבורד ניהול
+        </h1>
+
+        <p style={{ color: "#9B7860", marginTop: 0 }}>
+          נתוני שימוש באפליקציה
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gap: 14,
+            marginTop: 30,
+          }}
+        >
+          {cards.map(([label, value]) => (
+            <div
+              key={label}
+              style={{
+                background: "white",
+                borderRadius: 16,
+                padding: 20,
+                boxShadow: "0 2px 10px rgba(92,61,46,0.08)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 13,
+                  color: "#9B7860",
+                  marginBottom: 8,
+                }}
+              >
+                {label}
+              </div>
+
+              <div
+                style={{
+                  fontSize: 32,
+                  fontWeight: 600,
+                  color: "#5C3D2E",
+                }}
+              >
+                {value}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

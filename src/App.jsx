@@ -5943,6 +5943,7 @@ export default function App() {
   const [installPrompt,setInstallPrompt]=useState(null);
 const [showInstallBanner,setShowInstallBanner]=useState(false);
 const [showInstallHelp,setShowInstallHelp]=useState(false);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   useEffect(()=>{
   const isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
@@ -6272,13 +6273,27 @@ if (isAdminDashboard) {
         lineHeight:1.8,
         color:'#7A6658'
       }}>
-        באייפון לחצי על כפתור השיתוף
-        <span style={{fontSize:20,margin:'0 5px'}}>⬆️</span>
-        בתחתית Safari
-        <br/>
-        ואז בחרי
-        <strong> „הוספה למסך הבית” </strong>
-        ולחצי „הוספה”.
+        {isIOS ? (
+  <>
+    באייפון לחצי על כפתור השיתוף
+    <span style={{fontSize:20,margin:'0 5px'}}>⬆️</span>
+    בתחתית Safari
+    <br/>
+    ואז בחרי
+    <strong> „הוספה למסך הבית” </strong>
+    ולחצי „הוספה”.
+  </>
+) : (
+  <>
+    באנדרואיד לחצי על תפריט הדפדפן
+    <strong> ⋮ </strong>
+    <br/>
+    ובחרי
+    <strong> „התקנת האפליקציה” </strong>
+    או
+    <strong> „הוספה למסך הבית”</strong>.
+  </>
+)}
       </div>
 
       <button

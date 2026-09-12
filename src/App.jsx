@@ -5940,6 +5940,51 @@ export default function App() {
   const [showSearch,setShowSearch]=useState(false);
   const [searchQ,setSearchQ]=useState('');
   const [showPlus,setShowPlus]=useState(false);
+  const [installPrompt,setInstallPrompt]=useState(null);
+const [showInstallBanner,setShowInstallBanner]=useState(false);
+const [showInstallHelp,setShowInstallHelp]=useState(false);
+  useEffect(()=>{
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  const isMobile =
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isStandalone || !isMobile) {
+    setShowInstallBanner(false);
+    return;
+  }
+
+  setShowInstallBanner(true);
+
+  const handleBeforeInstallPrompt = (e) => {
+    e.preventDefault();
+    setInstallPrompt(e);
+  };
+
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+  return () => {
+    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  };
+},[]);
+
+const handleInstallBloom = async () => {
+  if (installPrompt) {
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+      setShowInstallBanner(false);
+    }
+
+    setInstallPrompt(null);
+    return;
+  }
+
+  setShowInstallHelp(true);
+};
   const [profile,setProfile]=useState(()=>loadProfile());
   const [showSetup,setShowSetup]=useState(()=>!loadProfile());
   const [tabStack,setTabStack]=useState(['home']);
@@ -6092,6 +6137,169 @@ if (isAdminDashboard) {
           })}
         </div>
       </div>
+      {currentTab==='home' && showInstallBanner && (
+  <div style={{
+    margin:'12px 14px 0',
+    background:'#F3E7DC',
+    border:'1px solid #E7D3C3',
+    borderRadius:14,
+    padding:'10px 12px',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-between',
+    gap:10,
+    boxShadow:'0 2px 8px rgba(92,61,46,0.05)'
+  }}>
+    <div style={{
+      display:'flex',
+      alignItems:'center',
+      gap:9,
+      minWidth:0
+    }}>
+      <div style={{fontSize:20}}>📱</div>
+
+      <div>
+        <div style={{
+          fontSize:12,
+          fontWeight:600,
+          color:'#5C3D2E'
+        }}>
+          הוסיפי את Bloom למסך הבית
+        </div>
+
+        <div style={{
+          fontSize:10,
+          color:'#8E776A',
+          marginTop:2
+        }}>
+          גישה מהירה, ממש כמו אפליקציה
+        </div>
+      </div>
+    </div>
+
+    <div style={{
+      display:'flex',
+      alignItems:'center',
+      gap:5
+    }}>
+      <button
+        onClick={handleInstallBloom}
+        style={{
+          border:'none',
+          background:'#C4785A',
+          color:'white',
+          borderRadius:16,
+          padding:'6px 11px',
+          fontSize:11,
+          cursor:'pointer',
+          fontFamily:'"Assistant",sans-serif'
+        }}
+      >
+        הוספה
+      </button>
+
+      <button
+        onClick={()=>setShowInstallBanner(false)}
+        aria-label="סגירה"
+        style={{
+          border:'none',
+          background:'transparent',
+          color:'#9B8679',
+          fontSize:16,
+          cursor:'pointer',
+          padding:2
+        }}
+      >
+        ×
+      </button>
+    </div>
+  </div>
+)}
+      {showInstallHelp && (
+  <div
+    onClick={()=>setShowInstallHelp(false)}
+    style={{
+      position:'fixed',
+      inset:0,
+      background:'rgba(61,43,31,0.45)',
+      zIndex:9999,
+      display:'flex',
+      alignItems:'flex-end',
+      justifyContent:'center'
+    }}
+  >
+    <div
+      onClick={e=>e.stopPropagation()}
+      style={{
+        width:'100%',
+        maxWidth:480,
+        background:'#FAF6F0',
+        position:'relative',
+        borderRadius:'22px 22px 0 0',
+        padding:'26px 22px 30px',
+        boxSizing:'border-box',
+        textAlign:'center',
+        color:'#5C3D2E'
+      }}
+    >
+      <button
+        onClick={()=>setShowInstallHelp(false)}
+        aria-label="סגירה"
+        style={{
+          position:'absolute',
+          border:'none',
+          background:'transparent',
+          fontSize:24,
+          cursor:'pointer',
+          color:'#9B7860'
+        }}
+      >
+        ×
+      </button>
+
+      <div style={{fontSize:30,marginBottom:10}}>📱</div>
+
+      <div style={{
+        fontSize:20,
+        fontWeight:600,
+        marginBottom:8
+      }}>
+        שמרי את Bloom כאפליקציה
+      </div>
+
+      <div style={{
+        fontSize:14,
+        lineHeight:1.8,
+        color:'#7A6658'
+      }}>
+        באייפון לחצי על כפתור השיתוף
+        <span style={{fontSize:20,margin:'0 5px'}}>⬆️</span>
+        בתחתית Safari
+        <br/>
+        ואז בחרי
+        <strong> „הוספה למסך הבית” </strong>
+        ולחצי „הוספה”.
+      </div>
+
+      <button
+        onClick={()=>setShowInstallHelp(false)}
+        style={{
+          marginTop:22,
+          border:'none',
+          background:'#C4785A',
+          color:'white',
+          borderRadius:22,
+          padding:'10px 28px',
+          fontSize:13,
+          cursor:'pointer',
+          fontFamily:'"Assistant",sans-serif'
+        }}
+      >
+        הבנתי
+      </button>
+    </div>
+  </div>
+)}
       {showSearch&&(
         <div style={{background:C.br,padding:'0 16px 12px'}}>
           <input

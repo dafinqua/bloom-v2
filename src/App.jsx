@@ -27,6 +27,8 @@ function saveProfile(data) {
 }
 function calcWeek(profile) {
   if (!profile) return null;
+  if (profile.stage && profile.stage !== 'pregnant') return null;
+if (!profile.date) return null;
   var today = new Date();
   var lmp;
   if (profile.type === 'lmp') {
@@ -5088,6 +5090,9 @@ function AccountScreen({user, onClose, onLoggedOut}) {
 }
 
 function SetupScreen({onSave, isEdit, profile}) {
+    var stage_state = React.useState(profile ? (profile.stage || 'pregnant') : 'pregnant');
+  var stage = stage_state[0]; 
+  var setStage = stage_state[1];
   var type_state = React.useState(profile ? profile.type : 'lmp');
   var type = type_state[0]; var setType = type_state[1];
   var date_state = React.useState(profile ? profile.date : '');
@@ -5098,22 +5103,88 @@ function SetupScreen({onSave, isEdit, profile}) {
   var today = new Date().toISOString().slice(0,10);
   var minDate = new Date(Date.now() - 300*24*60*60*1000).toISOString().slice(0,10);
 
-  function handleSave() {
+function handleSave() {
+  if (stage === 'pregnant') {
     if (!date) { setErr('נא לבחור תאריך'); return; }
     var d = new Date(date);
     if (isNaN(d)) { setErr('תאריך לא תקין'); return; }
-    onSave({type: type, date: date, savedAt: Date.now()});
   }
+
+  onSave({
+    stage: stage,
+    type: stage === 'pregnant' ? type : null,
+    date: stage === 'pregnant' ? date : '',
+    savedAt: Date.now()
+  });
+}
 
   return (
     <div style={{maxWidth:480,margin:'0 auto',minHeight:'100vh',background:'#FBF7F2',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'32px 24px',direction:'rtl',fontFamily:'"Assistant","Heebo",sans-serif'}}>
       <div style={{width:'100%',maxWidth:400}}>
         <div style={{textAlign:'center',marginBottom:32}}>
           <div style={{fontFamily:'"Cormorant Garamond",Georgia,serif',fontSize:36,fontWeight:300,color:'#3D2B1F',letterSpacing:'2px',fontStyle:'italic',marginBottom:8}}>Bloom</div>
-          <div style={{fontSize:16,color:'#3A2E28',fontWeight:500,marginBottom:8}}>{isEdit ? 'עריכת פרטי ההריון' : 'ברוכה הבאה 🌸'}</div>
+          <div style={{fontSize:16,color:'#3A2E28',fontWeight:500,marginBottom:8}}>{isEdit ? 'עריכת הפרטים שלי' : 'ברוכה הבאה 🌸'}</div>
           {!isEdit && <div style={{fontSize:13,color:'#9B7860',lineHeight:1.6}}>כדי להתאים את האפליקציה אלייך,<br/>נשמח לכמה פרטים.</div>}
         </div>
+<div style={{background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)',marginBottom:20}}>
+  <div style={{fontSize:13,color:'#6B5744',fontWeight:500,marginBottom:14}}>
+    באיזה שלב את כרגע?
+  </div>
 
+  {[
+    ['pregnant','🤰','בהריון'],
+    ['postpartum','🤱','אחרי לידה'],
+    ['general','🌸','כאן כדי ללמוד ולהתכונן']
+  ].map(function(item){
+    var active = stage === item[0];
+
+    return (
+      <div
+        key={item[0]}
+        onClick={function(){
+          setStage(item[0]);
+          setErr('');
+        }}
+        style={{
+          display:'flex',
+          alignItems:'center',
+          gap:10,
+          padding:'12px 14px',
+          borderRadius:10,
+          border:'1px solid '+(active?'#C4785A':'#EDE4D8'),
+          background:active?'#FFF0EB':'white',
+          cursor:'pointer',
+          marginBottom:item[0]==='general'?0:8
+        }}
+      >
+        <div style={{
+          width:18,
+          height:18,
+          borderRadius:'50%',
+          border:'2px solid '+(active?'#C4785A':'#C8BFB5'),
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          flexShrink:0
+        }}>
+          {active && <div style={{
+            width:8,
+            height:8,
+            borderRadius:'50%',
+            background:'#C4785A'
+          }}/>}
+        </div>
+
+        <div style={{fontSize:13,color:'#3A2E28',fontWeight:active?500:400}}>
+          <span style={{marginLeft:7}}>{item[1]}</span>
+          {item[2]}
+        </div>
+      </div>
+    );
+  })}
+</div>
+        {stage === 'pregnant' && (
+  <>
         <div style={{background:'white',borderRadius:16,padding:24,boxShadow:'0 2px 12px rgba(92,61,46,0.08)',marginBottom:20}}>
           <div style={{fontSize:13,color:'#6B5744',fontWeight:500,marginBottom:14}}>בחרי את סוג התאריך</div>
           <div onClick={function(){setType('lmp');}} style={{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',borderRadius:10,border:'1px solid '+(type==='lmp'?'#C4785A':'#EDE4D8'),background:type==='lmp'?'#FFF0EB':'white',cursor:'pointer',marginBottom:8}}>
@@ -5145,6 +5216,8 @@ function SetupScreen({onSave, isEdit, profile}) {
           />
           {err && <div style={{color:'#C4785A',fontSize:12,marginTop:6}}>{err}</div>}
         </div>
+      </>
+)}
 
         <button onClick={handleSave} style={{width:'100%',background:'linear-gradient(135deg,#C4785A,#8B4A2E)',border:'none',borderRadius:12,padding:'14px',fontSize:15,color:'white',fontWeight:600,cursor:'pointer',fontFamily:'inherit',marginBottom:isEdit?12:0}}>
           שמירה

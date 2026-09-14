@@ -4930,10 +4930,14 @@ function AuthScreen() {
           options:{data:{full_name:fullName}}
         });
         if(error) throw error;
+         if (typeof window.gtag === 'function') {
+  window.gtag('event', 'sign_up', { method: 'email' });
+}
         setMsg('נשלח מייל אימות לכתובת שלך. יש ללחוץ על הקישור כדי להשלים את ההרשמה, ואז לחזור ולהתחבר.');
       } else if(mode==='forgot'){
         const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:getAuthRedirectUrl()});
         if(error) throw error;
+       
         setMsg('נשלח מייל עם קישור לאיפוס סיסמה.');
       } else {
         const {error}=await supabase.auth.signInWithPassword({email,password});

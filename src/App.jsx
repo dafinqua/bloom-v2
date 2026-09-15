@@ -6168,12 +6168,17 @@ const handleInstallBloom = async () => {
 const isAdminDashboard =
   new URLSearchParams(window.location.search).get("admin") === "bloom";
 
+if (authSession === undefined) {
+  return <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#FBF7F2',fontFamily:'"Assistant",sans-serif',color:'#9B7860',fontSize:14}}>טוענת...</div>;
+}
+
 if (isAdminDashboard) {
+  if (!authSession) {
+    return <AuthScreen />;
+  }
+
   return <AdminDashboard />;
 }
-  if (authSession===undefined) {
-    return <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#FBF7F2',fontFamily:'"Assistant",sans-serif',color:'#9B7860',fontSize:14}}>טוענת...</div>;
-  }
   if (authView==='recovery') {
     return <ResetPasswordScreen onDone={()=>setAuthView('normal')}/>;
   }

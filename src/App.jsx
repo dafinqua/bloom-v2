@@ -1,9 +1,47 @@
 import React, { useState, useEffect, useRef } from "react";
-import { supabase } from "./supabaseClient";
-import { Capacitor } from "@capacitor/core";
-import { Browser } from "@capacitor/browser";
-import { getAuthRedirectUrl, initNativeAuthListener } from "./nativeAuth";
-import { logAppOpen, trackScreen } from "./analytics";
+// ⚠️ PREVIEW-ONLY MOCKS — see earlier notes; stubs so this renders standalone here.
+const Capacitor = { isNativePlatform: () => false };
+const Browser = { open: async ({url}) => window.open(url,'_blank') };
+function getAuthRedirectUrl(){ return window.location.origin; }
+function initNativeAuthListener(){}
+function logAppOpen(){}
+function trackScreen(){}
+const supabase = {
+  auth: {
+    _listeners: [],
+    _session: null,
+    getSession: async () => ({ data: { session: supabase.auth._session } }),
+    onAuthStateChange: (cb) => {
+      supabase.auth._listeners.push(cb);
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    },
+    signUp: async () => ({ data: {}, error: null }),
+    signInWithPassword: async ({ email }) => {
+      const fakeSession = { user: { id: 'preview-user-id', email: email || 'demo@example.com' } };
+      supabase.auth._session = fakeSession;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
+      return { data: { session: fakeSession }, error: null };
+    },
+    signInWithOAuth: async () => {
+      const fakeSession = { user: { id: 'preview-user-id', email: 'demo@google.com' } };
+      supabase.auth._session = fakeSession;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
+      return { error: null };
+    },
+    resetPasswordForEmail: async () => ({ data: {}, error: null }),
+    updateUser: async () => ({ data: {}, error: null }),
+    signOut: async () => {
+      supabase.auth._session = null;
+      supabase.auth._listeners.forEach(cb => cb('SIGNED_OUT', null));
+      return { error: null };
+    },
+  },
+  from: () => ({
+    select: () => ({ eq: () => ({ single: async () => ({ data: { full_name: 'דוגמה בלבד', phone: '', city: '' }, error: null }) }) }),
+    update: () => ({ eq: async () => ({ error: null }) }),
+    insert: async () => ({ data: null, error: null }),
+  }),
+};
 const ADMIN_DASHBOARD = "/?admin=bloom";
 
 const isNativeApp = Capacitor.isNativePlatform();
@@ -85,14 +123,30 @@ const BPS=[
   {s:"אחרי הלידה",it:["מגע עור לעור מיידי","הנקה בחדר לידה","הימנעות ממוצץ","רחצה בבית","חיסונים"]}
 ];
 
+// Product recommendations for checklist items. Key = exact item text from CL below.
+// Each item can have 0, 1, or several recommendations. 'note' is optional.
+// Not linked to CL's structure on purpose — adding/removing a recommendation here
+// never touches the checklist itself.
+const PRODUCT_RECOMMENDATIONS = {
+  // "עגלה": [
+  //   {name:"...", store:"...", note:"...", link:"https://..."},
+  // ],
+};
+
 const CL={
   "🩺 בדיקות בהריון":["📍 תחילת ההריון (עד שבוע 10)","בדיקות דם ראשוניות","סוג דם ו-Rh","ספירת דם","שתן כללית ותרבית","HIV","עגבת (VDRL)","הפטיטיס B","בדיקת חסינות לאדמת","בדיקות נוספות לפי המלצת הרופא/ה (כגון CMV, טוקסופלזמה או TSH במידת הצורך)","📍 שבועות 11-13+6","שקיפות עורפית","סקר שליש ראשון (בדיקת דם)","NIPT – בדיקת DNA עוברי (לבחירה)","סיסי שליה (CVS) – במידת הצורך ובהמלצה רפואית","📍 שבועות 16-18","חלבון עוברי (סקר שליש שני)","מי שפיר – במידת הצורך או לפי בחירה והמלצה רפואית","📍 שבועות 20-24","סקירת מערכות מאוחרת","📍 שבועות 24-28","העמסת סוכר","ספירת דם","לעיתים גם בדיקת ברזל (פריטין)","📍 שבועות 27-36","חיסון שעלת (Tdap)","אם האם Rh שלילי: זריקת Anti-D סביב שבוע 28","📍 שבועות 35-37","משטח GBS","📍 משבוע 40","מוניטור (NST)","אולטרסאונד לפי הצורך","הערכת כמות מי שפיר","מעקב בהתאם להנחיית הצוות הרפואי","💛 לא כל אישה צריכה לבצע את כל הבדיקות – חלקן הן בדיקות סקר, חלקן מבוצעות רק במקרים מסוימים וחלקן נתונות לבחירה אישית. מומלץ להחליט יחד עם הרופא/ה או המיילדת."],
-  "מה לקנות":["עגלה + מושב בטיחות לרכב","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","כיסא רחצה","מוניטור לתינוק","משאבת חלב + שקיות אחסון","כרית הנקה","רפידות הנקה","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי","ערסל/כיסא תנועה"],
-  "מה לעשות":["סיור מחלקת לידה","קורס הכנה ללידה","תיאום עם קופת חולים","הכנת חדר תינוק","בחירת שם","ביטוח בריאות לתינוק","הגדרת עוזרים לאחרי הלידה","הכנת ארוחות להקפאה","שמירת מספר דולה/חדר לידה","סיכום תוכנית לידה עם הצוות","בדיקת כיסא בטיחות לרכב (התקנה!)"],
-  "ציוד חדר לידה":["בגד ים / חלוק להרגשה טובה","גרביים חמות (גם בקיץ!)","שמן לעיסוי (שקדים/קוקוס)","פלייליסט מוכן + אוזניות","מנורת לילה קטנה","צעיף Rebozo (רבוזו)","חטיפי אנרגיה לשותף/ה","מטען טלפון ארוך","שפתון (פה מתייבש!)","מחממת גב / פדים חמים"],
-  "מזוודה לאמא":["תעודת זהות + כרטיס קופ\"ח","מסמכי הריון","חלוק נוח לאחרי הלידה ×2","פיגמה נוחה ×2","חזיית הנקה + רפידות ×3","תחתוני לאחרי לידה (גדולים) x5","שמפו, סבון, קרם","מברשת שיניים + שפתון","מגבת אישית","כרית הנקה","אוכל קל ומשקאות","נעלי בית עם אחיזה"],
-  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","פיגמה ×3","כובע קטן ×2","גרביים ×3","שמיכה דקה","מגבות גזה ×4","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם חיתול (Bepanthen)","בגד חגיגי ליום השחרור"],
+  "מה לקנות":["עגלה","כסא בטיחות לרכב/ סלקל","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","אמבטיה","כיסא רחצה","מוניטור לתינוק","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי"],
+  "תיק לחדר לידה":["תעודת זהות","מסמכי מעקב הריון","גרביים חמות (גם בקיץ!)","פלייליסט","נשנושים ושתייה","מטען טלפון","שפתון (פה מתייבש!)","מכשיר טנס","בקבוק מים עם פיה/ קשית","סוודר","כפכפים","גומייה לשיער","שמן שקדים ×2","רמקול/ אוזניות","אטמי אוזניים","מניפה","כרית חמה","כיסוי עיניים","מטען וסוודר למלווה"],
+  "מזוודה לאמא":["פיג'מה נוחה ×2","תחתוני לאחרי לידה (גדולים) x5","שמפו, סבון, קרם","מברשת שיניים + משחת שיניים","מגבת אישית","נעלי בית","נייר טואלט נעים","תוספי תזונה","סוודר","משקפיים/ עדשות","דאודורנט","פדים עבים","ציוד למלווה שלך"],
+  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","כובע ×1","גרביים ×2","שמיכה דקה","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם החתלה","טטרות","בגד חגיגי ליום השחרור"],
+};
+
+// Postpartum checklist — separate from the pregnancy CL above, shown under the
+// "אחרי לידה" (postbirth) category instead of under pregnancy.
+const CL_POSTBIRTH={
   "אחרי לידה":["הגשת לידה בביטוח לאומי (תוך 90 יום)","רישום תעודת לידה (תוך 10 ימים)","ביקור טיפת חלב ראשון","פגישה עם יועצת הנקה","הרשמה לקופת חולים לתינוק","חיסון ראשון בשב' 2","ביקור רופאת נשים 6 שבועות","הגשת בקשה לקצבת ילד"],
+  "ציוד לתיק החתלה":["מגבונים","חיתולים","משחה לטוסיק","משטח החתלה","שקיות קטנות","טטרות","סט בגדים להחלפה","מוצץ","סינר הנקה","תמ\"ל ובקבוקים","צעצועים","קרם הגנה (מגיל חצי שנה)"],
+  "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)"],
 };
 
 const RX_POINTS = [
@@ -2910,18 +2964,20 @@ function Rights() {
   );
 }
 
-function Checklists() {
-  const [tab,setTab]=useState('מה לקנות');
+function Checklists({data}) {
+  const src = data || CL;
+  const [tab,setTab]=useState(Object.keys(src)[0]);
   const [checked,setChecked]=useState({});
+  const [openReco,setOpenReco]=useState(null);
   const toggle=(t,i)=>{const k=`${t}-${i}`;setChecked(p=>({...p,[k]:!p[k]}));};
-  const items=CL[tab]||[];
+  const items=src[tab]||[];
   const checkableIdx=items.map((it,i)=>it.startsWith('📍')||it.startsWith('💛')?null:i).filter(i=>i!==null);
   const done=checkableIdx.filter(i=>checked[`${tab}-${i}`]).length;
   const pct=checkableIdx.length?Math.round(done/checkableIdx.length*100):0;
   return (
     <div>
       <div style={{display:'flex',gap:6,marginBottom:16,flexWrap:'wrap'}}>
-        {Object.keys(CL).map(t=><button key={t} onClick={()=>setTab(t)} style={{padding:'5px 11px',borderRadius:20,border:`1px solid ${tab===t?C.t:C.cd}`,background:tab===t?C.t:'white',color:tab===t?'white':C.tx,cursor:'pointer',fontSize:12,fontFamily:'inherit'}}>{t}</button>)}
+        {Object.keys(src).map(t=><button key={t} onClick={()=>setTab(t)} style={{padding:'5px 11px',borderRadius:20,border:`1px solid ${tab===t?C.t:C.cd}`,background:tab===t?C.t:'white',color:tab===t?'white':C.tx,cursor:'pointer',fontSize:12,fontFamily:'inherit'}}>{t}</button>)}
       </div>
       <div style={card}>
         <div style={{display:'flex',justifyContent:'space-between',marginBottom:8,fontSize:13,color:C.txl}}><span>התקדמות</span><span>{done}/{checkableIdx.length} ({pct}%)</span></div>
@@ -2930,7 +2986,40 @@ function Checklists() {
           if(item.startsWith('📍')||item.startsWith('💛')){
             return <div key={i} style={{fontSize:item.startsWith('💛')?12:13,fontWeight:600,color:item.startsWith('💛')?C.txl:C.t,marginTop:i===0?0:14,marginBottom:6,paddingTop:i===0?0:10,borderTop:i===0?'none':`1px solid ${C.cd}`,lineHeight:1.6}}>{item}</div>;
           }
-          const k=`${tab}-${i}`;return(<div key={i} onClick={()=>toggle(tab,i)} style={{display:'flex',alignItems:'flex-start',gap:10,padding:'10px 0',borderBottom:i<items.length-1?`1px solid ${C.cd}`:'none',cursor:'pointer'}}><div style={{width:20,height:20,borderRadius:5,border:`2px solid ${checked[k]?C.t:C.cd}`,background:checked[k]?C.t:'white',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,color:'white',fontSize:12}}>{checked[k]&&'✓'}</div><div style={{fontSize:14,lineHeight:1.5,textDecoration:checked[k]?'line-through':'none',color:checked[k]?C.txl:C.tx}}>{item}</div></div>);})}
+          const k=`${tab}-${i}`;
+          const recos=PRODUCT_RECOMMENDATIONS[item];
+          const recoKey=`${tab}-${i}-reco`;
+          const isOpen=openReco===recoKey;
+          return(
+            <div key={i}>
+              <div style={{display:'flex',alignItems:'flex-start',gap:10,padding:'10px 0',borderBottom:(isOpen||i<items.length-1)?`1px solid ${C.cd}`:'none'}}>
+                <div onClick={()=>toggle(tab,i)} style={{width:20,height:20,borderRadius:5,border:`2px solid ${checked[k]?C.t:C.cd}`,background:checked[k]?C.t:'white',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,color:'white',fontSize:12,cursor:'pointer'}}>{checked[k]&&'✓'}</div>
+                <div onClick={()=>toggle(tab,i)} style={{fontSize:14,lineHeight:1.5,textDecoration:checked[k]?'line-through':'none',color:checked[k]?C.txl:C.tx,flex:1,cursor:'pointer'}}>{item}</div>
+                {recos&&recos.length>0&&(
+                  <div onClick={()=>recos.length===1&&recos[0].link&&!recos[0].note?openExternal(recos[0].link):setOpenReco(isOpen?null:recoKey)} style={{position:'relative',width:30,height:30,borderRadius:'50%',background:C.cd,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,cursor:'pointer'}}>
+                    🔗
+                    {recos.length>1&&<div style={{position:'absolute',top:-5,left:-5,background:C.t,color:'white',fontSize:10,fontWeight:700,width:16,height:16,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>{recos.length}</div>}
+                  </div>
+                )}
+              </div>
+              {isOpen&&recos&&(
+                <div style={{background:C.cr,borderRadius:14,padding:14,margin:'0 0 12px 30px'}}>
+                  <div style={{fontSize:12,color:C.txl,fontWeight:600,marginBottom:10}}>💛 {recos.length>1?'ההמלצות שלי':'ההמלצה שלי'}</div>
+                  {recos.map((r,ri)=>(
+                    <div key={ri} style={{background:'white',borderRadius:12,padding:'12px 14px',marginBottom:ri<recos.length-1?8:0,border:`1px solid ${C.cd}`}}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:r.note?6:10}}>
+                        <span style={{fontSize:11,color:C.t,background:C.cd,padding:'2px 8px',borderRadius:8}}>{r.store}</span>
+                        <span style={{fontSize:14,fontWeight:600,color:C.tx}}>{r.name}</span>
+                      </div>
+                      {r.note&&<div style={{fontSize:12,color:C.txl,lineHeight:1.6,marginBottom:10}}>{r.note}</div>}
+                      <div onClick={()=>openExternal(r.link)} style={{display:'inline-block',background:C.t,color:'white',fontSize:12,fontWeight:600,padding:'7px 14px',borderRadius:8,cursor:'pointer'}}>לצפייה במוצר ←</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -4773,6 +4862,7 @@ const NAV_CATS = [
       {id:'bf',lb:'🤱 הנקה ואחרי לידה'},
       {id:'postpartum',lb:'🌺 התאוששות'},
       {id:'baby',lb:'👶 הכל לתינוק'},
+      {id:'cl_post',lb:"✅ צ'קליסטים"},
       {id:'nightchat',lb:'🌙 ערות לילה',comingSoon:true},
       {id:'coupons',lb:'🎁 קופונים'},
     ]
@@ -4851,6 +4941,7 @@ const SEARCH_INDEX=[
   {q:"ברקסטון היקס צירי אימון לא אמיתיים",label:"ברקסטון היקס",tab:"w",sub:"הריון ← תוכן שבועי"},
   {q:"זכויות לידה חופשת לידה ביטוח לאומי דמי לידה",label:"זכויות יולדת",tab:"rights",sub:"הריון ← זכויות"},
   {q:"צ'קליסט מה לקנות תיק לידה ציוד רשימה",label:"צ'קליסטים",tab:"cl",sub:"הריון ← צ'קליסטים"},
+  {q:"צ'קליסט אחרי לידה עגלה סדינים ציוד",label:"צ'קליסטים",tab:"cl_post",sub:"אחרי לידה ← צ'קליסטים"},
   {q:"שמות תינוקות בנות בנים",label:"שמות לתינוק",tab:"names",sub:"הריון ← שמות"},
   {q:"תיק רפואי מסמכים בדיקות",label:"תיק רפואי",tab:"wallet",sub:"הריון ← תיק רפואי"},
   // ── לידה ──
@@ -6134,6 +6225,7 @@ const handleInstallBloom = async () => {
     if(tab==='induction_methods')return <Induction initTab='methods'/>;
     if(tab==='rights')return <Rights/>;
     if(tab==='cl')return <Checklists/>;
+    if(tab==='cl_post')return <Checklists data={CL_POSTBIRTH}/>;
     if(tab==='cx')return <Complications/>;
     if(tab==='postpartum')return <PostpartumRecovery/>;
     if(tab==='postpartum_emotions')return <PostpartumRecovery initTab='emotions'/>;

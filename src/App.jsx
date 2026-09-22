@@ -1,47 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-// ⚠️ PREVIEW-ONLY MOCKS — see earlier notes; stubs so this renders standalone here.
-const Capacitor = { isNativePlatform: () => false };
-const Browser = { open: async ({url}) => window.open(url,'_blank') };
-function getAuthRedirectUrl(){ return window.location.origin; }
-function initNativeAuthListener(){}
-function logAppOpen(){}
-function trackScreen(){}
-const supabase = {
-  auth: {
-    _listeners: [],
-    _session: null,
-    getSession: async () => ({ data: { session: supabase.auth._session } }),
-    onAuthStateChange: (cb) => {
-      supabase.auth._listeners.push(cb);
-      return { data: { subscription: { unsubscribe: () => {} } } };
-    },
-    signUp: async () => ({ data: {}, error: null }),
-    signInWithPassword: async ({ email }) => {
-      const fakeSession = { user: { id: 'preview-user-id', email: email || 'demo@example.com' } };
-      supabase.auth._session = fakeSession;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
-      return { data: { session: fakeSession }, error: null };
-    },
-    signInWithOAuth: async () => {
-      const fakeSession = { user: { id: 'preview-user-id', email: 'demo@google.com' } };
-      supabase.auth._session = fakeSession;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_IN', fakeSession));
-      return { error: null };
-    },
-    resetPasswordForEmail: async () => ({ data: {}, error: null }),
-    updateUser: async () => ({ data: {}, error: null }),
-    signOut: async () => {
-      supabase.auth._session = null;
-      supabase.auth._listeners.forEach(cb => cb('SIGNED_OUT', null));
-      return { error: null };
-    },
-  },
-  from: () => ({
-    select: () => ({ eq: () => ({ single: async () => ({ data: { full_name: 'דוגמה בלבד', phone: '', city: '' }, error: null }) }) }),
-    update: () => ({ eq: async () => ({ error: null }) }),
-    insert: async () => ({ data: null, error: null }),
-  }),
-};
+import { supabase } from "./supabaseClient";
+import { Capacitor } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
+import { getAuthRedirectUrl, initNativeAuthListener } from "./nativeAuth";
+import { logAppOpen, trackScreen } from "./analytics";
 const ADMIN_DASHBOARD = "/?admin=bloom";
 
 const isNativeApp = Capacitor.isNativePlatform();
@@ -147,6 +109,7 @@ const CL_POSTBIRTH={
   "אחרי לידה":["הגשת לידה בביטוח לאומי (תוך 90 יום)","רישום תעודת לידה (תוך 10 ימים)","ביקור טיפת חלב ראשון","פגישה עם יועצת הנקה","הרשמה לקופת חולים לתינוק","חיסון ראשון בשב' 2","ביקור רופאת נשים 6 שבועות","הגשת בקשה לקצבת ילד"],
   "ציוד לתיק החתלה":["מגבונים","חיתולים","משחה לטוסיק","משטח החתלה","שקיות קטנות","טטרות","סט בגדים להחלפה","מוצץ","סינר הנקה","תמ\"ל ובקבוקים","צעצועים","קרם הגנה (מגיל חצי שנה)"],
   "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)"],
+  "אולי תרצי גם":[],
 };
 
 const RX_POINTS = [
@@ -5514,19 +5477,25 @@ function AdminDashboard() {
     setLoading(true);
     setError(false);
 
-    const { data: dashboardData, error: dashboardError } =
-      await supabase.rpc("get_analytics_dashboard");
+    try {
+      const { data: dashboardData, error: dashboardError } =
+        await supabase.rpc("get_analytics_dashboard");
 
-    if (dashboardError) {
-      console.error("[Bloom dashboard]", dashboardError);
+      if (dashboardError) {
+        console.error("[Bloom dashboard]", dashboardError);
+        setError(true);
+        setLoading(false);
+        return;
+      }
+
+      setData(dashboardData);
+      setLastUpdated(new Date());
+      setLoading(false);
+    } catch (e) {
+      console.error("[Bloom dashboard] unexpected failure", e);
       setError(true);
       setLoading(false);
-      return;
     }
-
-    setData(dashboardData);
-    setLastUpdated(new Date());
-    setLoading(false);
   }
 
   useEffect(() => {

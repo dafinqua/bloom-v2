@@ -30,13 +30,16 @@ function calcWeek(profile) {
   if (profile.stage && profile.stage !== 'pregnant') return null;
 if (!profile.date) return null;
   var today = new Date();
-  var lmp;
-  if (profile.type === 'lmp') {
-    lmp = new Date(profile.date);
-  } else {
-    // due date → lmp = due - 280 days
-    lmp = new Date(new Date(profile.date) - 280*24*60*60*1000);
-  }
+function parseLocalDate(s) {
+  var p = s.split('-').map(Number);
+  return new Date(p[0], p[1] - 1, p[2]);
+}
+var lmp;
+if (profile.type === 'lmp') {
+  lmp = parseLocalDate(profile.date);
+} else {
+  lmp = new Date(parseLocalDate(profile.date) - 280*24*60*60*1000);
+}
   var diff = Math.floor((today - lmp) / (24*60*60*1000));
   var week = Math.floor(diff / 7) + 1;
   var day = diff % 7;

@@ -41,7 +41,7 @@ if (profile.type === 'lmp') {
   lmp = new Date(parseLocalDate(profile.date) - 280*24*60*60*1000);
 }
   var diff = Math.floor((today - lmp) / (24*60*60*1000));
-  var week = Math.floor(diff / 7) + 1;
+  var week = Math.floor(diff / 7);
   var day = diff % 7;
   var daysLeft = 280 - diff;
   return { week: week, day: day, daysLeft: daysLeft, lmp: lmp };

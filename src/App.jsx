@@ -2263,24 +2263,24 @@ const SPINNING = [
    purpose:"שחרור והרפיית הרקמות, השרירים והפאשיה",
    start:"משבוע 20",freq:"פעם-פעמיים בשבוע",labor:"לבצע בין הצירים",
    contra:"הנחיה רפואית להימנע, או כאב משמעותי",
-   video:"https://www.youtube.com/results?search_query=rebozo+sifting+spinning+babies"},
+   video:"https://drive.google.com/file/d/1Pr2j0aBB-XDBEZmzZySKzj_d50YA-pZ-/view"},
   {id:"bum_jiggle",title:"Bum Jiggle",emoji:"🌿",
    purpose:"שחרור והרפיית הרקמות, השרירים והפאשיה",
    start:"משבוע 20",freq:"פעם-פעמיים בשבוע",labor:"לבצע בין הצירים",
    contra:"הנחיה רפואית להימנע, או כאב משמעותי",
-   video:"https://www.youtube.com/results?search_query=spinning+babies+jiggle+technique"},
+   video:"https://youtu.be/9CwyQCuFXC4?si=3PiICSLqr4klJG92"},
   {id:"inversion",title:"Forward-Leaning Inversion",emoji:"🔄",
    purpose:"להפחית מתח ברצועות התומכות ברחם וליצור יותר מרחב לעובר",
    start:"משבוע 20",freq:"פעם ביום, 30 שניות בהיפוך המלא",
    labor:"לבצע בזמן הציר, 3-5 צירים רצופים",
    contra:"סחרחורת, כאב, אי-נוחות משמעותית, או הנחיה רפואית",
-   video:"https://www.youtube.com/results?search_query=forward+leaning+inversion+spinning+babies"},
+   video:"https://youtu.be/r_tJt7mB3HU?si=rdydm8vi1DsbsXJi"},
   {id:"sidelying",title:"Side-Lying Release",emoji:"↔️",
    purpose:"איזון רקמות האגן ושיפור הסימטריה",
    start:"משבוע 20",freq:"פעם-פעמיים בשבוע",
    labor:"עם צירים: 3 צירים בכל צד. ללא צירים: 15 דקות בכל צד. אפשר לחזור כל 4 שעות",
    contra:"סימפיזיוליזיס (SPD) או הנחיה רפואית",
-   video:"https://www.youtube.com/results?search_query=side+lying+release+spinning+babies"}
+   video:"https://youtu.be/VMrrb9S2td0?si=XRRmmnJm07m3d6Mf"}
 ];
 
 function ExCard({ex}) {

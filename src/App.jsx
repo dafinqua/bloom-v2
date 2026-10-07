@@ -13,7 +13,7 @@ function openExternal(url) {
   if (isNativeApp && /^https?:\/\//.test(url)) {
     Browser.open({ url });
   } else {
-    openExternal(url);
+    window.open(url, '_blank');
   }
 }
 

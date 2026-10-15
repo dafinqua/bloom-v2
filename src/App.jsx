@@ -93,17 +93,77 @@ const BPS=[
 // Not linked to CL's structure on purpose — adding/removing a recommendation here
 // never touches the checklist itself.
 const PRODUCT_RECOMMENDATIONS = {
-  // "עגלה": [
-  //   {name:"...", store:"...", note:"...", link:"https://..."},
-  // ],
+  // === תיק לחדר לידה ===
+  "מכשיר טנס": [
+    {name:"TENS ללידה – Elle TENS 2", store:"צירים", link:"https://tzirim.co.il/product/elle-tens-2/", coupon:"DDOULA – 5% הנחה + סט אלקטרודות נוסף במתנה"}
+  ],
+
+  // === מה לקנות ===
+  "שמן לעיסוי תינוק": [
+    {name:"שמן עיסוי לתינוק Mustela Baby", store:"iHerb", link:"https://il.iherb.com/pr/mustela-baby-oil-with-avocado-oil-3-38-fl-oz-100-ml/105441"}
+  ],
+  "מדחום דיגיטלי": [
+    {name:"מדחום Braun ThermoScan 7+ IRT6525", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/297999"},
+    {name:"מדחום Kinsa QuickCare Digital", store:"Amazon", link:"https://link.amazon/B0fiYsW08"}
+  ],
+
+  // === מזוודה לתינוק ===
+  "קרם החתלה": [
+    {name:"משחת החתלה וולדה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/199045"},
+    {name:"קרם החתלה Mustela ללא בישום", store:"iHerb", link:"https://il.iherb.com/pr/mustela-baby-child-diaper-rash-cream-fragrance-free-3-8-oz-108-g/85179"}
+  ],
+  "טטרות": [
+    {name:"טטרה קטנה Aden + Anais", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/326316"},
+    {name:"טטרות במבוק גדולות", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4LwXQaH"},
+    {name:"טטרות במבוק קטנות", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3ZxA8EH"}
+  ],
+
+  // === ציוד הנקה (אחרי לידה) ===
+  "סינר הנקה": [
+    {name:"סינר הנקה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/442826"},
+    {name:"סינר הנקה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3fE5nzX"}
+  ],
+  "רפידות הנקה": [
+    {name:"רפידות הנקה לנסינו", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/138318"},
+    {name:"רפידות הנקה חד-פעמיות Lansinoh Stay Dry", store:"iHerb", link:"https://il.iherb.com/pr/lansinoh-stay-dry-nursing-pads-60-individually-wrapped-pads/52214"}
+  ],
+  "בקבוק למקרה הצורך": [
+    {name:"בקבוק טומי טיפי", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/411375"},
+    {name:"בקבוקי Lansinoh NaturalWave – סט 3", store:"iHerb", link:"https://il.iherb.com/pr/lansinoh-feeding-bottles-with-naturalwave-nipple-medium-flow-3m-3-bottles-8-oz-240-ml-each/74170"}
+  ],
+  "משחה לנולין לפטמות": [
+    {name:"קרם פטמות לנולין", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/139314"},
+    {name:"Earth Mama Organic Nipple Butter", store:"iHerb", link:"https://il.iherb.com/pr/earth-mama-organic-nipple-butter-2-fl-oz-60-ml/21358"},
+    {name:"Motherlove Nipple Cream", store:"iHerb", link:"https://il.iherb.com/pr/motherlove-breastfeeding-nipple-cream-1-fl-oz-29-5-ml/37468"}
+  ],
+
+  // === אולי תרצי גם (אחרי לידה) ===
+  "מאוורר לעגלה": [
+    {name:"מאוורר לעגלה Yamayo Just Chilin", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/219722"},
+    {name:"מאוורר לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3LlTlZB"}
+  ],
+  "מחזיק כוס ונייד לעגלה": [
+    {name:"מחזיק כוס ונייד לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4mHZn73"}
+  ],
+  "ארגונית לעגלה": [
+    {name:"ארגונית לעגלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451489"}
+  ],
+  // === תיק לחדר לידה ===
+  "בקבוק פרי": [
+    {name:"בקבוק פרי", store:"Mama Bear", link:"https://mamabear.co.il/product/peri-bottle/"}
+  ],
+  // === אולי תרצי גם ===
+  "מייבש בקבוקים": [
+    {name:"מייבש בקבוקים", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3z85OpT"}
+  ],
 };
 
 const CL={
   "🩺 בדיקות בהריון":["📍 תחילת ההריון (עד שבוע 10)","בדיקות דם ראשוניות","סוג דם ו-Rh","ספירת דם","שתן כללית ותרבית","HIV","עגבת (VDRL)","הפטיטיס B","בדיקת חסינות לאדמת","בדיקות נוספות לפי המלצת הרופא/ה (כגון CMV, טוקסופלזמה או TSH במידת הצורך)","📍 שבועות 11-13+6","שקיפות עורפית","סקר שליש ראשון (בדיקת דם)","NIPT – בדיקת DNA עוברי (לבחירה)","סיסי שליה (CVS) – במידת הצורך ובהמלצה רפואית","📍 שבועות 16-18","חלבון עוברי (סקר שליש שני)","מי שפיר – במידת הצורך או לפי בחירה והמלצה רפואית","📍 שבועות 20-24","סקירת מערכות מאוחרת","📍 שבועות 24-28","העמסת סוכר","ספירת דם","לעיתים גם בדיקת ברזל (פריטין)","📍 שבועות 27-36","חיסון שעלת (Tdap)","אם האם Rh שלילי: זריקת Anti-D סביב שבוע 28","📍 שבועות 35-37","משטח GBS","📍 משבוע 40","מוניטור (NST)","אולטרסאונד לפי הצורך","הערכת כמות מי שפיר","מעקב בהתאם להנחיית הצוות הרפואי","💛 לא כל אישה צריכה לבצע את כל הבדיקות – חלקן הן בדיקות סקר, חלקן מבוצעות רק במקרים מסוימים וחלקן נתונות לבחירה אישית. מומלץ להחליט יחד עם הרופא/ה או המיילדת."],
-  "מה לקנות":["עגלה","כסא בטיחות לרכב/ סלקל","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","אמבטיה","כיסא רחצה","מוניטור לתינוק","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי"],
-  "תיק לחדר לידה":["תעודת זהות","מסמכי מעקב הריון","גרביים חמות (גם בקיץ!)","פלייליסט","נשנושים ושתייה","מטען טלפון","שפתון (פה מתייבש!)","מכשיר טנס","בקבוק מים עם פיה/ קשית","סוודר","כפכפים","גומייה לשיער","שמן שקדים ×2","רמקול/ אוזניות","אטמי אוזניים","מניפה","כרית חמה","כיסוי עיניים","מטען וסוודר למלווה"],
+  "מה לקנות":["עגלה","כסא בטיחות לרכב/ סלקל","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","אמבטיה","כיסא רחצה","מוניטור לתינוק","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי","טטרות"],
+  "תיק לחדר לידה":["תעודת זהות","מסמכי מעקב הריון","גרביים חמות (גם בקיץ!)","פלייליסט","נשנושים ושתייה","מטען טלפון","שפתון (פה מתייבש!)","מכשיר טנס","בקבוק מים עם פיה/ קשית","סוודר","כפכפים","גומייה לשיער","שמן שקדים ×2","רמקול/ אוזניות","אטמי אוזניים","מניפה","כרית חמה","כיסוי עיניים","מטען וסוודר למלווה","בקבוק פרי"],
   "מזוודה לאמא":["פיג'מה נוחה ×2","תחתוני לאחרי לידה (גדולים) x5","שמפו, סבון, קרם","מברשת שיניים + משחת שיניים","מגבת אישית","נעלי בית","נייר טואלט נעים","תוספי תזונה","סוודר","משקפיים/ עדשות","דאודורנט","פדים עבים","ציוד למלווה שלך"],
-  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","כובע ×1","גרביים ×2","שמיכה דקה","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם החתלה","טטרות","בגד חגיגי ליום השחרור"],
+  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","כובע ×1","גרביים ×2","שמיכה דקה","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם החתלה","בגד חגיגי ליום השחרור"],
 };
 
 // Postpartum checklist — separate from the pregnancy CL above, shown under the
@@ -111,8 +171,8 @@ const CL={
 const CL_POSTBIRTH={
   "אחרי לידה":["הגשת לידה בביטוח לאומי (תוך 90 יום)","רישום תעודת לידה (תוך 10 ימים)","ביקור טיפת חלב ראשון","פגישה עם יועצת הנקה","הרשמה לקופת חולים לתינוק","חיסון ראשון בשב' 2","ביקור רופאת נשים 6 שבועות","הגשת בקשה לקצבת ילד"],
   "ציוד לתיק החתלה":["מגבונים","חיתולים","משחה לטוסיק","משטח החתלה","שקיות קטנות","טטרות","סט בגדים להחלפה","מוצץ","סינר הנקה","תמ\"ל ובקבוקים","צעצועים","קרם הגנה (מגיל חצי שנה)"],
-  "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)"],
-  "אולי תרצי גם":[],
+  "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)","שקיות לאחסון חלב"],
+  "אולי תרצי גם":["מאוורר לעגלה","מחזיק כוס ונייד לעגלה","ארגונית לעגלה","מייבש בקבוקים"],
 };
 
 const RX_POINTS = [
@@ -2962,23 +3022,25 @@ function Checklists({data}) {
                 <div onClick={()=>toggle(tab,i)} style={{width:20,height:20,borderRadius:5,border:`2px solid ${checked[k]?C.t:C.cd}`,background:checked[k]?C.t:'white',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,color:'white',fontSize:12,cursor:'pointer'}}>{checked[k]&&'✓'}</div>
                 <div onClick={()=>toggle(tab,i)} style={{fontSize:14,lineHeight:1.5,textDecoration:checked[k]?'line-through':'none',color:checked[k]?C.txl:C.tx,flex:1,cursor:'pointer'}}>{item}</div>
                 {recos&&recos.length>0&&(
-                  <div onClick={()=>recos.length===1&&recos[0].link&&!recos[0].note?openExternal(recos[0].link):setOpenReco(isOpen?null:recoKey)} style={{position:'relative',width:30,height:30,borderRadius:'50%',background:C.cd,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,cursor:'pointer'}}>
+                  <div onClick={()=>recos.length===1&&recos[0].link&&!recos[0].note&&!recos[0].coupon?openExternal(recos[0].link):setOpenReco(isOpen?null:recoKey)} style={{position:'relative',width:30,height:30,borderRadius:'50%',background:C.cd,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,cursor:'pointer'}}>
                     🔗
                     {recos.length>1&&<div style={{position:'absolute',top:-5,left:-5,background:C.t,color:'white',fontSize:10,fontWeight:700,width:16,height:16,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>{recos.length}</div>}
                   </div>
                 )}
               </div>
               {isOpen&&recos&&(
-                <div style={{background:C.cr,borderRadius:14,padding:14,margin:'0 0 12px 30px'}}>
-                  <div style={{fontSize:12,color:C.txl,fontWeight:600,marginBottom:10}}>💛 {recos.length>1?'ההמלצות שלי':'ההמלצה שלי'}</div>
+                <div style={{background:C.cr,borderRadius:14,padding:12,margin:'0 0 12px 30px'}}>
+                  <div style={{fontSize:12,color:C.txl,fontWeight:600,marginBottom:8}}>💛 {recos.length>1?'ההמלצות שלי':'ההמלצה שלי'}</div>
                   {recos.map((r,ri)=>(
-                    <div key={ri} style={{background:'white',borderRadius:12,padding:'12px 14px',marginBottom:ri<recos.length-1?8:0,border:`1px solid ${C.cd}`}}>
-                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:r.note?6:10}}>
-                        <span style={{fontSize:11,color:C.t,background:C.cd,padding:'2px 8px',borderRadius:8}}>{r.store}</span>
-                        <span style={{fontSize:14,fontWeight:600,color:C.tx}}>{r.name}</span>
+                    <div key={ri} style={{background:'white',borderRadius:12,padding:'10px 14px',marginBottom:ri<recos.length-1?6:0,border:`1px solid ${C.cd}`}}>
+                      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:10}}>
+                        <div>
+                          <div style={{fontSize:14,fontWeight:600,color:C.tx,marginBottom:2}}>{r.name}</div>
+                          <div style={{fontSize:11,color:C.txl}}>{r.store}</div>
+                        </div>
+                        <div onClick={()=>openExternal(r.link)} style={{fontSize:14,fontWeight:700,color:C.t,cursor:'pointer',whiteSpace:'nowrap',flexShrink:0}}>לצפייה ←</div>
                       </div>
-                      {r.note&&<div style={{fontSize:12,color:C.txl,lineHeight:1.6,marginBottom:10}}>{r.note}</div>}
-                      <div onClick={()=>openExternal(r.link)} style={{display:'inline-block',background:C.t,color:'white',fontSize:12,fontWeight:600,padding:'7px 14px',borderRadius:8,cursor:'pointer'}}>לצפייה במוצר ←</div>
+                      {r.coupon&&<div style={{marginTop:8,padding:'6px 10px',background:C.cr,borderRadius:8,fontSize:12,color:C.t,display:'flex',alignItems:'center',gap:6}}><span>🎟️</span><span style={{fontWeight:600}}>{r.coupon}</span></div>}
                     </div>
                   ))}
                 </div>
@@ -4721,11 +4783,9 @@ const COUPONS_DATA = [
   {service:"מנשאי URBAN BABY WRAP",discount:"10% הנחה",desc:"מנשאי בד וקשיחים מעוצבים, חברה ישראלית.",code:"dafna",url:"https://www.urbanbabywrap.com/"},
   {service:"ALPHA MOM",discount:"5% הנחה",desc:"חזיות ומוצרי הנקה - בוטיק לאמהות ולאמהות בדרך.",code:"DD5",url:"https://alphamom.co.il/"},
   {service:"צילומי הריון, לידה וניובורן",discount:"15% הנחה",desc:"נסיה - צלמת מנוסה בצילומי הריון ולידה, פעילה בכל הארץ.",code:"דרך דפנה דולה",url:"https://www.instagram.com/nesialon/"},
-  {service:"GROUPHUG",discount:"15% הנחה",desc:"פלטפורמה עם אנשי מקצוע בתחומי הריון, לידה, פוסט-פארטום והורות.",code:"DULA15",url:"https://www.grouphug.online/family"},
   {service:"מוצרי NUBY",discount:"10% הנחה",desc:"משחקים לפעוטות, צעצועי התפתחות ואביזרי האכלה.",code:"DAFNAD10",url:"https://intersun.co.il/"},
   {service:"תיק LITIK ללידה",discount:"10% הנחה",desc:"תיק מרוכז עם כל מה שצריך ללידה, במקום אחד.",code:"DAFNA10",url:"https://www.litik.co.il/הליתיק-של-הדולה-דפנה/"},
   {service:"כרית הריון והנקה",discount:"20% הנחה",desc:"כרית לשינה נוחה בהריון, ולאחר מכן ככרית הנקה.",code:"DAFNA20",url:"https://caritli.co.il/"},
-  {service:"בקבוק פרי",discount:"10% הנחה",desc:"בקבוק לשטיפה אינטימית - מוצר חשוב אחרי הלידה.",code:"dafna10",url:"https://mamabear.co.il/product/peri-bottle/"},
   {service:"מתנות לבייבי",discount:"10% הנחה",desc:"מתנות לידה ופרטי עיצוב לחדר התינוק.",code:"dafnadoula10",url:"https://www.opali-gifts.com/"}
 ];
 
@@ -4766,13 +4826,6 @@ function Coupons() {
           </div>
         </div>
       ))}
-      <div style={{...card,background:'#E8F4E8',textAlign:'center'}}>
-        <div style={{fontSize:13,color:'#2E7D32',lineHeight:1.8}}>
-          <strong>🎁 קוד חבר מביאה חבר</strong><br/>
-          הפניי חברה לאפליקציה – שתיכן תקבלנה הנחה של 5% על טיפול הבא!<br/>
-          <button onClick={()=>{const msg=encodeURIComponent('שלום! ממליצה על אפליקציית דפנה דולה – מלווה הריון ולידה. מדהים! 🌸'); openExternal('https://wa.me/?text='+msg);}} style={{marginTop:8,padding:'8px 20px',background:'#2E7D32',color:'white',border:'none',borderRadius:20,fontFamily:'inherit',fontSize:13,cursor:'pointer'}}>💚 שתפי חברה</button>
-        </div>
-      </div>
     </div>
   );
 }

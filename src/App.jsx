@@ -56,28 +56,44 @@ const ttl = {fontFamily:'"DM Sans","Assistant",sans-serif',fontSize:18,fontWeigh
 const bdy = {fontSize:14,lineHeight:1.7,color:C.txl};
 
 const WD = {
-  4:{sz:"פרג",emoji:"🌾",szEn:"poppy seed",hl:"האמבריון נקשר לרחם",sys:"הלב והמוח מתחילים",tip:"תתייעצי על התוספים שאת צריכה להתחיל לקחת",sym:"עייפות, בחילות קלות",tests:[]},
-  5:{sz:"גרגיר שומשום",emoji:"🌾",szEn:"sesame seed",hl:"הלב מתחיל לפעום!",sys:"צינור עצבי נסגר",tip:"הפסיקי אלכוהול ועישון",sym:"בחילות, עייפות קיצונית",tests:[]},
-  6:{sz:"אפונה",emoji:"🫛",szEn:"pea",hl:"ניצנים של ידיים ורגליים",sys:"המוח מתפתח מהר",tip:"קבעי אולטרסאונד ראשון",sym:"בחילות בוקר וערב",tests:["בדיקת דם ראשונה"]},
-  8:{sz:"פטל",emoji:"🫐",szEn:"raspberry",hl:"כל האיברים החיוניים קיימים!",sys:"אצבעות מתפתחות",tip:"אולטרסאונד ראשון בקרוב",sym:"בחילות, שינויי מצב רוח",tests:["אולטרסאונד ראשון – אימות מיקום ההריון, גיל ההריון, מספר העוברים ודופק"]},
+  4:{sz:"פרג",emoji:"",ill:"poppy",szEn:"poppy seed",hl:"האמבריון נקשר לרחם",sys:"הלב והמוח מתחילים",tip:"תתייעצי על התוספים שאת צריכה להתחיל לקחת",sym:"עייפות, בחילות קלות",tests:[]},
+  5:{sz:"גרגר פלפל",emoji:"",ill:"pepper",szEn:"peppercorn",hl:"הלב מתחיל לפעום!",sys:"צינור עצבי נסגר",tip:"הפסיקי אלכוהול ועישון",sym:"בחילות, עייפות קיצונית",tests:[]},
+  6:{sz:"גרגר רימון",emoji:"",ill:"pomseed",szEn:"pomegranate seed",hl:"ניצנים של ידיים ורגליים",sys:"המוח מתפתח מהר",tip:"קבעי אולטרסאונד ראשון",sym:"בחילות בוקר וערב",tests:["בדיקת דם ראשונה"]},
+  8:{sz:"פטל",emoji:"",ill:"raspberry",szEn:"raspberry",hl:"כל האיברים החיוניים קיימים!",sys:"אצבעות מתפתחות",tip:"אולטרסאונד ראשון בקרוב",sym:"בחילות, שינויי מצב רוח",tests:["אולטרסאונד ראשון – אימות מיקום ההריון, גיל ההריון, מספר העוברים ודופק"]},
   10:{sz:"תות",emoji:"🍓",szEn:"strawberry",hl:"העובר יכול לבלוע!",sys:"מפרקים נוצרים",tip:"סיסי שליה (CVS) – במידת הצורך ובהמלצה רפואית (בין שבועות 11-13)",sym:"בחילות מתמשכות",tests:[]},
-  12:{sz:"שזיף",emoji:"🍑",szEn:"plum",hl:"סוף טרימסטר ראשון!",sys:"מע' עצבים מפותחת",tip:"NT + בדיקת דם גנטית",sym:"בחילות אמורות כבר לעבור, נפיחות ברגליים",tests:["שקיפות עורפית","NIPT (בדיקת DNA עוברי בדם האם – לבחירה)"]},
-  14:{sz:"לימון",emoji:"🍋",szEn:"lemon",hl:"רוב הנשים מתחילות להרגיש טוב יותר, והבחילות לרוב פוחתות",sys:"ביטויי פנים מתפתחים",tip:"אנרגיה חוזרת לרוב!",sym:"אנרגיה חוזרת",tests:[]},
+  12:{sz:"שזיף",emoji:"",ill:"plum",szEn:"plum",hl:"סוף טרימסטר ראשון!",sys:"מע' עצבים מפותחת",tip:"NT + בדיקת דם גנטית",sym:"בחילות אמורות כבר לעבור, נפיחות ברגליים",tests:["שקיפות עורפית","NIPT (בדיקת DNA עוברי בדם האם – לבחירה)"]},
+  14:{sz:"נקטרינה",emoji:"",ill:"nectarine",szEn:"nectarine",hl:"רוב הנשים מתחילות להרגיש טוב יותר, והבחילות לרוב פוחתות",sys:"ביטויי פנים מתפתחים",tip:"אנרגיה חוזרת לרוב!",sym:"אנרגיה חוזרת",tests:[]},
   16:{sz:"אבוקדו",emoji:"🥑",szEn:"avocado",hl:"ייתכן שתתחילי להרגיש תנועות ראשונות, במיוחד אם זה אינו ההריון הראשון",sys:"שמיעה מתפתחת",tip:"בדיקת מי שפיר אם הוצע",sym:"תנועות עדינות",tests:["בדיקת מי שפיר (אם מוצעת)","AFP + Quad Screen"]},
-  18:{sz:"בטטה",emoji:"🍠",szEn:"sweet potato",hl:"פעמים ראשונות לבעיטות!",sys:"רשתית העין מתפתחת",tip:"ישני על הצד השמאלי",sym:"כאבי גב, סחרחורות",tests:[]},
+  18:{sz:"פלפל אדום",emoji:"",ill:"redpepper",szEn:"red bell pepper",hl:"פעמים ראשונות לבעיטות!",sys:"רשתית העין מתפתחת",tip:"ישני על הצד השמאלי",sym:"כאבי גב, סחרחורות",tests:[]},
   20:{sz:"בננה",emoji:"🍌",szEn:"banana",hl:"אמצע ההריון! אולטרסאונד מלא",sys:"עור מכוסה vernix",tip:"סקירת מערכות מאוחרת מומלצת בין שבועות 20-24",sym:"כאבי גב, תכיפות שתן",tests:["סקירת מערכות מאוחרת"]},
-  22:{sz:"פפאיה",emoji:"🫐",szEn:"papaya",hl:"מגיב לצלילים מבחוץ",sys:"שיניים מתפתחות",tip:"שוחי בריכה – מצוין לגב!",sym:"שרירי בטן מתוחים",tests:[]},
-  24:{sz:"תירס",emoji:"🌽",szEn:"corn",hl:"ריאות מתחילות לייצר surfactant",sys:"עיניים נפתחות!",tip:"בדיקת סוכרת בשב 24-28",sym:"נפיחות",tests:["העמסת סוכר (GCT/OGTT)","ספירת דם – ברזל"]},
-  26:{sz:"כרוב",emoji:"🥦",szEn:"head of lettuce",hl:"עיניים נפתחות ונסגרות!",sys:"ריאות מתפתחות",tip:"הכיני תוכנית לידה ראשונית",sym:"כאבי גב, קוצר נשימה קל",tests:[]},
-  28:{sz:"חציל",emoji:"🍆",szEn:"eggplant",hl:"טרימסטר שלישי! מוח מתפתח מהר",sys:"מוח מתפתח מהר",tip:"קורס לידה עכשיו!",sym:"קוצר נשימה, ברקסטון היקס",tests:["בדיקת דם – ברזל","בדיקת GCT אם עוד לא"]},
-  30:{sz:"כרוב סיני",emoji:"🥬",szEn:"cabbage",hl:"מתחיל לצבור שומן מתחת לעור",sys:"מרכז הראייה מתפתח",tip:"זה זמן מצוין להתחיל בשגרת Spinning Babies כדי לעודד איזון של האגן ולסייע לתינוק למצוא תנוחה מיטבית",sym:"עייפות חוזרת, כאבי אגן",tests:[]},
-  32:{sz:"קוקוס",emoji:"🥥",szEn:"coconut",hl:"מתהפך לתנוחת לידה",sys:"עצמות מתחזקות",tip:"שוחחי על תוכנית לידה עם הצוות",sym:"כאבי אגן, קשיי שינה",tests:["בדיקת GBS (סטרפטוקוק)","ניטור אם יש הוראה רפואית"]},
-  34:{sz:"קישוא",emoji:"🥒",szEn:"butternut squash",hl:"מרוב שומן – עור מקומט פחות",sys:"מערכת חיסון מתחזקת",tip:"זה זמן טוב להכין את תיק הלידה ולהתחיל עיסוי פרינאום, אם בחרת בכך",sym:"כאבי גב חזקים, קשיי שינה",tests:[]},
-  36:{sz:"פפאיה גדולה",emoji:"🍈",szEn:"papaya",hl:"אצל חלק מהנשים ראש העובר יורד לאגן, מה שעשוי להקל על הנשימה ולהגביר את הלחץ באגן",sys:"ריאות כמעט בשלות",tip:"הכיני את תיק הלידה שלך",sym:"לחץ על אגן, ירידת בטן",tests:["בדיקת GBS","בדיקת ניטור (NST) שבועית"]},
-  38:{sz:"אבטיח קטן",emoji:"🍉",szEn:"watermelon",hl:"תינוקך full term!",sys:"כל המערכות מוכנות",tip:"כל יום נוסף ברחם תורם להבשלת התינוק, כל עוד המעקב הרפואי תקין",sym:"לחץ חזק, ייתכן ירידת מים"},
-  40:{sz:"קווה",emoji:"🎃",szEn:"pumpkin",hl:"מועד הלידה המחושב!",sys:"הכל מוכן",tip:"נסי להישאר רגועה. רק כ-5% מהתינוקות נולדים בדיוק בתאריך הלידה המשוער. כל עוד המעקב הרפואי תקין, גם אם הלידה עדיין לא התחילה – זה יכול להיות תקין",sym:"לחץ, ציפייה, התרגשות",tests:["ניטור","בדיקת מי שפיר","מעקב הריון עודף"]}
+  22:{sz:"מנגו",emoji:"🥭",szEn:"mango",hl:"מגיב לצלילים מבחוץ",sys:"שיניים מתפתחות",tip:"שוחי בריכה – מצוין לגב!",sym:"שרירי בטן מתוחים",tests:[]},
+  24:{sz:"קלח תירס",emoji:"🌽",szEn:"corn on the cob",hl:"ריאות מתחילות לייצר surfactant",sys:"עיניים נפתחות!",tip:"בדיקת סוכרת בשב 24-28",sym:"נפיחות",tests:["העמסת סוכר (GCT/OGTT)","ספירת דם – ברזל"]},
+  26:{sz:"חציל",emoji:"🍆",szEn:"eggplant",hl:"עיניים נפתחות ונסגרות!",sys:"ריאות מתפתחות",tip:"הכיני תוכנית לידה ראשונית",sym:"כאבי גב, קוצר נשימה קל",tests:[]},
+  28:{sz:"כרובית",emoji:"",ill:"cauliflower",szEn:"cauliflower",hl:"טרימסטר שלישי! מוח מתפתח מהר",sys:"מוח מתפתח מהר",tip:"קורס לידה עכשיו!",sym:"קוצר נשימה, ברקסטון היקס",tests:["בדיקת דם – ברזל","בדיקת GCT אם עוד לא"]},
+  30:{sz:"דלורית",emoji:"",ill:"butternut",szEn:"butternut squash",hl:"מתחיל לצבור שומן מתחת לעור",sys:"מרכז הראייה מתפתח",tip:"זה זמן מצוין להתחיל בשגרת Spinning Babies כדי לעודד איזון של האגן ולסייע לתינוק למצוא תנוחה מיטבית",sym:"עייפות חוזרת, כאבי אגן",tests:[]},
+  32:{sz:"אננס",emoji:"🍍",szEn:"pineapple",hl:"מתהפך לתנוחת לידה",sys:"עצמות מתחזקות",tip:"שוחחי על תוכנית לידה עם הצוות",sym:"כאבי אגן, קשיי שינה",tests:["בדיקת GBS (סטרפטוקוק)","ניטור אם יש הוראה רפואית"]},
+  34:{sz:"כרוב",emoji:"",ill:"cabbage",szEn:"cabbage",hl:"מרוב שומן – עור מקומט פחות",sys:"מערכת חיסון מתחזקת",tip:"זה זמן טוב להכין את תיק הלידה ולהתחיל עיסוי פרינאום, אם בחרת בכך",sym:"כאבי גב חזקים, קשיי שינה",tests:[]},
+  36:{sz:"פפאיה גדולה",emoji:"",ill:"papaya",szEn:"large papaya",hl:"אצל חלק מהנשים ראש העובר יורד לאגן, מה שעשוי להקל על הנשימה ולהגביר את הלחץ באגן",sys:"ריאות כמעט בשלות",tip:"הכיני את תיק הלידה שלך",sym:"לחץ על אגן, ירידת בטן",tests:["בדיקת GBS","בדיקת ניטור (NST) שבועית"]},
+  38:{sz:"מלון",emoji:"🍈",szEn:"melon",hl:"תינוקך full term!",sys:"כל המערכות מוכנות",tip:"כל יום נוסף ברחם תורם להבשלת התינוק, כל עוד המעקב הרפואי תקין",sym:"לחץ חזק, ייתכן ירידת מים"},
+  39:{sz:"דלעת גדולה",emoji:"",ill:"pumpkin",szEn:"large pumpkin",hl:"תינוקך full term!",sys:"כל המערכות מוכנות",tip:"כל יום נוסף ברחם תורם להבשלת התינוק, כל עוד המעקב הרפואי תקין",sym:"לחץ חזק, ייתכן ירידת מים"},
+  40:{sz:"אבטיח גדול",emoji:"🍉",szEn:"large watermelon",hl:"מועד הלידה המחושב!",sys:"הכל מוכן",tip:"נסי להישאר רגועה. רק כ-5% מהתינוקות נולדים בדיוק בתאריך הלידה המשוער. כל עוד המעקב הרפואי תקין, גם אם הלידה עדיין לא התחילה – זה יכול להיות תקין",sym:"לחץ, ציפייה, התרגשות",tests:["ניטור","בדיקת מי שפיר","מעקב הריון עודף"]}
 };
 function getWD(w){const ks=Object.keys(WD).map(Number).sort((a,b)=>a-b);let b=ks[0];for(const k of ks){if(k<=w)b=k;}return WD[b];}
+// איורי גודל לשבועות שאין להם אימוג׳י מתאים (מוצגים כשאין emoji בנתוני השבוע)
+const SIZE_ILL = {
+  poppy: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="82" rx="30" ry="4" fill="#000" opacity="0.08"/><ellipse cx="50" cy="58" rx="4" ry="2.8" fill="#3D405B" transform="rotate(20 50 58)"/><ellipse cx="49" cy="57" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(20 50 58)"/><ellipse cx="42" cy="62" rx="4" ry="2.8" fill="#565A7C" transform="rotate(-30 42 62)"/><ellipse cx="41" cy="61" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-30 42 62)"/><ellipse cx="58" cy="63" rx="4" ry="2.8" fill="#3D405B" transform="rotate(50 58 63)"/><ellipse cx="57" cy="62" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(50 58 63)"/><ellipse cx="46" cy="52" rx="4" ry="2.8" fill="#565A7C" transform="rotate(70 46 52)"/><ellipse cx="45" cy="51" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(70 46 52)"/><ellipse cx="54" cy="50" rx="4" ry="2.8" fill="#3D405B" transform="rotate(-10 54 50)"/><ellipse cx="53" cy="49" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-10 54 50)"/><ellipse cx="36" cy="56" rx="4" ry="2.8" fill="#565A7C" transform="rotate(10 36 56)"/><ellipse cx="35" cy="55" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(10 36 56)"/><ellipse cx="64" cy="56" rx="4" ry="2.8" fill="#3D405B" transform="rotate(-40 64 56)"/><ellipse cx="63" cy="55" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-40 64 56)"/><ellipse cx="40" cy="68" rx="4" ry="2.8" fill="#565A7C" transform="rotate(40 40 68)"/><ellipse cx="39" cy="67" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(40 40 68)"/><ellipse cx="52" cy="68" rx="4" ry="2.8" fill="#3D405B" transform="rotate(-20 52 68)"/><ellipse cx="51" cy="67" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-20 52 68)"/><ellipse cx="61" cy="69" rx="4" ry="2.8" fill="#565A7C" transform="rotate(10 61 69)"/><ellipse cx="60" cy="68" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(10 61 69)"/><ellipse cx="48" cy="44" rx="4" ry="2.8" fill="#3D405B" transform="rotate(30 48 44)"/><ellipse cx="47" cy="43" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(30 48 44)"/><ellipse cx="57" cy="43" rx="4" ry="2.8" fill="#565A7C" transform="rotate(-50 57 43)"/><ellipse cx="56" cy="42" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-50 57 43)"/><ellipse cx="31" cy="64" rx="4" ry="2.8" fill="#3D405B" transform="rotate(-15 31 64)"/><ellipse cx="30" cy="63" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-15 31 64)"/><ellipse cx="69" cy="64" rx="4" ry="2.8" fill="#565A7C" transform="rotate(25 69 64)"/><ellipse cx="68" cy="63" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(25 69 64)"/><ellipse cx="45" cy="74" rx="4" ry="2.8" fill="#3D405B" transform="rotate(5 45 74)"/><ellipse cx="44" cy="73" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(5 45 74)"/><ellipse cx="56" cy="75" rx="4" ry="2.8" fill="#565A7C" transform="rotate(-35 56 75)"/><ellipse cx="55" cy="74" rx="1.3" ry="0.7" fill="#fff" opacity="0.35" transform="rotate(-35 56 75)"/></svg>,
+  pepper: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="86" rx="22" ry="4" fill="#000" opacity="0.08"/><defs><radialGradient id="pc1" cx="0.38" cy="0.35" r="0.8"><stop offset="0" stopColor="#6B5A50"/><stop offset="1" stopColor="#2B221E"/></radialGradient></defs><circle cx="50" cy="52" r="26" fill="url(#pc1)"/><g stroke="#8A786C" strokeWidth="1.6" fill="none" strokeLinecap="round" opacity="0.8"><path d="M30 46 Q39 38 49 45"/><path d="M45 62 Q55 55 66 63"/><path d="M33 64 Q40 71 50 68"/><path d="M54 36 Q63 34 69 44"/><path d="M60 52 Q68 50 72 56"/></g><ellipse cx="40" cy="40" rx="7" ry="4" fill="#fff" opacity="0.25" transform="rotate(-30 40 40)"/></svg>,
+  pomseed: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="88" rx="28" ry="4" fill="#000" opacity="0.08"/><defs><radialGradient id="pa1" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stopColor="#FF6B6B"/><stop offset="0.6" stopColor="#D00000"/><stop offset="1" stopColor="#8F0A14"/></radialGradient></defs><ellipse cx="31" cy="66" rx="10" ry="13" fill="url(#pa1)" transform="rotate(-25 31 66)"/><ellipse cx="32.0" cy="67.95" rx="3.8" ry="5.46" fill="#F8D9C4" opacity="0.45" transform="rotate(-25 31 66)"/><ellipse cx="27.5" cy="60.15" rx="2.2" ry="1.8200000000000003" fill="#fff" opacity="0.5" transform="rotate(-45 31 66)"/><defs><radialGradient id="pa2" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stopColor="#FF6B6B"/><stop offset="0.6" stopColor="#D00000"/><stop offset="1" stopColor="#8F0A14"/></radialGradient></defs><ellipse cx="69" cy="68" rx="10" ry="13" fill="url(#pa2)" transform="rotate(35 69 68)"/><ellipse cx="70.0" cy="69.95" rx="3.8" ry="5.46" fill="#F8D9C4" opacity="0.45" transform="rotate(35 69 68)"/><ellipse cx="65.5" cy="62.15" rx="2.2" ry="1.8200000000000003" fill="#fff" opacity="0.5" transform="rotate(15 69 68)"/><defs><radialGradient id="pa3" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stopColor="#FF6B6B"/><stop offset="0.6" stopColor="#D00000"/><stop offset="1" stopColor="#8F0A14"/></radialGradient></defs><ellipse cx="50" cy="50" rx="17" ry="22" fill="url(#pa3)" transform="rotate(15 50 50)"/><ellipse cx="51.7" cy="53.3" rx="6.46" ry="9.24" fill="#F8D9C4" opacity="0.45" transform="rotate(15 50 50)"/><ellipse cx="44.05" cy="40.1" rx="3.74" ry="3.08" fill="#fff" opacity="0.5" transform="rotate(-5 50 50)"/></svg>,
+  raspberry: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="90" rx="22" ry="3.5" fill="#000" opacity="0.08"/><circle cx="33.5" cy="30" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="31.7" cy="28" r="1.7" fill="#fff" opacity="0.45"/><circle cx="44.5" cy="30" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="42.7" cy="28" r="1.7" fill="#fff" opacity="0.45"/><circle cx="55.5" cy="30" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="53.7" cy="28" r="1.7" fill="#fff" opacity="0.45"/><circle cx="66.5" cy="30" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="64.7" cy="28" r="1.7" fill="#fff" opacity="0.45"/><circle cx="28" cy="40" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="26.2" cy="38" r="1.7" fill="#fff" opacity="0.45"/><circle cx="39" cy="40" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="37.2" cy="38" r="1.7" fill="#fff" opacity="0.45"/><circle cx="50" cy="40" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="48.2" cy="38" r="1.7" fill="#fff" opacity="0.45"/><circle cx="61" cy="40" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="59.2" cy="38" r="1.7" fill="#fff" opacity="0.45"/><circle cx="72" cy="40" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="70.2" cy="38" r="1.7" fill="#fff" opacity="0.45"/><circle cx="33.5" cy="51" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="31.7" cy="49" r="1.7" fill="#fff" opacity="0.45"/><circle cx="44.5" cy="51" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="42.7" cy="49" r="1.7" fill="#fff" opacity="0.45"/><circle cx="55.5" cy="51" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="53.7" cy="49" r="1.7" fill="#fff" opacity="0.45"/><circle cx="66.5" cy="51" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="64.7" cy="49" r="1.7" fill="#fff" opacity="0.45"/><circle cx="39" cy="62" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="37.2" cy="60" r="1.7" fill="#fff" opacity="0.45"/><circle cx="50" cy="62" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="48.2" cy="60" r="1.7" fill="#fff" opacity="0.45"/><circle cx="61" cy="62" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="59.2" cy="60" r="1.7" fill="#fff" opacity="0.45"/><circle cx="44.5" cy="72" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="42.7" cy="70" r="1.7" fill="#fff" opacity="0.45"/><circle cx="55.5" cy="72" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="53.7" cy="70" r="1.7" fill="#fff" opacity="0.45"/><circle cx="50" cy="81" r="6.4" fill="#D81B60" stroke="#A0144A" strokeWidth="0.9"/><circle cx="48.2" cy="79" r="1.7" fill="#fff" opacity="0.45"/><path d="M50 30 C40 26 32 28 28 34 C38 36 44 34 50 30 Z" fill="#4C8C4A"/><path d="M50 30 C42 30 36 31 31 33" stroke="#356B35" strokeWidth="1.2" fill="none" strokeLinecap="round"/><path d="M50 30 C60 26 68 28 72 34 C62 36 56 34 50 30 Z" fill="#4C8C4A"/><path d="M50 30 C58 30 64 31 69 33" stroke="#356B35" strokeWidth="1.2" fill="none" strokeLinecap="round"/><path d="M50 30 C46 22 50 16 56 14 C58 22 56 28 50 30 Z" fill="#4C8C4A"/><path d="M50 30 C52 24 54 20 55 16" stroke="#356B35" strokeWidth="1.2" fill="none" strokeLinecap="round"/></svg>,
+  plum: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="89" rx="24" ry="4" fill="#000" opacity="0.08"/><defs><radialGradient id="pl1" cx="0.38" cy="0.35" r="0.85"><stop offset="0" stopColor="#9B4FB8"/><stop offset="1" stopColor="#4A1A5E"/></radialGradient></defs><ellipse cx="50" cy="57" rx="28" ry="26" fill="url(#pl1)"/><path d="M50 32 Q43 57 50 82" stroke="#3B1248" strokeWidth="1.8" fill="none" opacity="0.6" strokeLinecap="round"/><ellipse cx="50" cy="57" rx="28" ry="26" fill="#C9B1D9" opacity="0.14"/><ellipse cx="38" cy="46" rx="6" ry="11" fill="#fff" opacity="0.24" transform="rotate(20 38 46)"/><path d="M50 32 Q51 25 55 20" stroke="#6B4F2A" strokeWidth="2.6" fill="none" strokeLinecap="round"/><path d="M55 22 Q68 12 78 20 Q66 29 55 22 Z" fill="#4C8C4A"/><path d="M55 22 Q66 19 76 20" stroke="#356B35" strokeWidth="1.2" fill="none" strokeLinecap="round"/></svg>,
+  nectarine: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="89" rx="24" ry="4" fill="#000" opacity="0.08"/><defs><radialGradient id="ne1" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stopColor="#FFC27A"/><stop offset="0.5" stopColor="#F4722B"/><stop offset="1" stopColor="#C8202F"/></radialGradient></defs><circle cx="50" cy="57" r="28" fill="url(#ne1)"/><path d="M50 31 Q58 57 50 84" stroke="#B3261E" strokeWidth="1.6" fill="none" opacity="0.4" strokeLinecap="round"/><ellipse cx="38" cy="46" rx="6" ry="10" fill="#fff" opacity="0.38" transform="rotate(25 38 46)"/><path d="M50 31 Q51 24 55 20" stroke="#6B4F2A" strokeWidth="2.6" fill="none" strokeLinecap="round"/><path d="M55 22 Q68 12 78 20 Q66 29 55 22 Z" fill="#4C8C4A"/><path d="M55 22 Q66 19 76 20" stroke="#356B35" strokeWidth="1.2" fill="none" strokeLinecap="round"/></svg>,
+  redpepper: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="91" rx="26" ry="4" fill="#000" opacity="0.08"/><defs><linearGradient id="rp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F0392F"/><stop offset="1" stopColor="#B3151B"/></linearGradient></defs><path d="M30 38 C21 45 19 67 29 79 C36 87 44 89 50 85 C56 89 64 87 71 79 C81 67 79 45 70 38 C64 32 56 34 50 36 C44 34 36 32 30 38 Z" fill="url(#rp1)"/><g stroke="#8F1218" strokeWidth="1.6" fill="none" opacity="0.5" strokeLinecap="round"><path d="M50 37 C46 52 46 70 50 85"/><path d="M38 38 C33 52 35 70 40 83"/><path d="M62 38 C67 52 65 70 60 83"/></g><ellipse cx="33" cy="56" rx="4" ry="12" fill="#fff" opacity="0.32" transform="rotate(8 33 56)"/><ellipse cx="50" cy="37" rx="12" ry="4" fill="#2F5233"/><path d="M46 37 Q46 26 52 21 L58 24 Q54 30 55 37 Z" fill="#386641"/></svg>,
+  cauliflower: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="90" rx="28" ry="4" fill="#000" opacity="0.08"/><path d="M20 62 Q15 38 38 43 Q34 66 50 84 Q28 86 20 62 Z" fill="#6A994E"/><path d="M80 62 Q85 38 62 43 Q66 66 50 84 Q72 86 80 62 Z" fill="#6A994E"/><ellipse cx="50" cy="55" rx="27" ry="24" fill="#EFE6CC"/><circle cx="36" cy="46" r="10" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="50" cy="38" r="11" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="64" cy="46" r="10" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="30" cy="58" r="9" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="44" cy="56" r="10" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="58" cy="56" r="10" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="70" cy="58" r="9" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="38" cy="68" r="8.5" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="50" cy="68" r="9" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><circle cx="62" cy="68" r="8.5" fill="#F7F0DE" stroke="#D9CBA3" strokeWidth="1"/><path d="M30 77 Q50 97 70 77 Q50 69 30 77 Z" fill="#7BAA5A"/><path d="M50 74 L50 90" stroke="#5C8C47" strokeWidth="1.4"/></svg>,
+  butternut: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="91" rx="24" ry="3.5" fill="#000" opacity="0.08"/><defs><linearGradient id="bs1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#F2CB8A"/><stop offset="1" stopColor="#D9963F"/></linearGradient></defs><path d="M44 20 L56 20 C58 32 60 41 66 49 C79 59 80 79 68 87 C58 93 42 93 32 87 C20 79 21 59 34 49 C40 41 42 32 44 20 Z" fill="url(#bs1)"/><path d="M50 22 C50 50 50 72 50 91" stroke="#C8832F" strokeWidth="1.4" fill="none" opacity="0.5"/><ellipse cx="37" cy="66" rx="4" ry="12" fill="#fff" opacity="0.28" transform="rotate(10 37 66)"/><rect x="45" y="12" width="10" height="9" rx="2.5" fill="#7A5A2E"/></svg>,
+  cabbage: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="91" rx="30" ry="4" fill="#000" opacity="0.08"/><path d="M14 62 C14 80 32 92 50 92 C68 92 86 80 86 62 C80 74 66 82 50 82 C34 82 20 74 14 62 Z" fill="#5C8C47"/><ellipse cx="50" cy="58" rx="35" ry="30" fill="#6FA057"/><circle cx="50" cy="54" r="26" fill="#A9CF80"/><g stroke="#6E9C52" strokeWidth="1.8" fill="none" strokeLinecap="round"><path d="M50 30 C45 44 45 62 50 80"/><path d="M37 36 C31 50 35 66 43 78"/><path d="M63 36 C69 50 65 66 57 78"/></g><g stroke="#4F7F3D" strokeWidth="2" fill="none" strokeLinecap="round"><path d="M20 56 C24 38 38 29 50 29"/><path d="M80 56 C76 38 62 29 50 29"/></g><ellipse cx="38" cy="44" rx="6" ry="10" fill="#fff" opacity="0.3" transform="rotate(20 38 44)"/></svg>,
+  papaya: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="91" rx="22" ry="3.5" fill="#000" opacity="0.08"/><defs><linearGradient id="pp1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#B7D35B"/><stop offset="0.3" stopColor="#F6C453"/><stop offset="0.7" stopColor="#F29E4C"/><stop offset="1" stopColor="#E0782F"/></linearGradient></defs><g transform="rotate(-16 50 50)"><path d="M50 12 C60 14 68 28 70 46 C72 64 66 82 52 88 C38 92 28 78 30 56 C32 36 40 14 50 12 Z" fill="url(#pp1)"/><ellipse cx="50" cy="12" rx="3.4" ry="2.4" fill="#7A5A2E"/><ellipse cx="40" cy="44" rx="4.5" ry="16" fill="#fff" opacity="0.3" transform="rotate(6 40 44)"/></g></svg>,
+  pumpkin: <svg viewBox="0 0 100 100" width="90" height="90" aria-hidden="true" style={{display:"block",margin:"0 auto"}}><ellipse cx="50" cy="89" rx="32" ry="4" fill="#000" opacity="0.08"/><ellipse cx="24" cy="58" rx="9" ry="21" fill="#E87A18" stroke="#C75F12" strokeWidth="1.4"/><ellipse cx="76" cy="58" rx="9" ry="21" fill="#E87A18" stroke="#C75F12" strokeWidth="1.4"/><ellipse cx="36" cy="58" rx="13" ry="25" fill="#F08A24" stroke="#C75F12" strokeWidth="1.4"/><ellipse cx="64" cy="58" rx="13" ry="25" fill="#F08A24" stroke="#C75F12" strokeWidth="1.4"/><ellipse cx="50" cy="58" rx="12" ry="26" fill="#F59A33" stroke="#C75F12" strokeWidth="1.4"/><ellipse cx="44" cy="46" rx="4" ry="12" fill="#fff" opacity="0.28" transform="rotate(12 44 46)"/><path d="M46 34 C46 26 48 22 52 20 L58 22 C56 26 56 30 56 34 Z" fill="#7A6A2E"/><path d="M58 27 C66 22 73 27 71 34 C69 38 64 36 65 33" stroke="#4C8C4A" strokeWidth="2" fill="none" strokeLinecap="round"/></svg>,
+};
 function getTri(w){if(w<=13)return{l:'טרימסטר ראשון',c:'#3A6B3A',bg:'#E8F4E8'};if(w<=26)return{l:'טרימסטר שני',c:'#E65100',bg:'#FFF3E0'};return{l:'טרימסטר שלישי',c:'#C62828',bg:'#FCE4EC'};}
 function fmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
 
@@ -93,26 +109,236 @@ const BPS=[
 // Not linked to CL's structure on purpose — adding/removing a recommendation here
 // never touches the checklist itself.
 const PRODUCT_RECOMMENDATIONS = {
-  // "עגלה": [
-  //   {name:"...", store:"...", note:"...", link:"https://..."},
-  // ],
+  // === תיק לחדר לידה ===
+  "מכשיר טנס": [
+    {name:"TENS ללידה – Elle TENS 2", store:"צירים", link:"https://tzirim.co.il/product/elle-tens-2/", coupon:"DDOULA – 5% הנחה + סט אלקטרודות נוסף במתנה"}
+  ],
+
+  // === מה לקנות ===
+  "שמן לעיסוי תינוק": [
+    {name:"שמן עיסוי לתינוק Mustela Baby", store:"iHerb", link:"https://il.iherb.com/pr/mustela-baby-oil-with-avocado-oil-3-38-fl-oz-100-ml/105441"}
+  ],
+  "מדחום דיגיטלי": [
+    {name:"מדחום Braun ThermoScan 7+ IRT6525", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/297999"},
+    {name:"מדחום Kinsa QuickCare Digital", store:"Amazon", link:"https://link.amazon/B0fiYsW08"}
+  ],
+
+  // === מזוודה לתינוק ===
+  "קרם החתלה": [
+    {name:"משחת החתלה וולדה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/199045"},
+    {name:"קרם החתלה Mustela ללא בישום", store:"iHerb", link:"https://il.iherb.com/pr/mustela-baby-child-diaper-rash-cream-fragrance-free-3-8-oz-108-g/85179"}
+  ],
+  "טטרות": [
+    {name:"טטרה קטנה Aden + Anais", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/326316"},
+    {name:"טטרות במבוק גדולות", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4LwXQaH"},
+    {name:"טטרות במבוק קטנות", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3ZxA8EH"},
+    {name:"טטרות גדולות", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451538"}
+  ],
+
+  // === ציוד הנקה (אחרי לידה) ===
+  "סינר הנקה": [
+    {name:"סינר הנקה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/442826"},
+    {name:"סינר הנקה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3fE5nzX"}
+  ],
+  "רפידות הנקה": [
+    {name:"רפידות הנקה לנסינו", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/138318"},
+    {name:"רפידות הנקה חד-פעמיות Lansinoh Stay Dry", store:"iHerb", link:"https://il.iherb.com/pr/lansinoh-stay-dry-nursing-pads-60-individually-wrapped-pads/52214"}
+  ],
+  "בקבוק למקרה הצורך": [
+    {name:"בקבוק טומי טיפי", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/411375"},
+    {name:"בקבוקי Lansinoh NaturalWave – סט 3", store:"iHerb", link:"https://il.iherb.com/pr/lansinoh-feeding-bottles-with-naturalwave-nipple-medium-flow-3m-3-bottles-8-oz-240-ml-each/74170"},
+    {name:"בקבוק Lansinoh NaturalWave", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/138357"},
+    {name:"בקבוק אוונט", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/280165"}
+  ],
+  "משחה לנולין לפטמות": [
+    {name:"קרם פטמות לנולין", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/139314"},
+    {name:"Earth Mama Organic Nipple Butter", store:"iHerb", link:"https://il.iherb.com/pr/earth-mama-organic-nipple-butter-2-fl-oz-60-ml/21358"},
+    {name:"Motherlove Nipple Cream", store:"iHerb", link:"https://il.iherb.com/pr/motherlove-breastfeeding-nipple-cream-1-fl-oz-29-5-ml/37468"}
+  ],
+
+  // === אולי תרצי גם (אחרי לידה) ===
+  "מאוורר לעגלה": [
+    {name:"מאוורר לעגלה Yamayo Just Chilin", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/219722"},
+    {name:"מאוורר לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3LlTlZB"}
+  ],
+  "מחזיק כוס ונייד לעגלה": [
+    {name:"מחזיק כוס ונייד לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4mHZn73"},
+    {name:"מחזיק כוס ונייד לעגלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/476186"}
+  ],
+  "ארגונית לעגלה": [
+    {name:"ארגונית לעגלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451489"}
+  ],
+  // === תיק לחדר לידה ===
+  "בקבוק פרי": [
+    {name:"בקבוק פרי Lansinoh עם שקית נסיעות", store:"iHerb", link:"https://il.iherb.com/pr/lansinoh-peri-bottle-with-travel-bag-12-2-oz-360-ml/124035?rcode=AUT2146"},
+    {name:"בקבוק פרי Frida Mom", store:"Amazon", link:"https://link.amazon/B0dmFsKDL"},
+    {name:"בקבוק לשטיפה אינטימית", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/214744"}
+  ],
+  // === אולי תרצי גם ===
+  "מייבש בקבוקים": [
+    {name:"מתקן ייבוש בקבוקים", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/152538"},
+    {name:"מייבש בקבוקים", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3z85OpT"}
+  ],
+
+  // === תיק לחדר לידה (השלמה) ===
+  "שמן שקדים ×2": [
+    {name:"שמן שקדים", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/446047"},
+    {name:"שמן שקדים Handcraft Blends", store:"iHerb", link:"https://il.iherb.com/pr/handcraft-blends-100-pure-sweet-almond-oil-8-fl-oz-236-ml/151684?rcode=AUT2146"}
+  ],
+
+  // === מה לקנות (השלמות) ===
+  "צופי רחצה": [
+    {name:"צופי רחצה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451406"}
+  ],
+  "מוניטור לתינוק": [
+    {name:"מוניטור לתינוק", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c2R9sefP"}
+  ],
+
+  // === מזוודה לאמא ===
+  "פדים עבים": [
+    {name:"פדים לאחר לידה The Honey Pot", store:"iHerb", link:"https://il.iherb.com/pr/the-honey-pot-company-organic-cooling-herbal-infusion-pads-with-wings-postpartum-12-count/106206?rcode=AUT2146"},
+    {name:"קוטקס לאחר לידה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/231671"}
+  ],
+
+  // === ציוד הנקה (השלמות) ===
+  "חזיית הנקה": [
+    {name:"חזיית הנקה ושאיבה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/346817"},
+    {name:"חזיית הנקה", store:"Amazon", link:"https://link.amazon/B0gr5lXnw"}
+  ],
+  "כרית הנקה (מומלץ)": [
+    {name:"כרית הנקה מילגה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/394364"},
+    {name:"כרית הנקה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/400142"}
+  ],
+  "שקיות לאחסון חלב": [
+    {name:"שקיות אחסון חלב Lansinoh 50 יח׳", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/138332"},
+    {name:"שקיות אחסון חלב Medela Breast Milk Storage Bags", store:"Amazon", link:"https://link.amazon/B0apnH3Ns"}
+  ],
+
+  // === אולי תרצי גם (השלמות) ===
+  "מחזיק מוצץ": [
+    {name:"מחזיק מוצץ", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4DQ3rUH"}
+  ],
+  "מחזיק מוצץ ממותג": [
+    {name:"מחזיק מוצץ ממותג", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3vQgUBn"}
+  ],
+  "מכשיר רעש לבן": [
+    {name:"מכשיר רעש לבן", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/286601"},
+    {name:"מכשיר רעש לבן", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3uBdOfn"}
+  ],
+  "מחמם בקבוקים": [
+    {name:"מחמם בקבוקים", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/169437"}
+  ],
+  "משחה לטחורים": [
+    {name:"Motherlove Postpartum Mom's Bottom Balm", store:"iHerb", link:"https://il.iherb.com/pr/motherlove-postpartum-mom-s-bottom-balm-1-fl-oz-29-5-ml/37470?rcode=AUT2146"}
+  ],
+  "ג'ל לצלקות": [
+    {name:"Derma E Scar Gel", store:"iHerb", link:"https://il.iherb.com/pr/derma-e-scar-gel-2-oz-56-g/6375?rcode=AUT2146"}
+  ],
+  "שמן אתרי לוונדר": [
+    {name:"שמן אתרי לוונדר NOW Foods", store:"iHerb", link:"https://il.iherb.com/pr/now-foods-essential-oils-lavender-1-3-fl-oz-10-ml/79008?rcode=AUT2146"}
+  ],
+  "קליפס לתיק עגלה": [
+    {name:"קליפס לתיק עגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3TSpgTP"}
+  ],
+  "ארגונית החתלה": [
+    {name:"ארגונית החתלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/453472"},
+    {name:"ארגונית החתלה OXO Tot Diaper Caddy", store:"Amazon", link:"https://link.amazon/B0b5gPGlG"}
+  ],
+  "שומר מוצץ": [
+    {name:"שומר מוצץ לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4qorvfb"}
+  ],
+  "סינר": [
+    {name:"סינר", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3NJ0LP3"}
+  ],
+  "חיתול בגד ים": [
+    {name:"חיתול בגד ים", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3qNCELf"}
+  ],
+
+  // === השלמות מלשונית האקסטרות ===
+  "סדינים לעגלה": [
+    {name:"סדינים לעגלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451368"},
+    {name:"סדינים לעגלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c41KEsuh"}
+  ],
+  "תיק החתלה": [
+    {name:"תיק החתלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/451476"},
+    {name:"תיק החתלה", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c3dq0b4l"}
+  ],
+  "ערכת טיפוח / קוצץ ציפורניים לתינוק": [
+    {name:"ערכת טיפוח / קוצץ ציפורניים לתינוק", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/283686"}
+  ],
+  "מגבת עם קפוצ'ון לתינוק": [
+    {name:"מגבת עם קפוצ'ון לתינוק", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/371406"},
+    {name:"מגבת עם קפוצ'ון לתינוק", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4ldHTzf"}
+  ],
+  "כדור פיזיו ללידה": [
+    {name:"כדור פיזיו ללידה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/101022"}
+  ],
+  "טיפוח קרקפת": [
+    {name:"שמפו קצף Mustela לתינוק 150 מ״ל", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/188362"},
+    {name:"קרם Cradle Cap Mustela ללא בישום", store:"iHerb", link:"https://il.iherb.com/pr/mustela-cradle-cap-cream-fragrance-free-1-35-fl-oz-40-ml/99748?rcode=AUT2146"},
+    {name:"שמפו קצף Mustela לקרקפת תינוק / Cradle Cap", store:"iHerb", link:"https://il.iherb.com/pr/mustela-foam-shampoo-for-newborns-with-avocado-polyphenols-for-cradle-cap-5-07-fl-oz-150-ml/102581?rcode=AUT2146"}
+  ],
+  "מי ניקוי ללא שטיפה": [
+    {name:"מים מיסלריים Mustela ללא שטיפה 300 מ״ל", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/227495"},
+    {name:"מי ניקוי ללא שטיפה Mustela Baby", store:"iHerb", link:"https://il.iherb.com/pr/mustela-baby-child-no-rinse-cleansing-water-10-14-fl-oz-300-ml/105439?rcode=AUT2146"}
+  ],
+  "שמפו עדין לתינוק": [
+    {name:"שמפו עדין Mustela לתינוק", store:"iHerb", link:"https://il.iherb.com/pr/mustela-gentle-shampoo-6-76-fl-oz-200-ml/113714?rcode=AUT2146"}
+  ],
+  "טיפוח עור יבש": [
+    {name:"שמפו קצף Mustela Stelatopia לעור יבש במיוחד", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/188421"}
+  ],
+  "מברשת עיסוי חניכיים": [
+    {name:"מברשת עיסוי חניכיים Nuby NanaNubs", store:"iHerb", link:"https://il.iherb.com/pr/nuby-nananubs-banana-massaging-toothbrush-3-months-1-brush/103947?rcode=AUT2146"}
+  ],
+  "אביזרי עיסוי ללידה (רולר / כדור עיסוי)": [
+    {name:"אביזרי עיסוי ללידה – רולר/כדור עיסוי", store:"AliExpress", link:"https://s.click.aliexpress.com/e/_c4nCMG0t"}
+  ],
+  "שמן לעיסוי פרינאום": [
+    {name:"שמן לעיסוי פרינאום", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/198542"}
+  ],
+  "רפידה מקררת לאחר לידה": [
+    {name:"רפידה מקררת לאחר לידה", store:"Amazon", link:"https://link.amazon/B02Mltcvj"}
+  ],
+  "תרסיס לתפרים": [
+    {name:"Motherlove Postpartum Sitz Bath Spray", store:"iHerb", link:"https://il.iherb.com/pr/motherlove-postpartum-sitz-bath-spray-2-fl-oz-59-ml/37475?rcode=AUT2146"}
+  ],
+  "משטח החתלה": [
+    {name:"משטח החתלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/433739"}
+  ],
+  "משאבת חלב ידנית": [
+    {name:"משאבת חלב ידנית Philips Avent Natural Motion", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/251797"},
+    {name:"משאבת חלב ידנית Frida 2-in-1 Manual Pump", store:"Amazon", link:"https://link.amazon/B0agx4UdR"}
+  ],
+  "כוס טפטופים": [
+    {name:"כוס טפטופים", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/138381"}
+  ],
+  "קומפרסים חמים/קרים לשד": [
+    {name:"קומפרסים חמים/קרים לשד", store:"Amazon", link:"https://link.amazon/B0fWTdP8R"}
+  ],
+  "מגני פטמה (לפי צורך)": [
+    {name:"פטמת סיליקון מדלה", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/349229"}
+  ],
+  "רפידות טיפוליות": [
+    {name:"רפידות טיפוליות נרסיקר", store:"KSP", link:"https://ksp.co.il/appkey/15418/item/352841"}
+  ],
 };
 
 const CL={
   "🩺 בדיקות בהריון":["📍 תחילת ההריון (עד שבוע 10)","בדיקות דם ראשוניות","סוג דם ו-Rh","ספירת דם","שתן כללית ותרבית","HIV","עגבת (VDRL)","הפטיטיס B","בדיקת חסינות לאדמת","בדיקות נוספות לפי המלצת הרופא/ה (כגון CMV, טוקסופלזמה או TSH במידת הצורך)","📍 שבועות 11-13+6","שקיפות עורפית","סקר שליש ראשון (בדיקת דם)","NIPT – בדיקת DNA עוברי (לבחירה)","סיסי שליה (CVS) – במידת הצורך ובהמלצה רפואית","📍 שבועות 16-18","חלבון עוברי (סקר שליש שני)","מי שפיר – במידת הצורך או לפי בחירה והמלצה רפואית","📍 שבועות 20-24","סקירת מערכות מאוחרת","📍 שבועות 24-28","העמסת סוכר","ספירת דם","לעיתים גם בדיקת ברזל (פריטין)","📍 שבועות 27-36","חיסון שעלת (Tdap)","אם האם Rh שלילי: זריקת Anti-D סביב שבוע 28","📍 שבועות 35-37","משטח GBS","📍 משבוע 40","מוניטור (NST)","אולטרסאונד לפי הצורך","הערכת כמות מי שפיר","מעקב בהתאם להנחיית הצוות הרפואי","💛 לא כל אישה צריכה לבצע את כל הבדיקות – חלקן הן בדיקות סקר, חלקן מבוצעות רק במקרים מסוימים וחלקן נתונות לבחירה אישית. מומלץ להחליט יחד עם הרופא/ה או המיילדת."],
-  "מה לקנות":["עגלה","כסא בטיחות לרכב/ סלקל","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","אמבטיה","כיסא רחצה","מוניטור לתינוק","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי"],
-  "תיק לחדר לידה":["תעודת זהות","מסמכי מעקב הריון","גרביים חמות (גם בקיץ!)","פלייליסט","נשנושים ושתייה","מטען טלפון","שפתון (פה מתייבש!)","מכשיר טנס","בקבוק מים עם פיה/ קשית","סוודר","כפכפים","גומייה לשיער","שמן שקדים ×2","רמקול/ אוזניות","אטמי אוזניים","מניפה","כרית חמה","כיסוי עיניים","מטען וסוודר למלווה"],
-  "מזוודה לאמא":["פיג'מה נוחה ×2","תחתוני לאחרי לידה (גדולים) x5","שמפו, סבון, קרם","מברשת שיניים + משחת שיניים","מגבת אישית","נעלי בית","נייר טואלט נעים","תוספי תזונה","סוודר","משקפיים/ עדשות","דאודורנט","פדים עבים","ציוד למלווה שלך"],
-  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","כובע ×1","גרביים ×2","שמיכה דקה","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם החתלה","טטרות","בגד חגיגי ליום השחרור"],
+  "מה לקנות":["עגלה","כסא בטיחות לרכב/ סלקל","מיטת תינוק + מזרן","חיתולים (0 + גודל 1)","מגבוני לחות","בגדי גוף (0-3 חודשים) x6","פיגמות ×4","שמיכות דקות ×3","אמבטיה","צופי רחצה","מוניטור לתינוק","מוצץ (לגיבוי)","שמן לעיסוי תינוק","מדחום דיגיטלי","טטרות","סדינים לעגלה","תיק החתלה","ערכת טיפוח / קוצץ ציפורניים לתינוק","מגבת עם קפוצ'ון לתינוק","כדור פיזיו ללידה","טיפוח קרקפת","מי ניקוי ללא שטיפה","שמפו עדין לתינוק","טיפוח עור יבש","מברשת עיסוי חניכיים"],
+  "תיק לחדר לידה":["תעודת זהות","מסמכי מעקב הריון","גרביים חמות (גם בקיץ!)","פלייליסט","נשנושים ושתייה","מטען טלפון","שפתון (פה מתייבש!)","מכשיר טנס","בקבוק מים עם פיה/ קשית","סוודר","כפכפים","גומייה לשיער","שמן שקדים ×2","רמקול/ אוזניות","אטמי אוזניים","מניפה","כרית חמה","כיסוי עיניים","מטען וסוודר למלווה","בקבוק פרי","אביזרי עיסוי ללידה (רולר / כדור עיסוי)","שמן לעיסוי פרינאום"],
+  "מזוודה לאמא":["פיג'מה נוחה ×2","תחתוני לאחרי לידה (גדולים) x5","שמפו, סבון, קרם","מברשת שיניים + משחת שיניים","מגבת אישית","נעלי בית","נייר טואלט נעים","תוספי תזונה","סוודר","משקפיים/ עדשות","דאודורנט","פדים עבים","רפידה מקררת לאחר לידה","תרסיס לתפרים","ציוד למלווה שלך"],
+  "מזוודה לתינוק":["בגד גוף ×4 (גודל לידה + 0-3)","כובע ×1","גרביים ×2","שמיכה דקה","חיתולים שלב 1 – 20 יח'","מגבונים עדינים","קרם החתלה","בגד חגיגי ליום השחרור"],
 };
 
 // Postpartum checklist — separate from the pregnancy CL above, shown under the
 // "אחרי לידה" (postbirth) category instead of under pregnancy.
 const CL_POSTBIRTH={
-  "אחרי לידה":["הגשת לידה בביטוח לאומי (תוך 90 יום)","רישום תעודת לידה (תוך 10 ימים)","ביקור טיפת חלב ראשון","פגישה עם יועצת הנקה","הרשמה לקופת חולים לתינוק","חיסון ראשון בשב' 2","ביקור רופאת נשים 6 שבועות","הגשת בקשה לקצבת ילד"],
+  "אחרי לידה":["הגשת לידה בביטוח לאומי (תוך 90 יום)","רישום תעודת לידה (תוך 10 ימים)","ביקור טיפת חלב ראשון","הרשמה לקופת חולים לתינוק","חיסון ראשון בשב' 2","ביקור רופאת נשים 6 שבועות","הגשת בקשה לקצבת ילד"],
   "ציוד לתיק החתלה":["מגבונים","חיתולים","משחה לטוסיק","משטח החתלה","שקיות קטנות","טטרות","סט בגדים להחלפה","מוצץ","סינר הנקה","תמ\"ל ובקבוקים","צעצועים","קרם הגנה (מגיל חצי שנה)"],
-  "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)"],
-  "אולי תרצי גם":[],
+  "ציוד הנקה":["חזיית הנקה","משחה לנולין לפטמות","רפידות הנקה","סינר הנקה","בקבוק למקרה הצורך","כרית הנקה (מומלץ)","שקיות לאחסון חלב","משאבת חלב ידנית","כוס טפטופים","קומפרסים חמים/קרים לשד","מגני פטמה (לפי צורך)","רפידות טיפוליות"],
+  "אולי תרצי גם":["מאוורר לעגלה","מחזיק כוס ונייד לעגלה","ארגונית לעגלה","מייבש בקבוקים","מחזיק מוצץ","מחזיק מוצץ ממותג","מכשיר רעש לבן","מחמם בקבוקים","משחה לטחורים","ג'ל לצלקות","שמן אתרי לוונדר","קליפס לתיק עגלה","ארגונית החתלה","שומר מוצץ","סינר","חיתול בגד ים"],
 };
 
 const RX_POINTS = [
@@ -1119,7 +1345,7 @@ function Weekly() {
         </div>
         <span style={{display:'inline-block',padding:'3px 10px',borderRadius:10,fontSize:12,background:tri.bg,color:tri.c,marginBottom:12}}>{tri.l}</span>
         <div style={{textAlign:'center',padding:'16px 0',background:`linear-gradient(135deg,${C.cr},white)`,borderRadius:12,marginBottom:4}}>
-          <div style={{fontSize:80,marginBottom:4,filter:'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'}}>{d.emoji}</div>
+          <div style={{fontSize:80,marginBottom:4,filter:'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'}}>{d.emoji?d.emoji:SIZE_ILL[d.ill]}</div>
           <div style={{fontFamily:'Georgia,serif',fontSize:22,color:C.br,marginBottom:2}}>גודל: {d.sz}</div>
           <div style={{fontSize:12,color:C.txl,fontStyle:'italic'}}>{d.szEn}</div>
         </div>
@@ -2962,23 +3188,25 @@ function Checklists({data}) {
                 <div onClick={()=>toggle(tab,i)} style={{width:20,height:20,borderRadius:5,border:`2px solid ${checked[k]?C.t:C.cd}`,background:checked[k]?C.t:'white',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,color:'white',fontSize:12,cursor:'pointer'}}>{checked[k]&&'✓'}</div>
                 <div onClick={()=>toggle(tab,i)} style={{fontSize:14,lineHeight:1.5,textDecoration:checked[k]?'line-through':'none',color:checked[k]?C.txl:C.tx,flex:1,cursor:'pointer'}}>{item}</div>
                 {recos&&recos.length>0&&(
-                  <div onClick={()=>recos.length===1&&recos[0].link&&!recos[0].note?openExternal(recos[0].link):setOpenReco(isOpen?null:recoKey)} style={{position:'relative',width:30,height:30,borderRadius:'50%',background:C.cd,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,cursor:'pointer'}}>
+                  <div onClick={()=>recos.length===1&&recos[0].link&&!recos[0].note&&!recos[0].coupon?openExternal(recos[0].link):setOpenReco(isOpen?null:recoKey)} style={{position:'relative',width:30,height:30,borderRadius:'50%',background:C.cd,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,cursor:'pointer'}}>
                     🔗
                     {recos.length>1&&<div style={{position:'absolute',top:-5,left:-5,background:C.t,color:'white',fontSize:10,fontWeight:700,width:16,height:16,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}>{recos.length}</div>}
                   </div>
                 )}
               </div>
               {isOpen&&recos&&(
-                <div style={{background:C.cr,borderRadius:14,padding:14,margin:'0 0 12px 30px'}}>
-                  <div style={{fontSize:12,color:C.txl,fontWeight:600,marginBottom:10}}>💛 {recos.length>1?'ההמלצות שלי':'ההמלצה שלי'}</div>
+                <div style={{background:C.cr,borderRadius:14,padding:12,margin:'0 0 12px 30px'}}>
+                  <div style={{fontSize:12,color:C.txl,fontWeight:600,marginBottom:8}}>💛 {recos.length>1?'ההמלצות שלי':'ההמלצה שלי'}</div>
                   {recos.map((r,ri)=>(
-                    <div key={ri} style={{background:'white',borderRadius:12,padding:'12px 14px',marginBottom:ri<recos.length-1?8:0,border:`1px solid ${C.cd}`}}>
-                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:r.note?6:10}}>
-                        <span style={{fontSize:11,color:C.t,background:C.cd,padding:'2px 8px',borderRadius:8}}>{r.store}</span>
-                        <span style={{fontSize:14,fontWeight:600,color:C.tx}}>{r.name}</span>
+                    <div key={ri} style={{background:'white',borderRadius:12,padding:'10px 14px',marginBottom:ri<recos.length-1?6:0,border:`1px solid ${C.cd}`}}>
+                      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:10}}>
+                        <div>
+                          <div style={{fontSize:14,fontWeight:600,color:C.tx,marginBottom:2}}>{r.name}</div>
+                          <div style={{fontSize:11,color:C.txl}}>{r.store}</div>
+                        </div>
+                        <div onClick={()=>openExternal(r.link)} style={{fontSize:14,fontWeight:700,color:C.t,cursor:'pointer',whiteSpace:'nowrap',flexShrink:0}}>לצפייה ←</div>
                       </div>
-                      {r.note&&<div style={{fontSize:12,color:C.txl,lineHeight:1.6,marginBottom:10}}>{r.note}</div>}
-                      <div onClick={()=>openExternal(r.link)} style={{display:'inline-block',background:C.t,color:'white',fontSize:12,fontWeight:600,padding:'7px 14px',borderRadius:8,cursor:'pointer'}}>לצפייה במוצר ←</div>
+                      {r.coupon&&<div style={{marginTop:8,padding:'6px 10px',background:C.cr,borderRadius:8,fontSize:12,color:C.t,display:'flex',alignItems:'center',gap:6}}><span>🎟️</span><span style={{fontWeight:600}}>{r.coupon}</span></div>}
                     </div>
                   ))}
                 </div>
@@ -4721,11 +4949,9 @@ const COUPONS_DATA = [
   {service:"מנשאי URBAN BABY WRAP",discount:"10% הנחה",desc:"מנשאי בד וקשיחים מעוצבים, חברה ישראלית.",code:"dafna",url:"https://www.urbanbabywrap.com/"},
   {service:"ALPHA MOM",discount:"5% הנחה",desc:"חזיות ומוצרי הנקה - בוטיק לאמהות ולאמהות בדרך.",code:"DD5",url:"https://alphamom.co.il/"},
   {service:"צילומי הריון, לידה וניובורן",discount:"15% הנחה",desc:"נסיה - צלמת מנוסה בצילומי הריון ולידה, פעילה בכל הארץ.",code:"דרך דפנה דולה",url:"https://www.instagram.com/nesialon/"},
-  {service:"GROUPHUG",discount:"15% הנחה",desc:"פלטפורמה עם אנשי מקצוע בתחומי הריון, לידה, פוסט-פארטום והורות.",code:"DULA15",url:"https://www.grouphug.online/family"},
   {service:"מוצרי NUBY",discount:"10% הנחה",desc:"משחקים לפעוטות, צעצועי התפתחות ואביזרי האכלה.",code:"DAFNAD10",url:"https://intersun.co.il/"},
   {service:"תיק LITIK ללידה",discount:"10% הנחה",desc:"תיק מרוכז עם כל מה שצריך ללידה, במקום אחד.",code:"DAFNA10",url:"https://www.litik.co.il/הליתיק-של-הדולה-דפנה/"},
   {service:"כרית הריון והנקה",discount:"20% הנחה",desc:"כרית לשינה נוחה בהריון, ולאחר מכן ככרית הנקה.",code:"DAFNA20",url:"https://caritli.co.il/"},
-  {service:"בקבוק פרי",discount:"10% הנחה",desc:"בקבוק לשטיפה אינטימית - מוצר חשוב אחרי הלידה.",code:"dafna10",url:"https://mamabear.co.il/product/peri-bottle/"},
   {service:"מתנות לבייבי",discount:"10% הנחה",desc:"מתנות לידה ופרטי עיצוב לחדר התינוק.",code:"dafnadoula10",url:"https://www.opali-gifts.com/"}
 ];
 
@@ -4766,13 +4992,6 @@ function Coupons() {
           </div>
         </div>
       ))}
-      <div style={{...card,background:'#E8F4E8',textAlign:'center'}}>
-        <div style={{fontSize:13,color:'#2E7D32',lineHeight:1.8}}>
-          <strong>🎁 קוד חבר מביאה חבר</strong><br/>
-          הפניי חברה לאפליקציה – שתיכן תקבלנה הנחה של 5% על טיפול הבא!<br/>
-          <button onClick={()=>{const msg=encodeURIComponent('שלום! ממליצה על אפליקציית דפנה דולה – מלווה הריון ולידה. מדהים! 🌸'); openExternal('https://wa.me/?text='+msg);}} style={{marginTop:8,padding:'8px 20px',background:'#2E7D32',color:'white',border:'none',borderRadius:20,fontFamily:'inherit',fontSize:13,cursor:'pointer'}}>💚 שתפי חברה</button>
-        </div>
-      </div>
     </div>
   );
 }
